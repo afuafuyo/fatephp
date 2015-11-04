@@ -38,7 +38,12 @@ class Application extends \y\core\Application {
      * @var Controller 当前的控制器
      */
     public $controller = null;
-
+    
+    /**
+     * @var Object 异常处理类
+     */
+    public $errorHandler = 'y\\web\\ErrorHandler';
+    
     /**
      * 运行应用
      *
@@ -56,6 +61,15 @@ class Application extends \y\core\Application {
 
         // 单一入口
         return $controller->execute($request);
+    }
+    
+    /**
+     * 异常处理
+     */
+    public function errorHandler() {
+        $handler = $this->createObject($this->errorHandler);
+        
+        $handler->register();
     }
 
     /**
@@ -91,4 +105,5 @@ class Application extends \y\core\Application {
 
         return $this->createObject( $this->controllerNamespace . '\\' . ucfirst($id) . 'Controller' );
     }
+
 }

@@ -31,6 +31,8 @@ final class DbFactory {
      */
     private static $_dbNamespace = 'y\db';
 
+    private function __construct(){}
+    
     /**
      * 连接数据库
      *
@@ -49,10 +51,10 @@ final class DbFactory {
             $config = Y::$app->db[$dbFlag];
             static::$_dsn = $config['dsn'];
             $driver = static::getDriverName();
-            
+
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
             $dbFile = Y::namespaceToFile($dbClass);
-            
+
             try {
                 if(!is_file($dbFile)) {
                     throw new FileNotFoundException('The class File: ' . $dbFile . ' not found');
@@ -63,13 +65,7 @@ final class DbFactory {
                     ,$config['password']
                     /*,static::$attributes*/);
                 
-                // 编码
-                if(isset($config['charset']) &&
-                    in_array($driver, ['mysql', 'mysqli', 'pgsql', 'cubrid'])) {
-                    
-                    static::$_links[$dbFlag]->exec('SET NAMES \''. $config['charset'] .'\'');
-                }
-                static::$_links[$dbFlag]->initConnection();    
+                static::$_links[$dbFlag]->initConnection($config);    
 
             } catch(FileNotFoundException $e) {
                 echo 'Connection failed: ' . $e->getMessage();

@@ -14,10 +14,17 @@ class Application extends \y\core\Object {
         // 由于多态 此时 $this 是子类 Application
         Y::$app = $this;
         
+        $this->errorHandler();
+        
         $this->init($config);
         
         Y::config($this, $config);
     }
+    
+    /**
+     * 异常处理
+     */
+    public function errorHandler() {}
 	
     /**
      * 初始化应用
@@ -58,7 +65,7 @@ class Application extends \y\core\Object {
         $instance = Y::createObject($clazz);
         
         if(null === $instance) {
-            throw new ClassNotFoundException('The Controller class '. $clazz .' not found.');
+            throw new ClassNotFoundException('The class: '. $clazz .' not found.');
         }
         
         return $instance;

@@ -19,7 +19,7 @@ class Request extends \y\core\Object {
     /**
      * 获得单例对象
      */
-    public function getInstance() {
+    public static function getInstance() {
         if(null === self::$instance) {
             self::$instance = new self();
         }
