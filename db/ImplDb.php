@@ -9,11 +9,6 @@ use y\core\InvalidCallException;
 abstract class ImplDb extends \y\core\Object implements \y\db\IDb {
 
     /**
-     * @var string 表前缀
-     */
-    public $tablePrefix = '';
-
-    /**
      * @var PDO pdo 类实例
      */
     public $pdo = null;
@@ -31,7 +26,7 @@ abstract class ImplDb extends \y\core\Object implements \y\db\IDb {
     public function initConnection(& $config){}
     
     /**
-     * 调用不存在的方法
+     * __call
      *
      * @param string $name 方法名字
      * @param array $params 方法参数

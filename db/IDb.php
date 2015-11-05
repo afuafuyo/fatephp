@@ -3,6 +3,7 @@ namespace y\db;
 
 /**
  * 数据库接口类
+ * 本类不考虑安全检查 下层确保数据的安全性
  */
 interface IDb {
 
@@ -51,7 +52,7 @@ interface IDb {
     /**
      * 插入记录
      *
-     * @param array 数据
+     * @param array $data 数据
      * @return int insertId
      */
     public function insert(& $data);
@@ -66,7 +67,7 @@ interface IDb {
     /**
      * 修改记录
      *
-     * @param array 数据
+     * @param array $data 数据
      * @return int 影响行数
      */
     public function update(& $data);
@@ -74,8 +75,9 @@ interface IDb {
     /**
      * 获取记录数
      *
+     * @param string $field 列
      * @return int 结果
      */
-    public function count();
+    public function count($field = '*');
     
 }
