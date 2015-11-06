@@ -16,7 +16,7 @@ class IndexController extends \y\web\Controller {
         //});
         
 		//$sql = 'SELECT * FROM users';
-		//foreach ($db->query($sql) as $row) {
+		//foreach ($db->querySql($sql) as $row) {
         //    var_dump($row);
 		//}
         
