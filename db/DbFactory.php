@@ -71,6 +71,8 @@ final class DbFactory {
                 echo 'Connection failed: ' . $e->getMessage();
 
             } catch(PDOException $e) {
+                static::$_links[$dbFlag] = null;
+                
                 echo 'PDOException: ' . $e->getMessage();
             }
         }

@@ -17,6 +17,11 @@ class Db extends \y\db\ImplDb {
     private $_sql = '';
     
     /**
+     * @var array 数据
+     */
+    private $_data = [];
+    
+    /**
      * @var array 操作
      */
     private $_options = [];
@@ -47,14 +52,82 @@ class Db extends \y\db\ImplDb {
         $this->_options = [];
     }
     
+    private function closeStatement() {
+        $this->pdoStatement->closeCursor();
+        $this->pdoStatement = null;
+    }
+    
+    private function closePdo() {
+        $this->pdo = null;
+    }
+    
+    private function countDim($array) {
+        static $dimcount = 1;
+        if(is_array(reset($array))) {
+           $dimcount++;
+           $ret = $this->countDim(reset($array));
+           
+        } else {
+           $ret = $dimcount;
+        }
+        
+        return $ret;
+    }
+    
+    private function buildCols() {
+        $ret = '';
+        $length = $this->countDim($this->_data);
+        if(1 === $length) {
+            $ret = implode('`,`', array_keys($this->_data));
+            
+        } else if($length > 1) {
+            $tmp = $this->_data[0];
+            $ret = implode('`,`', array_keys($tmp));
+        }
+        
+        return '' === $ret ? '()' : '(`' . $ret . '`)';
+    }
+    
+    private function buildValues() {
+        $ret = '';
+        $length = $this->countDim($this->_data);
+        if(1 === $length) {
+            $ret = implode('\',\'', array_values($this->_data));
+            
+        } else if($length > 1) {
+            $tmp = [];
+            foreach($this->_data as $v) {
+                $tmp[] = implode('\',\'', array_values($v));
+            }
+            
+            $ret = implode('\'),(\'', $tmp);
+        }
+        
+        return '' === $ret ? '()' : '(\'' . $ret . '\')';
+    }
+    
     private function initSql() {
         $sql = '';
         switch($this->_operate) {
             case self::$INSERT :
-                // insert into x() values()
+                // insert into t() values()[,(),()...]
+                $table = isset($this->_options['table']) ? $this->_options['table'] : '';
+                $cols = $this->buildCols();
+                $values = $this->buildValues();
+                $sql = 'INSERT INTO ' . $table . $cols . ' VALUES' . $values;
+                
                 break;
             
             case self::$DELETE :
+                // delete from t where x
+                $table = isset($this->_options['table']) ? $this->_options['table'] : '';
+                
+                $where = isset($this->_options['where']) ? 
+                    ' WHERE ' . $this->_options['where'] : '';
+                
+                if('' !== $where) {
+                    $sql = 'DELETE FROM ' . $table . $where;
+                }   
                 
                 break;
             
@@ -63,7 +136,7 @@ class Db extends \y\db\ImplDb {
                 break;
             
             case self::$SELECT :
-                // select * from tbl
+                // select * from t
                 // where x
                 // group by x
                 // having x
@@ -195,8 +268,11 @@ class Db extends \y\db\ImplDb {
      * @return int insertId
      */
     public function insert(& $data) {
-        
-        return $this;
+        $this->_operate = self::$INSERT;
+        $this->_data = $data;
+        $sql = $this->initSql();
+
+        return $this->executeSql($sql);
     }
     
     /**
@@ -205,8 +281,10 @@ class Db extends \y\db\ImplDb {
      * @return int 影响行数
      */
     public function delete() {
-        
-        return $this;
+        $this->_operate = self::$DELETE;
+        $sql = $this->initSql();
+
+        return $this->executeSql($sql);
     }
     
     /**
@@ -258,8 +336,10 @@ class Db extends \y\db\ImplDb {
      */
     public function querySql($sql, $fetchStyle = PDO::FETCH_ASSOC) {
         $this->prepareStatement($sql);
+        $data = $this->pdoStatement->fetchAll($fetchStyle);
+        $this->closeStatement();
         
-        return $this->pdoStatement->fetchAll($fetchStyle);
+        return $data;
     }
     
     /**
