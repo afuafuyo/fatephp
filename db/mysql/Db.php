@@ -160,7 +160,11 @@ class Db extends \y\db\ImplDb {
         $this->_operate = self::$SELECT;
         $sql = $this->_sql = $this->initSql();
         
-        return $this->querySql($sql);
+        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
+        $data = $this->querySql($sql);
+        $this->trigger(self::EVENT_AFTER_QUERY, $this);
+        
+        return $data;
     }
     
     /**

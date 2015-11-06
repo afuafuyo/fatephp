@@ -6,7 +6,7 @@ use y\core\InvalidCallException;
 /**
  * pdo 基类
  */
-abstract class ImplDb extends \y\core\Object implements \y\db\IDb {
+abstract class ImplDb extends DbEvent implements IDb {
 
     /**
      * @var PDO pdo 类实例

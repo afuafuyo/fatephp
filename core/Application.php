@@ -8,7 +8,7 @@ use y\core\ClassNotFoundException;
 /**
  * 应用前端控制器
  */
-class Application extends \y\core\Object {
+class Application extends Object {
 
     public function __construct($config = []) {
         // 由于多态 此时 $this 是子类 Application

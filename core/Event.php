@@ -50,11 +50,13 @@ class Event extends Object {
      * 触发
      *
      * @param string $eventName 事件名称
+     * @param object $param 参数
      */
-    public function trigger($eventName) {
+    public function trigger($eventName, $param = null) {
         if(isset($this->_handlers[$eventName])) {
             foreach($this->_handlers[$eventName] as $handler) {
-                call_user_func($handler);
+                null === $param ? call_user_func($handler) : 
+                    call_user_func($handler, $param);
             }
         }
     }
