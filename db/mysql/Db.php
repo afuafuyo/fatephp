@@ -50,6 +50,7 @@ class Db extends \y\db\ImplDb {
     
     private function resetOption() {
         $this->_options = [];
+        $this->_data = [];
     }
     
     private function closeStatement() {
@@ -96,6 +97,7 @@ class Db extends \y\db\ImplDb {
             
         } else if($length > 1) {
             $tmp = [];
+            // 二维遍历
             foreach($this->_data as $v) {
                 $tmp[] = implode('\',\'', array_values($v));
             }
@@ -104,6 +106,15 @@ class Db extends \y\db\ImplDb {
         }
         
         return '' === $ret ? '()' : '(\'' . $ret . '\')';
+    }
+    
+    private function buildSet() {
+        $ret = '';
+        foreach($this->_data as $k => $v) {
+            $ret .= "`{$k}`='{$v}',";
+        }
+        
+        return '' === $ret ? '' : 'SET ' . rtrim($ret, ',');
     }
     
     private function initSql() {
@@ -132,6 +143,16 @@ class Db extends \y\db\ImplDb {
                 break;
             
             case self::$UPDATE :
+                // update t set x=y, a=b where x
+                $table = isset($this->_options['table']) ? $this->_options['table'] : '';
+                $set = $this->buildSet();
+                
+                $where = isset($this->_options['where']) ? 
+                    ' WHERE ' . $this->_options['where'] : '';
+                
+                if('' !== $where) {
+                    $sql = 'UPDATE '. $table . ' ' . $set . $where;
+                }
                 
                 break;
             
@@ -294,8 +315,11 @@ class Db extends \y\db\ImplDb {
      * @return int 影响行数
      */
     public function update(& $data) {
+        $this->_operate = self::$UPDATE;
+        $this->_data = $data;
+        $sql = $this->initSql();
         
-        return $this;
+        return $this->executeSql($sql);
     }
     
     /**
@@ -305,8 +329,14 @@ class Db extends \y\db\ImplDb {
      * @return int 结果
      */
     public function count($field = '*') {
+        $table = isset($this->_options['table']) ? $this->_options['table'] : '';
+        $where = isset($this->_options['where']) ? 
+            ' WHERE ' . $this->_options['where'] : '';
+            
+        $sql = "SELECT COUNT({$field}) FROM `{$table}` {$where}";
+        $stat = $this->prepareStatement($sql);
         
-        return $this;
+        return $stat->fetchColumn();
     }
     
     /**

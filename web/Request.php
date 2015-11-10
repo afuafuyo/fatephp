@@ -17,6 +17,13 @@ class Request extends \y\core\Object {
     private function __construct() {}
 
     /**
+     * 过滤
+     */
+    private function filter($string) {
+        return htmlspecialchars($string, ENT_QUOTES);
+    }
+    
+    /**
      * 获得单例对象
      */
     public static function getInstance() {
@@ -32,7 +39,7 @@ class Request extends \y\core\Object {
      */
     public function parseUrl($routeParam) {
         if( isset($_GET[$routeParam]) ) {
-            return $_GET[$routeParam];
+            return $this->filter($_GET[$routeParam]);
         }
 
         return '';

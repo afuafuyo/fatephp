@@ -17,7 +17,7 @@ class IndexController extends \y\web\Controller {
         
 		//$sql = 'SELECT * FROM users';
 		//foreach ($db->querySql($sql) as $row) {
-        //    var_dump($row);
+        //   var_dump($row);
 		//}
         
         //$res = $db->table('users')->where('1=1')->orderBy('id desc')->getAll();
@@ -31,6 +31,11 @@ class IndexController extends \y\web\Controller {
         //$c = $db->table('users')->insert($data);
         
         //$c = $db->table('users')->where('id=1')->delete();
+        
+        //$data = ['name'=>'abc', 'age'=>1];
+        //$db->table('users')->where('id=1')->update($data);
+        
+        //echo $db->table('users')->count();
        
 	}
 }
