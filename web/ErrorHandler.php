@@ -9,11 +9,11 @@ class ErrorHandler {
     public function register() {
         //ini_set('display_errors', false);
         
-        set_exception_handler([$this, 'handleException']);
+        //set_exception_handler([$this, 'handleException']);
         
-        set_error_handler([$this, 'handleError']);
+        //set_error_handler([$this, 'handleError']);
         
-        register_shutdown_function([$this, 'handleFatalError']);
+        //register_shutdown_function([$this, 'handleFatalError']);
     }
     
     /**

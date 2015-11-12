@@ -3,7 +3,6 @@ namespace y\core;
 
 use Y;
 use y\core\InvalidConfigException;
-use y\core\ClassNotFoundException;
 
 /**
  * 应用前端控制器
@@ -52,23 +51,6 @@ class Application extends Object {
      */
     public function setAppPath($path) {
         Y::setPathAlias('@app', $path);
-    }
-
-    /**
-     * 创建对象
-     *
-     * @param string $clazz 类全名
-     * @throws ClassNotFoundException 类未找到
-     * @return Object 类实例
-     */
-    public function createObject($clazz) {
-        $instance = Y::createObject($clazz);
-        
-        if(null === $instance) {
-            throw new ClassNotFoundException('The class: '. $clazz .' not found.');
-        }
-        
-        return $instance;
     }
 
 }

@@ -22,12 +22,12 @@ class Application extends \y\core\Application {
     /**
      * @var string 默认控制器
      */
-    public $defaultController = 'Index';
+    public $defaultControllerId = 'index';
 
     /**
      * @var string 默认控制器命名空间
      */
-    public $controllerNamespace = 'app\\controllers';
+    public $defaultControllerNamespace = 'app\\controllers';
 
     /**
      * @var array 注册的模块
@@ -35,9 +35,14 @@ class Application extends \y\core\Application {
     public $modules = [];
 
     /**
-     * @var Controller 当前的控制器
+     * @var string 当前的模块
      */
-    public $controller = null;
+    public $moduleId = '';
+    
+    /**
+     * @var string 当前的控制器
+     */
+    public $controllerId = '';
     
     /**
      * @var Object 异常处理类
@@ -53,14 +58,14 @@ class Application extends \y\core\Application {
     public function run(){
         $request = Request::getInstance();
         $route = $request->parseUrl($this->routeParam);
-        $controller = $this->controller = $this->createController($route);
+        $controller = $this->createController($route);
 
         if(!method_exists($controller, 'execute')) {
             throw new InvalidCallException('The Controller\'s execute() method not found.');
         }
 
         // 单一入口
-        return $controller->execute($request);
+        return $controller->execute();
     }
     
     /**
@@ -76,6 +81,7 @@ class Application extends \y\core\Application {
      * 创建控制器
      *
      * @param string $route 路由参数 eg. user/index or user
+     * @return Object 控制器
      */
     public function createController($route) {
         $id = '';
@@ -93,17 +99,23 @@ class Application extends \y\core\Application {
             list($id, $route) = explode('/', $route, 2);
         } else {
             $id = $route;
-            $route = $this->defaultController;
+            $route = $this->defaultControllerId;
         }
 
         // 搜索顺序 模块控制器 -> 普通控制器
         if(isset($this->modules[$id])) {
             $c = trim($this->modules[$id], '\\') . '\\controllers\\' . ucfirst($route) . 'Controller';
 
+            $this->moduleId = $id;
+            $this->controllerId = $route;
+            
             return $this->createObject($c);
         }
 
-        return $this->createObject( $this->controllerNamespace . '\\' . ucfirst($id) . 'Controller' );
+        // 普通控制器
+        $this->controllerId = $id;
+
+        return $this->createObject( $this->defaultControllerNamespace . '\\' . ucfirst($id) . 'Controller' );
     }
 
 }

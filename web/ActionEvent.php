@@ -6,7 +6,7 @@ namespace y\web;
  */
 class ActionEvent extends \y\core\Event {
 
-    const EVENT_BEFORE_ACTION = 'beforeAction';
-    const EVENT_AFTER_ACTION = 'afterAction';
+    const EVENT_BEFORE_RENDER = 'beforeRender';
+    const EVENT_AFTER_RENDER = 'afterRender';
 
 }

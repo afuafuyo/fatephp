@@ -10,7 +10,9 @@ use y\db\DbFactory;
 class IndexController extends \y\web\Controller {
 	
 	public function execute($request) {
-		$db = DbFactory::instance('main');
+		//$this->render('index');
+        
+		//$db = DbFactory::instance('main');
         //$db->on($db::EVENT_BEFORE_QUERY, function(){
         //    echo 'beforeQuery<br>';
         //});
@@ -36,7 +38,6 @@ class IndexController extends \y\web\Controller {
         //$db->table('users')->where('id=1')->update($data);
         
         //echo $db->table('users')->count();
-       
 	}
 }
 ```

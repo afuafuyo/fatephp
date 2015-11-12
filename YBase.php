@@ -50,7 +50,7 @@ class YBase {
             unset(static::$pathAliases[$alias]);
 
         } else {
-            static::$pathAliases[$alias] = $path;
+            static::$pathAliases[$alias] = rtrim($path, '/');
         }
     }
 
@@ -76,7 +76,7 @@ class YBase {
      * @return null | Object 类实例
      */
     public static function createObject($clazz) {
-        $real = static::namespaceToFile($clazz);
+        $real = static::namespaceTranslate($clazz);
         if('' === $real || !is_file($real)) {
             return null;
         }
@@ -87,16 +87,16 @@ class YBase {
     }
 
     /**
-     * namespace 转文件
+     * namespace 路径转换
      *
-     * @param string $namespace 类全名
-     * @param boolean $extension 是否加扩展
+     * @param string $namespace 命名空间
+     * @param string $extension 扩展
      * @return 文件路径
      */
-    public static function namespaceToFile($namespace, $extension = true) {
+    public static function namespaceTranslate($namespace, $extension = '.php') {
         $path = static::getPathAlias('@' . str_replace('\\', '/', $namespace));
         
-        return $extension ? ($path . '.php') : $path;
+        return $path . $extension;
     }
 	 
     /**
@@ -107,7 +107,7 @@ class YBase {
     public static function autoload($className) {
         // 导入有命名空间的类
         if(false !== strpos($className, '\\')) {
-            $classFile = static::namespaceToFile($className);
+            $classFile = static::namespaceTranslate($className);
             if('' === $classFile || !is_file($classFile)) {
                 return;
             }

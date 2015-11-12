@@ -53,7 +53,7 @@ final class DbFactory {
             $driver = static::getDriverName();
 
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
-            $dbFile = Y::namespaceToFile($dbClass);
+            $dbFile = Y::namespaceTranslate($dbClass);
 
             try {
                 if(!is_file($dbFile)) {
