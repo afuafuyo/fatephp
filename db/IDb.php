@@ -40,20 +40,6 @@ interface IDb {
     public function orderBy($order);
     
     /**
-     * 获取记录
-     *
-     * @return array 结果集
-     */
-    public function getAll();
-    
-    /**
-     * 获取一条记录
-     *
-     * @return array 结果集
-     */
-    public function getOne();
-    
-    /**
      * 插入记录
      *
      * @param array $data 数据
@@ -75,13 +61,19 @@ interface IDb {
      * @return int 影响行数
      */
     public function update(& $data);
-
+    
     /**
-     * 获取记录数
+     * 获取记录
      *
-     * @param string $field 列
-     * @return int 结果
+     * @return array 结果集
      */
-    public function count($field = '*');
+    public function getAll();
+    
+    /**
+     * 获取一条记录
+     *
+     * @return array 结果集
+     */
+    public function getOne();
     
 }

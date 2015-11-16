@@ -43,6 +43,13 @@ class Db extends \y\db\ImplDb {
         $this->pdo = new PDO($dsn, $username, $password, $options);
     }
     
+    private function reset() {
+        $this->_operate = 0;
+        $this->_sql = '';
+        $this->_data = [];
+        $this->_options = [];
+    }
+    
     public function initConnection(& $config) {
         if(isset($config['charset'])) {
             $this->pdo->exec('SET NAMES \''. $config['charset'] .'\'');
@@ -50,11 +57,6 @@ class Db extends \y\db\ImplDb {
         if(isset($config['prefix'])) {
             $this->_tablePrefix = $config['prefix'];
         }
-    }
-    
-    private function resetOption() {
-        $this->_options = [];
-        $this->_data = [];
     }
     
     private function closeStatement() {
@@ -161,6 +163,7 @@ class Db extends \y\db\ImplDb {
                 break;
             
             case self::$SELECT :
+            case self::$SELECTONE :
                 // select * from t
                 // where x
                 // group by x
@@ -178,8 +181,10 @@ class Db extends \y\db\ImplDb {
                     ' HAVING ' . $this->_options['having'] : '';
                 $orderBy = isset($this->_options['orderBy']) ? 
                     ' ORDER BY ' . $this->_options['orderBy'] : '';
-                $limit = isset($this->_options['limit']) ? 
-                    ' LIMIT ' . $this->_options['limit'] : '';
+                $limit = self::$SELECTONE === $this->_operate ? 
+                    ' LIMIT 0,1' :
+                    (isset($this->_options['limit']) ? 
+                        ' LIMIT ' . $this->_options['limit'] : '');
                 
                 $sql = 'SELECT ' . $fields . ' FROM ' . $table . 
                     $where . 
@@ -190,12 +195,22 @@ class Db extends \y\db\ImplDb {
                     
                 break;
             
+            case self::$COUNT : 
+                $table = isset($this->_options['table']) ? $this->_options['table'] : '';
+                $field = isset($this->_options['countField']) ? $this->_options['countField'] : '*';
+                $where = isset($this->_options['where']) ? 
+                    ' WHERE ' . $this->_options['where'] : '';
+            
+                $sql = $this->_sql = "SELECT COUNT({$field}) FROM `{$table}` {$where}";
+            
+                break;
+            
             default :
                 break;
         }
         
         // 重置条件
-        $this->resetOption();
+        $this->reset();
         
         return $sql;
     }
@@ -257,10 +272,7 @@ class Db extends \y\db\ImplDb {
     public function getAll() {
         $this->_operate = self::$SELECT;
         $sql = $this->_sql = $this->initSql();
-        
-        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
         $data = $this->querySql($sql);
-        $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
         return $data;
     }
@@ -271,8 +283,12 @@ class Db extends \y\db\ImplDb {
      * @return array 结果集
      */
     public function getOne() {
+        $this->_operate = self::$SELECTONE;
+        $sql = $this->_sql = $this->initSql();
         
-        return $this;
+        $stat = $this->prepareStatement($sql);
+        
+        return $stat->fetch(PDO::FETCH_ASSOC);
     }
     
     /**
@@ -295,7 +311,7 @@ class Db extends \y\db\ImplDb {
     public function insert(& $data) {
         $this->_operate = self::$INSERT;
         $this->_data = $data;
-        $sql = $this->initSql();
+        $sql = $this->_sql = $this->initSql();
 
         return $this->executeSql($sql);
     }
@@ -307,7 +323,7 @@ class Db extends \y\db\ImplDb {
      */
     public function delete() {
         $this->_operate = self::$DELETE;
-        $sql = $this->initSql();
+        $sql = $this->_sql = $this->initSql();
 
         return $this->executeSql($sql);
     }
@@ -321,7 +337,7 @@ class Db extends \y\db\ImplDb {
     public function update(& $data) {
         $this->_operate = self::$UPDATE;
         $this->_data = $data;
-        $sql = $this->initSql();
+        $sql = $this->_sql = $this->initSql();
         
         return $this->executeSql($sql);
     }
@@ -333,18 +349,17 @@ class Db extends \y\db\ImplDb {
      * @return int 结果
      */
     public function count($field = '*') {
-        $table = isset($this->_options['table']) ? $this->_options['table'] : '';
-        $where = isset($this->_options['where']) ? 
-            ' WHERE ' . $this->_options['where'] : '';
-            
-        $sql = "SELECT COUNT({$field}) FROM `{$table}` {$where}";
+        $this->_operate = self::$COUNT;
+        $this->_options['countField'] = $field;
+        $sql = $this->_sql = $this->initSql();
+        
         $stat = $this->prepareStatement($sql);
         
         return $stat->fetchColumn();
     }
     
     /**
-     * 执行 sql 语句
+     * 执行 sql 语句 生成 PDOStatement 对象
      *
      * @param string $sql sql 语句
      * @param array $params 参数
@@ -369,9 +384,11 @@ class Db extends \y\db\ImplDb {
      * @return array 结果数组
      */
     public function querySql($sql, $fetchStyle = PDO::FETCH_ASSOC) {
+        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
         $this->prepareStatement($sql);
         $data = $this->pdoStatement->fetchAll($fetchStyle);
         $this->closeStatement();
+        $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
         return $data;
     }
@@ -383,7 +400,11 @@ class Db extends \y\db\ImplDb {
      * @return int 影响行数
      */
     public function executeSql($sql) {
-        return $this->pdo->exec($sql);
+        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
+        $ret = $this->pdo->exec($sql);
+        $this->trigger(self::EVENT_AFTER_QUERY, $this);
+        
+        return $ret;
     }
     
 }
