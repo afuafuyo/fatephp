@@ -19,11 +19,6 @@ final class DbFactory {
     private static $_links = [];
 
     /**
-     * @var string 数据源
-     */
-    private static $_dsn = null;
-    
-    /**
      * @var array PDO attributes [name => value]
      * [PHP manual](http://www.php.net/manual/en/function.PDO-setAttribute.php) for
      * details about available attributes.
@@ -33,7 +28,7 @@ final class DbFactory {
     /**
      * @var string 数据库命名空间
      */
-    private static $_dbNamespace = 'y\db';
+    private static $_dbNamespace = 'y\\db';
 
     private function __construct(){}
     
@@ -48,23 +43,24 @@ final class DbFactory {
         }
 
         if(!isset(Y::$app->db[$dbFlag])) {
-            throw new InvalidConfigException('Unknow db config:' . $dbFlag);
+            throw new InvalidConfigException('Unknow db config: ' . $dbFlag);
         }
 
         if( !isset(static::$_links[$dbFlag]) || null === static::$_links[$dbFlag] ){
             $config = Y::$app->db[$dbFlag];
-            static::$_dsn = $config['dsn'];
-            $driver = static::getDriverName();
+            $dsn = $config['dsn'];
+            $driver = static::getDriverName($dsn);
 
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
             $dbFile = Y::namespaceTranslate($dbClass);
 
             try {
                 if(!is_file($dbFile)) {
-                    throw new FileNotFoundException('The class File: ' . $dbFile . ' not found');
+                    throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');
                 }
 
-                static::$_links[$dbFlag] = new $dbClass($config['dsn'] 
+                static::$_links[$dbFlag] = new $dbClass(
+                    $dsn
                     ,$config['username']
                     ,$config['password']
                     /*,static::$attributes*/);
@@ -89,11 +85,11 @@ final class DbFactory {
      *
      * @return string name of the DB driver
      */
-    public static function getDriverName() {
+    public static function getDriverName($dsn = '') {
         $driverName = '';
-        if(null !== static::$_dsn) {
-            if(false !== ($pos = strpos(static::$_dsn, ':'))) {
-                $driverName = strtolower(substr(static::$_dsn, 0, $pos));
+        if('' !== $dsn) {
+            if(false !== ($pos = strpos($dsn, ':'))) {
+                $driverName = strtolower(substr($dsn, 0, $pos));
             }
         }
         
