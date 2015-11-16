@@ -37,14 +37,14 @@ class Application extends Object {
      */
     public function init(& $config) {
         if(!isset($config['id'])) {
-            throw new InvalidConfigException('The "id" configuration is required.');
+            throw new InvalidConfigException('The "id" configuration is required');
         }
         if(isset($config['appPath'])) {
             $this->setAppPath($config['appPath']);
             unset($config['appPath']);
             
         } else {
-            throw new InvalidConfigException('The "appPath" configuration is required.');
+            throw new InvalidConfigException('The "appPath" configuration is required');
         }
     }
 

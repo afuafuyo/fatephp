@@ -57,7 +57,7 @@ class View extends \y\core\Object {
      */
     public function renderFile($file, $params) {
         if(!is_file($file)) {
-            throw new FileNotFoundException('The view file: ' . $file . ' not found.');
+            throw new FileNotFoundException('The view file: ' . $file . ' not found');
         }
         
         ob_start();

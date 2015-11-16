@@ -65,7 +65,7 @@ class Application extends \y\core\Application {
         $controller = $this->createController($route);
 
         if(!method_exists($controller, 'execute')) {
-            throw new InvalidCallException('The Controller\'s execute() method not found.');
+            throw new InvalidCallException('The Controller\'s execute() method not found');
         }
 
         // 单一入口

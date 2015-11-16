@@ -57,7 +57,7 @@ class Object {
         $instance = Y::createObject($clazz);
         
         if(null === $instance) {
-            throw new ClassNotFoundException('The class: '. $clazz .' not found.');
+            throw new ClassNotFoundException('The class: '. $clazz .' not found');
         }
         
         return $instance;
