@@ -36,7 +36,7 @@ class Controller extends ActionEvent {
         
         if($output) {
             echo $data;
-            return;
+            return null;
         }
         
         return $data;

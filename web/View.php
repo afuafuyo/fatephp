@@ -50,7 +50,7 @@ class View extends \y\core\Object {
     }
     
     /**
-     * 渲染 php 文件
+     * 渲染文件
      *
      * @param string $file 文件
      * @param array $params 参数
