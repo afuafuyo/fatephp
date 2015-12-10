@@ -3,6 +3,34 @@
 
 ```php
 <?php
+require(__DIR__ . '/system/Y.php');
+
+$res = (new y\web\Application([
+	'id'=>1, 
+	'appPath'=> __DIR__ . '/app',
+	'modules' => [
+		'reg' => 'app\modules\reg'
+	],
+	'db' => [
+		'main' => [
+			'dsn' => 'mysql:host=localhost;dbname=binguan',
+			'username' => 'root',
+			'password' => 'root',
+			'charset' => 'utf8',
+			'prefix'=> ''
+		]
+	],
+    'cache' => [
+        'file' => [
+            'class' => 'y\cache\FileCache'
+        ]
+    ]
+	
+]))->run();
+```
+
+```php
+<?php
 namespace app\controllers;
 
 use y\db\DbFactory;
@@ -38,6 +66,12 @@ class IndexController extends \y\web\Controller {
         //$db->table('users')->where('id=1')->update($data);
         
         //echo $db->table('users')->count();
+        
+        // 缓存
+        $c = CacheFactory::instance('file');
+        $c->set('key', '123123');
+        echo $c->get('key');
+        $c->delete('key');
 	}
 }
 ```

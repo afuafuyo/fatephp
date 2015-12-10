@@ -53,12 +53,12 @@ final class DbFactory {
 
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
             $dbFile = Y::namespaceTranslate($dbClass);
+            
+            if(!is_file($dbFile)) {
+                throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');
+            }
 
             try {
-                if(!is_file($dbFile)) {
-                    throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');
-                }
-
                 static::$_links[$dbFlag] = new $dbClass(
                     $dsn
                     ,$config['username']
@@ -67,9 +67,6 @@ final class DbFactory {
                 
                 static::$_links[$dbFlag]->initConnection($config);    
 
-            } catch(FileNotFoundException $e) {
-                echo 'Connection failed: ' . $e->getMessage();
-
             } catch(PDOException $e) {
                 static::$_links[$dbFlag] = null;
                 
@@ -77,7 +74,7 @@ final class DbFactory {
             }
         }
 
-        return self::$_links[$dbFlag];
+        return static::$_links[$dbFlag];
     }
 	
 	/**

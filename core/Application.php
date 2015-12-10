@@ -39,12 +39,22 @@ class Application extends Object {
         if(!isset($config['id'])) {
             throw new InvalidConfigException('The "id" configuration is required');
         }
+        
         if(isset($config['appPath'])) {
             $this->setAppPath($config['appPath']);
             unset($config['appPath']);
             
         } else {
             throw new InvalidConfigException('The "appPath" configuration is required');
+        }
+        
+        if(isset($config['runtimePath'])) {
+            $this->setRuntimePath($config['runtimePath']);
+            unset($config['runtimePath']);
+            
+        } else {
+            // set "app/runtime"
+            $this->setRuntimePath( $this->getAppPath() . '/runtime');
         }
     }
 
@@ -55,6 +65,29 @@ class Application extends Object {
      */
     public function setAppPath($path) {
         Y::setPathAlias('@app', $path);
+    }
+    
+    /**
+     * 得到应用目录
+     */
+    public function getAppPath(){
+        return Y::getPathAlias('@app');
+    }
+    
+    /**
+     * 设置 runtime 路径
+     *
+     * @param string $path 路径
+     */
+    public function setRuntimePath($path) {
+        Y::setPathAlias('@runtime', $path);
+    }
+    
+    /**
+     * 得到 runtime 目录
+     */
+    public function getRuntimePath() {
+        return Y::getPathAlias('@runtime');
     }
 
 }
