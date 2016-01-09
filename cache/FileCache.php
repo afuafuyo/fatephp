@@ -7,6 +7,14 @@ namespace y\cache;
 
 use Y;
 
+/**
+ * 配置
+ *
+ * [
+ *      'class' => 'y\cache\FileCache'
+ * ]
+ *
+ */
 class FileCache extends ImplCache {
     
     /**

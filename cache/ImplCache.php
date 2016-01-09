@@ -9,6 +9,7 @@ namespace y\cache;
  * Cache 基类
  */
 abstract class ImplCache extends \y\core\Object implements ICache {
+    public function __construct(& $config) {}
     
     public function init() {}
 }
