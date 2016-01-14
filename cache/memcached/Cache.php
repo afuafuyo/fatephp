@@ -3,12 +3,14 @@
  * @author yu
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-namespace y\cache;
+namespace y\cache\memcached;
 
 use Memcached;
 use y\core\InvalidConfigException;
 
 /**
+ * memcached 缓存
+ *
  * 配置
  *
  * [
@@ -22,7 +24,7 @@ use y\core\InvalidConfigException;
  * ]
  *
  */
-class MemcachedCache extends ImplCache {
+class Cache extends ImplCache {
     
     private $memcached = null;
     
@@ -30,7 +32,7 @@ class MemcachedCache extends ImplCache {
      * 实例化 
      */
     public function __construct(& $config) {
-        parent::__construct();
+        parent::__construct($config);
         
         if(!isset($config['servers']) || empty($config['servers'])) {
             throw new InvalidConfigException('The "servers" property must be specified');

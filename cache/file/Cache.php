@@ -3,11 +3,13 @@
  * @author yu
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-namespace y\cache;
+namespace y\cache\file;
 
 use Y;
 
 /**
+ * 文件缓存类
+ *
  * 配置
  *
  * [
@@ -15,7 +17,7 @@ use Y;
  * ]
  *
  */
-class FileCache extends ImplCache {
+class Cache extends ImplCache {
     
     /**
      * @var string 缓存目录
@@ -32,7 +34,7 @@ class FileCache extends ImplCache {
      */
     public $cacheFileSuffix = '.bin';
     
-    public function __construct(& $config) {}
+    //public function __construct(& $config) {}
     
     public function init() {
         parent::init();
