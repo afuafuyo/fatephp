@@ -106,7 +106,7 @@ class YBase {
     /**
      * 类自动加载器
      *
-     * @param string $className 要载入的类全名
+     * @param string $className 要载入的类全名 eg. y\web\Application
      */
     public static function autoload($className) {
         // 导入有命名空间的类
