@@ -2,6 +2,11 @@
 ## 本程序采用单一入口 一个控制器只有一个入口方法的理念开发
 ##未完成状态
 
+###### 系统内置别名
+* @y  系统目录
+* @app  项目目录 由 appPath 指定
+* @runtime  缓存目录 指向 @app/runtime
+
 ```php
 <?php
 require(__DIR__ . '/system/Y.php');
