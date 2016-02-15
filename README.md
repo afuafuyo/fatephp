@@ -8,6 +8,8 @@
 * @runtime  缓存目录 指向 @app/runtime
 
 ```php
+index.php
+
 <?php
 require(__DIR__ . '/system/Y.php');
 
@@ -28,7 +30,7 @@ $res = (new y\web\Application([
 	],
     'cache' => [
         'file' => [
-            'class' => 'y\cache\FileCache'
+            'class' => 'y\cache\file\Cache'
         ]
     ]
 	
@@ -36,6 +38,8 @@ $res = (new y\web\Application([
 ```
 
 ```php
+app\controllers\IndexController.php
+
 <?php
 namespace app\controllers;
 
