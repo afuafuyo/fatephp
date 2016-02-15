@@ -13,18 +13,20 @@ use y\core\InvalidConfigException;
  *
  * 配置
  *
- * [
- *      'class' => 'y\cache\MemcachedCache'
- *      ,'servers' => [
- *          [
- *               'host' => '127.0.0.1'
- *               ,'port' => '11211'
+ *  'cache' => [
+ *      'memcached' => [
+ *          'class' => 'y\cache\memcached\Cache'  // 单引号字符串不转译
+ *          ,'servers' => [
+ *              [
+ *                  'host' => '127.0.0.1'
+ *                  ,'port' => '11211'
+ *              ]
  *          ]
  *      ]
- * ]
+ *  ]
  *
  */
-class Cache extends ImplCache {
+class Cache extends \y\cache\ImplCache {
     
     private $memcached = null;
     

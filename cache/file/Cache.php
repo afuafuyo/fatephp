@@ -12,12 +12,14 @@ use Y;
  *
  * 配置
  *
- * [
- *      'class' => 'y\cache\FileCache'
- * ]
+ *  'cache' => [
+ *      'file' => [
+ *          'class' => 'y\cache\file\Cache'  // 单引号字符串不转译
+ *      ]
+ *  ]
  *
  */
-class Cache extends ImplCache {
+class Cache extends \y\cache\ImplCache {
     
     /**
      * @var string 缓存目录
