@@ -34,6 +34,11 @@ class Application extends \y\core\Application {
     public $defaultControllerNamespace = 'app\\controllers';
 
     /**
+     * @var string 当前的控制器
+     */
+    public $controllerId = '';
+
+    /**
      * @var array 注册的模块
      */
     public $modules = [];
@@ -42,17 +47,12 @@ class Application extends \y\core\Application {
      * @var string 当前的模块
      */
     public $moduleId = '';
-    
-    /**
-     * @var string 当前的控制器
-     */
-    public $controllerId = '';
-    
+
     /**
      * @var Object 异常处理类
      */
     public $errorHandler = 'y\\web\\ErrorHandler';
-    
+
     /**
      * 运行应用
      *
