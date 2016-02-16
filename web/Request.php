@@ -13,7 +13,7 @@ class Request extends \y\core\Object {
     /**
      * @var Object $instance 实例
      */
-    private static $instance = null;
+    private static $_instance = null;
 
     /**
      * 私有构造方法
@@ -31,11 +31,11 @@ class Request extends \y\core\Object {
      * 获得单例对象
      */
     public static function getInstance() {
-        if(null === self::$instance) {
-            self::$instance = new self();
+        if(null === self::$_instance) {
+            self::$_instance = new self();
         }
 
-        return self::$instance;
+        return self::$_instance;
     }
 	
     /**

@@ -28,7 +28,7 @@ use y\core\InvalidConfigException;
  */
 class Cache extends \y\cache\ImplCache {
     
-    private $memcached = null;
+    private $_memcached = null;
     
     /**
      * 实例化 
@@ -40,22 +40,22 @@ class Cache extends \y\cache\ImplCache {
             throw new InvalidConfigException('The "servers" property must be specified');
         }
         
-        $this->memcached = new Memcached();
+        $this->_memcached = new Memcached();
         foreach($config['servers'] as $server) {
-            $this->memcached->addServer($server->host, $server->port);
+            $this->_memcached->addServer($server->host, $server->port);
         }
     }
     
     public function get($key) {
-        return $this->memcached->get($key);
+        return $this->_memcached->get($key);
     }
     
     public function set($key, $value, $duration = 0) {
-        $this->memcached->set($key, $value);
+        $this->_memcached->set($key, $value);
     }
     
     public function delete($key) {
-        return $this->memcached->delete($key);
+        return $this->_memcached->delete($key);
     }
     
 }
