@@ -28,6 +28,11 @@ class Application extends Object {
      * 异常处理
      */
     public function errorHandler() {}
+    
+    /**
+     * 运行应用
+     */
+    public function run() {}
 	
     /**
      * 初始化应用

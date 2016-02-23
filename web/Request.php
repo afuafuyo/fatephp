@@ -8,27 +8,16 @@ namespace y\web;
 /**
  * 前端请求
  */
-class Request extends \y\core\Object {
-	
+class Request extends \y\core\Request {
+
     /**
-     * @var Object $instance 实例
+     * @var Object $_instance 实例
      */
     private static $_instance = null;
-
-    /**
-     * 私有构造方法
-     */
-    private function __construct() {}
-
-    /**
-     * 过滤
-     */
-    private function filter($string) {
-        return htmlspecialchars($string, ENT_QUOTES);
-    }
     
     /**
      * 获得单例对象
+     * @return Object
      */
     public static function getInstance() {
         if(null === self::$_instance) {
@@ -37,16 +26,21 @@ class Request extends \y\core\Object {
 
         return self::$_instance;
     }
-	
-    /**
-     * 解析路由
-     */
-    public function parseUrl($routeParam) {
+
+    public function getParam($routeParam) {
         if( isset($_GET[$routeParam]) ) {
             return $this->filter($_GET[$routeParam]);
         }
 
         return '';
     }
-}
 
+    /**
+     * 过滤
+     * @return string
+     */
+    public function filter($string) {
+        return htmlspecialchars($string, ENT_QUOTES);
+    }
+    
+}

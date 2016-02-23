@@ -16,7 +16,7 @@ class Application extends \y\core\Application {
     /**
      * @var string 路由标识
      */
-    public $routeParam = 'r';
+    public $defaultRouteParam = 'r';
 
     /**
      * @var string 默认路由
@@ -60,8 +60,7 @@ class Application extends \y\core\Application {
      * @return array | null
      */
     public function run(){
-        $request = Request::getInstance();
-        $route = $request->parseUrl($this->routeParam);
+        $route = Request::getInstance()->getParam($this->defaultRouteParam);
         $controller = $this->createController($route);
 
         if(!method_exists($controller, 'execute')) {

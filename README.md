@@ -47,7 +47,7 @@ use y\db\DbFactory;
 
 class IndexController extends \y\web\Controller {
 	
-	public function execute($request) {
+	public function execute() {
         //$this->render('index');
         
         //$db = DbFactory::instance('main');
