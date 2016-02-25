@@ -8,6 +8,7 @@
 * @runtime  缓存目录 指向 @app/runtime
 
 ###### 项目目录结构
+<pre>
 app
   |
   --- controllers 普通控制器目录
@@ -44,6 +45,7 @@ app
     |
   --- runtime 缓存目录
     |
+</pre>
 
 ```php
 index.php
