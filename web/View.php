@@ -38,7 +38,8 @@ class View extends \y\core\View {
             $path = Y::namespaceTranslate('app', '');
         }
         
-        return $path . '/views/' . $app->routePrefix . '/' . $view . $this->defaultExtension;
+        return $path . '/views/' . (null === $app->routePrefix ? '.' : $app->routePrefix) . 
+            '/' . $view . $this->defaultExtension;
     }
     
     /**

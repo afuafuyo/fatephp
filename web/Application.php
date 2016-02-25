@@ -119,15 +119,17 @@ class Application extends \y\core\Application {
 
         // 保存当前控制器标示
         $this->controllerId = $route;
-        $this->routePrefix = $prefix;
 
         // 搜索顺序 模块控制器 -> 普通控制器
         if(isset($this->modules[$id])) {
-            $clazz = trim($this->modules[$id], '\\') . '\\controllers\\' . $prefix . '\\' . ucfirst($route) . 'Controller';
+            $clazz = trim($this->modules[$id], '\\') . '\\controllers\\' . ucfirst($route) . 'Controller';
             $this->moduleId = $id;
             
             return $this->createObject($clazz);
         }
+        
+        // 只有普通控制器保留顶级子目录
+        $this->routePrefix = $prefix;
 
         return $this->createObject( $this->defaultControllerNamespace . '\\' . $prefix . '\\' . ucfirst($route) . 'Controller' );
     }

@@ -39,8 +39,14 @@ app
     |
     |--- reg
     |   |
-    |   |--- controllers 模块控制器目录
+    |   |--- controllers 模块控制器目录 其下无子目录
+    |   |   |
+    |   |   |--- IndexController.php
+    |   |
     |   |--- views 模块模板目录
+    |   |   |
+    |   |   |--- index.php
+    |   |
     |   |--- 其他目录
     |
   --- runtime 缓存目录
