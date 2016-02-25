@@ -23,7 +23,7 @@ app
     |   |--- IndexController.php
     |   |--- OtherController.php
     |
-  --- view 普通控制器模板目录
+  --- views 普通控制器模板目录
     |
     |--- user 用户模板 对应上面用户组
     |   |
