@@ -7,6 +7,44 @@
 * @app  项目目录 由 appPath 指定
 * @runtime  缓存目录 指向 @app/runtime
 
+###### 项目目录结构
+app
+  |
+  --- controllers 普通控制器目录
+    |
+    |--- user 用户组
+    |   |
+    |   |--- IndexController.php 用户组下的控制器
+    |   |--- OtherController.php
+    |
+    |--- goods 商品组
+    |   |
+    |   |--- IndexController.php
+    |   |--- OtherController.php
+    |
+  --- view 普通控制器模板目录
+    |
+    |--- user 用户模板 对应上面用户组
+    |   |
+    |   |--- index.php
+    |   |--- other.php
+    |
+    --- goods 商品模板
+    |   |
+    |   |--- index.php
+    |   |--- other.php
+    |
+  --- modules 模块
+    |
+    |--- reg
+    |   |
+    |   |--- controllers 模块控制器目录
+    |   |--- views 模块模板目录
+    |   |--- 其他目录
+    |
+  --- runtime 缓存目录
+    |
+
 ```php
 index.php
 
@@ -17,11 +55,11 @@ $res = (new y\web\Application([
 	'id'=>1, 
 	'appPath'=> __DIR__ . '/app',
 	'modules' => [
-		'reg' => 'app\modules\reg'
+		'reg' => 'app\\modules\\reg'
 	],
 	'db' => [
 		'main' => [
-			'dsn' => 'mysql:host=localhost;dbname=binguan',
+			'dsn' => 'mysql:host=localhost;dbname=xxx',
 			'username' => 'root',
 			'password' => 'root',
 			'charset' => 'utf8',
@@ -38,27 +76,29 @@ $res = (new y\web\Application([
 ```
 
 ```php
-app\controllers\IndexController.php
+app\controllers\index\IndexController.php
 
 <?php
-namespace app\controllers;
+namespace app\controllers\index;
 
 use y\db\DbFactory;
+use y\cache\CacheFactory;
+use y\util\security\Crypt3DES;
 
 class IndexController extends \y\web\Controller {
 	
 	public function execute() {
-        //$this->render('index');
+        $this->render('index', []);
         
-        //$db = DbFactory::instance('main');
+		//$db = DbFactory::instance('main');
         //$db->on($db::EVENT_BEFORE_QUERY, function(){
         //    echo 'beforeQuery<br>';
         //});
         
-        //$sql = 'SELECT * FROM users';
-        //foreach ($db->querySql($sql) as $row) {
+		//$sql = 'SELECT * FROM users';
+		//foreach ($db->querySql($sql) as $row) {
         //   var_dump($row);
-        //}
+		//}
         
         //$res = $db->table('users')->where('1=1')->orderBy('id desc')->getAll();
         //$res2 = $db->table('users')->orderBy('id desc')->limit('2')->getAll();
@@ -77,11 +117,16 @@ class IndexController extends \y\web\Controller {
         
         //echo $db->table('users')->count();
         
-        // 缓存
-        $c = CacheFactory::instance('file');
-        $c->set('key', '123123');
-        echo $c->get('key');
-        $c->delete('key');
+        //$data = $db->table('users')->getAll();
+        //var_dump($data);
+        
+        //$c = CacheFactory::instance('file');
+        //$c->set('key', '123123');
+        
+        //echo $c->get('key');
+        
+        //$c->delete('key');
+       
 	}
 }
 ```

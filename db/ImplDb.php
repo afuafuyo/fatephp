@@ -44,4 +44,3 @@ abstract class ImplDb extends DbEvent implements IDb {
     }
 
 }
-

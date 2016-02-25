@@ -36,8 +36,9 @@ class Cache extends \y\cache\ImplCache {
      */
     public $cacheFileSuffix = '.bin';
     
-    //public function __construct(& $config) {}
-    
+    /**
+     * @inheritdoc
+     */
     public function init() {
         parent::init();
         
@@ -53,6 +54,9 @@ class Cache extends \y\cache\ImplCache {
         return $this->cachePath . DIRECTORY_SEPARATOR . $key . $this->cacheFileSuffix;
     }
     
+    /**
+     * @inheritdoc
+     */
     public function get($key) {
         $rs = null;
         $cacheFile = $this->getCacheFile($key);
@@ -68,6 +72,9 @@ class Cache extends \y\cache\ImplCache {
         return $rs;
     }
     
+    /**
+     * @inheritdoc
+     */
     public function set($key, $value, $duration = 31536000) {
         $cacheFile = $this->getCacheFile($key);
         
@@ -76,6 +83,9 @@ class Cache extends \y\cache\ImplCache {
         @touch($cacheFile, $duration + time());
     }
     
+    /**
+     * @inheritdoc
+     */
     public function delete($key) {
         $cacheFile = $this->getCacheFile($key);
 

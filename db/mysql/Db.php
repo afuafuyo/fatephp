@@ -33,7 +33,7 @@ class Db extends \y\db\ImplDb {
     /**
      * @var string 表前缀
      */
-    private $_tablePrefix = '';
+    private $_tablePrefix;
 
     public function __construct($dsn, $username, $password, $options = []) {
         $options = array_merge($options, [
@@ -222,53 +222,30 @@ class Db extends \y\db\ImplDb {
         return $this->_sql;
     }
     
-    /**
-     * 指定查询字段
-     *
-     * @param string $fields 要查询的字段
-     */
     public function fields($fields) {
         $this->_options['fields'] = $fields;
         
         return $this;
     }
     
-    /**
-     * 指定查询表
-     *
-     * @param string $table 要查询的表
-     */
     public function table($table) {
         $this->_options['table'] = $this->_tablePrefix . $table;
         
         return $this;
     }
     
-    /**
-     * 指定查询条件
-     *
-     * @param string $condition 查询条件
-     */
     public function where($condition) {
         $this->_options['where'] = $condition;
         
         return $this;
     }
     
-    /**
-     * 指定排序条件
-     *
-     * @param string $order 排序条件
-     */
     public function orderBy($order) {
         $this->_options['orderBy'] = $order;
         
         return $this;
     }
     
-    /**
-     * 获取记录
-     */
     public function getAll() {
         $this->_operate = self::$SELECT;
         $sql = $this->_sql = $this->initSql();
@@ -277,11 +254,6 @@ class Db extends \y\db\ImplDb {
         return $data;
     }
     
-    /**
-     * 获取一条记录
-     *
-     * @return array 结果集
-     */
     public function getOne() {
         $this->_operate = self::$SELECTONE;
         $sql = $this->_sql = $this->initSql();
@@ -302,12 +274,6 @@ class Db extends \y\db\ImplDb {
         return $this;
     }
     
-    /**
-     * 插入记录
-     *
-     * @param array $data 数据
-     * @return int insertId
-     */
     public function insert(& $data) {
         $this->_operate = self::$INSERT;
         $this->_data = $data;
@@ -316,11 +282,6 @@ class Db extends \y\db\ImplDb {
         return $this->executeSql($sql);
     }
     
-    /**
-     * 删除记录
-     *
-     * @return int 影响行数
-     */
     public function delete() {
         $this->_operate = self::$DELETE;
         $sql = $this->_sql = $this->initSql();
@@ -328,12 +289,6 @@ class Db extends \y\db\ImplDb {
         return $this->executeSql($sql);
     }
     
-    /**
-     * 修改记录
-     *
-     * @param array $data 数据
-     * @return int 影响行数
-     */
     public function update(& $data) {
         $this->_operate = self::$UPDATE;
         $this->_data = $data;

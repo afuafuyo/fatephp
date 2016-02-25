@@ -34,9 +34,9 @@ class Application extends \y\core\Application {
     public $defaultControllerNamespace = 'app\\controllers';
 
     /**
-     * @var string 当前的控制器
+     * @var Object 异常处理类
      */
-    public $controllerId = '';
+    public $errorHandler = 'y\\web\\ErrorHandler';
 
     /**
      * @var array 注册的模块
@@ -44,14 +44,19 @@ class Application extends \y\core\Application {
     public $modules = [];
 
     /**
-     * @var string 当前的模块
+     * @var string 当前的控制器
      */
-    public $moduleId = '';
+    public $controllerId;
 
     /**
-     * @var Object 异常处理类
+     * @var string 当前的模块
      */
-    public $errorHandler = 'y\\web\\ErrorHandler';
+    public $moduleId;
+
+    /**
+     * @var string 路由前缀
+     */
+    public $routePrefix;
 
     /**
      * 运行应用
@@ -88,13 +93,13 @@ class Application extends \y\core\Application {
      */
     public function createController($route) {
         $id = '';
-        if('' === $route) {
+        if('' === $route || '/' === $route) {
             $route = $this->defaultRoute;
         }
 
         // 检测非法 与 路径中不能有双斜线 '//'
         $route = trim($route, '/');
-        if(!preg_match('/^[a-z0-9_\-]+$/', $route) && false !== strpos($route, '//')) {
+        if(!preg_match('/^[\w\-]+$/', $route) && false !== strpos($route, '//')) {
             return null;
         }
 
@@ -105,20 +110,25 @@ class Application extends \y\core\Application {
             $route = $this->defaultControllerId;
         }
 
-        // 搜索顺序 模块控制器 -> 普通控制器
-        if(isset($this->modules[$id])) {
-            $c = trim($this->modules[$id], '\\') . '\\controllers\\' . ucfirst($route) . 'Controller';
-
-            $this->moduleId = $id;
-            $this->controllerId = $route;
-            
-            return $this->createObject($c);
+        $prefix = $id;
+        if( false !== ($pos = strrpos($route, '/')) ) {
+            $prefix .= '/' . substr($route, 0, $pos);
+            $route = substr($route, $pos + 1);
+            $prefix = str_replace('/', '\\', $prefix);
         }
 
-        // 普通控制器
-        $this->controllerId = $id;
+        // 保存当前控制器标示
+        $this->controllerId = $route;
+        $this->routePrefix = $prefix;
 
-        return $this->createObject( $this->defaultControllerNamespace . '\\' . ucfirst($id) . 'Controller' );
+        // 搜索顺序 模块控制器 -> 普通控制器
+        if(isset($this->modules[$id])) {
+            $clazz = trim($this->modules[$id], '\\') . '\\controllers\\' . $prefix . '\\' . ucfirst($route) . 'Controller';
+            $this->moduleId = $id;
+            
+            return $this->createObject($clazz);
+        }
+
+        return $this->createObject( $this->defaultControllerNamespace . '\\' . $prefix . '\\' . ucfirst($route) . 'Controller' );
     }
-
 }

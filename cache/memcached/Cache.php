@@ -46,16 +46,24 @@ class Cache extends \y\cache\ImplCache {
         }
     }
     
+    /**
+     * @inheritdoc
+     */
     public function get($key) {
         return $this->_memcached->get($key);
     }
     
+    /**
+     * @inheritdoc
+     */
     public function set($key, $value, $duration = 0) {
         $this->_memcached->set($key, $value);
     }
     
+    /**
+     * @inheritdoc
+     */
     public function delete($key) {
         return $this->_memcached->delete($key);
     }
-    
 }

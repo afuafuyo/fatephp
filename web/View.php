@@ -11,18 +11,10 @@ use y\core\FileNotFoundException;
 /**
  * 视图类
  */
-class View extends \y\core\Object {
+class View extends \y\core\View {
     
     /**
-     * @var string 默认视图文件后缀
-     */
-    public $defaultExtension = '.php';
-    
-    /**
-     * 渲染文件
-     *
-     * @param string $view 视图名
-     * @param array $params 参数
+     * @inheritdoc
      */
     public function render($view, $params = []) {
         $file = $this->findViewFile($view);
@@ -39,14 +31,14 @@ class View extends \y\core\Object {
         $app = Y::$app;
         $path = '';
         
-        if('' !== $app->moduleId) {
+        if(null !== $app->moduleId) {
             $path = Y::namespaceTranslate($app->modules[$app->moduleId], '');
             
         } else {
             $path = Y::namespaceTranslate('app', '');
         }
         
-        return $path . '/views/' . strtolower($app->controllerId) . '/' . $view . $this->defaultExtension;
+        return $path . '/views/' . $app->routePrefix . '/' . $view . $this->defaultExtension;
     }
     
     /**
