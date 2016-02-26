@@ -21,7 +21,7 @@ class Application extends \y\core\Application {
     /**
      * @var string 默认路由
      */
-    public $defaultRoute = 'index';
+    public $defaultRoute = 'index/index';
 
     /**
      * @var string 默认控制器
