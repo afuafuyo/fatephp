@@ -91,7 +91,6 @@ namespace app\controllers\index;
 
 use y\db\DbFactory;
 use y\cache\CacheFactory;
-use y\util\security\Crypt3DES;
 
 class IndexController extends \y\web\Controller {
 	
