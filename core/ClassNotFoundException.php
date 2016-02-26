@@ -4,4 +4,4 @@ namespace y\core;
 /**
  * 类未找到
  */
-class ClassNotFoundException extends \Exception {}
+class ClassNotFoundException extends Exception {}

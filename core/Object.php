@@ -22,7 +22,7 @@ class Object {
     */
 
     /**
-     * 读取不存在的属性
+     * 读取不存在或私有的属性
      *
      * @param string $name 属性名
      */
@@ -37,7 +37,7 @@ class Object {
     }
     
     /**
-     * 调用不存在的方法
+     * 调用不存在或私有的方法
      *
      * @param string $name 方法名字
      * @param array $params 方法参数

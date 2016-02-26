@@ -8,4 +8,4 @@ namespace y\db;
 /**
  * 数据库异常
  */
-class DbException extends \Exception {}
+class DbException extends \y\core\Exception {}
