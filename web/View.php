@@ -38,6 +38,7 @@ class View extends \y\core\View {
             $path = Y::namespaceTranslate('app', '');
         }
         
+        // 模块无子目录 普通控制器有子目录
         return $path . '/views/' . (null === $app->routePrefix ? '.' : $app->routePrefix) . 
             '/' . $view . $this->defaultExtension;
     }

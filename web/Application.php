@@ -34,7 +34,7 @@ class Application extends \y\core\Application {
         // 单一入口
         return $controller->execute();
     }
-    
+
     /**
      * 异常处理
      */

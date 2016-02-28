@@ -11,12 +11,12 @@ use y\core\RouterException;
 /**
  * 提供 app 所需的功能服务
  */
-class AppServiceTrait {
+trait AppServiceTrait {
 
     /**
      * @var array 路由配置
      */
-    private $_routes = [];
+    public $routes = [];
 
     /**
      * @var string 路由标识
@@ -66,9 +66,7 @@ class AppServiceTrait {
      *  ['moduleId' => 'post', 'controllerId' => 'show', 'params' => ['key' => 'id', 'segment' => 1]]
      */
     public function add($route, $mapping) {
-        $route = trim($route, '/');
-        $route = str_replace('/', '\\/', $route);
-        $this->_routes[$route] = $mapping;
+        $this->routes[$route] = $mapping;
     }
     
     /**
@@ -150,10 +148,10 @@ class AppServiceTrait {
         $_moduleId = '';
         $_controllerId = '';
         
-        if(!empty($this->_routes)) {
+        if(!empty($this->routes)) {
             $matches = null;
-            foreach($this->_routes as $regularRoute => $mapping) {
-                if(1 === preg_match("/{$regularRoute}/", $route, $matches)) {
+            foreach($this->routes as $regularRoute => $mapping) {
+                if(1 === preg_match('/' . str_replace('/', '\\/', trim($regularRoute, '/')) . '/', $route, $matches)) {
                     if(isset($mapping['moduleId'])) {
                         $_moduleId = $mapping['moduleId'];
                     }
@@ -177,5 +175,4 @@ class AppServiceTrait {
         
         return [$_moduleId, $_controllerId];
     }
-    
 }

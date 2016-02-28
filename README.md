@@ -65,6 +65,10 @@ $res = (new y\web\Application([
 	'modules' => [
 		'reg' => 'app\\modules\\reg'
 	],
+    'routes' => [
+        // 把下面这个模式 路由到 IndexController 并且参数的键定义为 id
+        '/p/(\d+)' => ['controllerId' => 'index', 'params' => ['key' => 'id', 'segment'=>1]]
+    ],
 	'db' => [
 		'main' => [
 			'dsn' => 'mysql:host=localhost;dbname=xxx',
