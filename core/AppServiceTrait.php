@@ -19,6 +19,11 @@ trait AppServiceTrait {
     public $routes = [];
 
     /**
+     * @var array 注册的模块
+     */
+    public $modules = [];
+
+    /**
      * @var string 路由标识
      */
     public $defaultRouteParam = 'r';
@@ -37,11 +42,6 @@ trait AppServiceTrait {
      * @var string 默认控制器
      */
     public $defaultControllerId = 'index';
-
-    /**
-     * @var array 注册的模块
-     */
-    public $modules = [];
 
     /**
      * @var string 当前的模块
