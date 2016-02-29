@@ -8,28 +8,28 @@
 
 ###### 项目目录结构
 <pre>
-app
+app 项目目录
   |
   --- controllers 普通控制器目录
     |
-    |--- user 用户组
+    |--- user 用户组目录
     |   |
     |   |--- IndexController.php 用户组下的控制器
     |   |--- OtherController.php
     |
-    |--- goods 商品组
+    |--- goods 商品组目录
     |   |
     |   |--- IndexController.php
     |   |--- OtherController.php
     |
   --- views 普通控制器模板目录
     |
-    |--- user 用户模板 对应上面用户组
+    |--- user 用户组模板 对应上面用户组
     |   |
     |   |--- index.php
     |   |--- other.php
     |
-    --- goods 商品模板
+    --- goods 商品组模板
     |   |
     |   |--- index.php
     |   |--- other.php
@@ -51,6 +51,12 @@ app
   --- runtime 缓存目录
     |
 </pre>
+
+```php
+路由格式
+
+index.php?r=模块id或前缀目录/控制器id
+```
 
 ```php
 index.php
