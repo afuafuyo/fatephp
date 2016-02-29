@@ -6,7 +6,7 @@
 namespace y\core;
 
 use y\web\Request;
-use y\core\RouterException;
+use y\core\InvalidConfigException;
 
 /**
  * 提供 app 所需的功能服务
@@ -98,7 +98,7 @@ trait AppServiceTrait {
             $_moduleId = $resolveRoute[0];
             $_controllerId = $resolveRoute[1];
             if('' !== $_moduleId && !isset($this->modules[$_moduleId])) {
-                throw new RouterException('The module ' . $_moduleId . ' not found');
+                throw new InvalidConfigException('The config module ' . $_moduleId . ' not found');
             }
             
         } else {
