@@ -13,13 +13,6 @@ abstract class Request extends Object {
     private $_scriptFile;
     
     /**
-     * 获取参数
-     * @param string $key
-     * @return string
-     */
-    public abstract function getParam($key);
-    
-    /**
      * 返回入口文件名
      * @return string
      */

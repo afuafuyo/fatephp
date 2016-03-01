@@ -34,6 +34,14 @@ class Request extends \y\core\Request {
 
         return '';
     }
+    
+    public function postParam($routeParam) {
+        if( isset($_POST[$routeParam]) ) {
+            return $this->filter($_POST[$routeParam]);
+        }
+
+        return '';
+    }
 
     /**
      * 过滤
