@@ -72,7 +72,9 @@ $res = (new y\web\Application([
 	],
     'routes' => [
         // 把下面这个模式 路由到 IndexController 并且参数的键定义为 id
-        '/p/(\d+)' => ['controllerId' => 'index', 'params' => ['key' => 'id', 'segment'=>1]]
+        '/p/(\d+)' => ['controllerId' => 'index', 'params' => ['key' => 'id', 'segment'=>1]],
+        // 把下面这个模式 路由到 user 目录下的 IndexController 并有两个参数 id uid
+        '/show/(\d+)/(\d+)' => ['prefix' => 'user', 'controllerId'=>'index', 'params' => ['key' => ['id', 'uid'], 'segment'=>[1, 2]]]
     ],
 	'db' => [
 		'main' => [

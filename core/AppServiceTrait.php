@@ -64,6 +64,7 @@ trait AppServiceTrait {
      * @param string $route 路由规则 eg. /post/show/(\d+)
      * @param array $mapping 路由映射 eg.
      *  ['moduleId' => 'post', 'controllerId' => 'show', 'params' => ['key' => 'id', 'segment' => 1]]
+     *  ['prefix' => 'post', 'controllerId' => 'index', 'params' => ['key' => ['id', 'otherkey'], 'segment' => [1, 2]]]
      */
     public function add($route, $mapping) {
         $this->routes[$route] = $mapping;
@@ -97,6 +98,7 @@ trait AppServiceTrait {
         if('' !== $resolveRoute[0] || '' !== $resolveRoute[1]) {
             $_moduleId = $resolveRoute[0];
             $_controllerId = $resolveRoute[1];
+            $_routePrefix = $resolveRoute[2];
             if('' !== $_moduleId && !isset($this->modules[$_moduleId])) {
                 throw new InvalidConfigException('The config module ' . $_moduleId . ' not found');
             }
@@ -147,6 +149,7 @@ trait AppServiceTrait {
     public function resolveUserRoute($route) {
         $_moduleId = '';
         $_controllerId = '';
+        $_routePrefix = '';
         
         if(!empty($this->routes)) {
             $matches = null;
@@ -158,13 +161,23 @@ trait AppServiceTrait {
                     if(isset($mapping['controllerId'])) {
                         $_controllerId = $mapping['controllerId'];
                     }
+                    if(isset($mapping['prefix'])) {
+                        $_routePrefix = $mapping['prefix'];
+                    }
                     // 用户自定义路由需要处理参数
                     if(isset($mapping['params'])) {
                         if(is_array($mapping['params']) &&
                             isset($mapping['params']['key']) &&
                             isset($mapping['params']['segment'])) {
                             
-                            $_GET[$mapping['params']['key']] = $matches[$mapping['params']['segment']];
+                            if(is_array($mapping['params']['key'])) {
+                                for($j=0,$len=count($mapping['params']['key']); $j<$len; $j++) {
+                                    $_GET[$mapping['params']['key'][$j]] = $matches[$mapping['params']['segment'][$j]];
+                                }
+                            
+                            } else {
+                                $_GET[$mapping['params']['key']] = $matches[$mapping['params']['segment']];
+                            }
                         }
                     }
                     
@@ -173,6 +186,6 @@ trait AppServiceTrait {
             }
         }
         
-        return [$_moduleId, $_controllerId];
+        return [$_moduleId, $_controllerId, $_routePrefix];
     }
 }
