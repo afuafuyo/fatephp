@@ -125,10 +125,11 @@ class IndexController extends \y\web\Controller {
         //$res2 = $db->table('users')->orderBy('id desc')->limit('2')->getAll();
         
         //$data = [
-        //    ['name'=>'zhangsan', 'age'=>20, 'b'=>'ajdsfafj'],
-        //    ['name'=>'wangwu', 'age'=>'20', 'b'=>'111'],
-        //    ['name'=>'lisu', 'age'=>20, 'b'=>'ggggg']
+        //    ['name'=>'zhangsan', 'age'=>20, 'b'=>'xxx'],
+        //    ['name'=>'wangwu', 'age'=>'20', 'b'=>'xxx'],
+        //    ['name'=>'lisu', 'age'=>20, 'b'=>'xxx']
         //];
+        // $data = ['name'=>'zhangsan', 'age'=>20];
         //$c = $db->table('users')->insert($data);
         
         //$c = $db->table('users')->where('id=1')->delete();
@@ -139,15 +140,13 @@ class IndexController extends \y\web\Controller {
         //echo $db->table('users')->count();
         
         //$data = $db->table('users')->getAll();
+        //$data = $db->fields('id,name')->table('users')->where('id=1')->getOne();
         //var_dump($data);
         
         //$c = CacheFactory::instance('file');
-        //$c->set('key', '123123');
-        
+        //$c->set('key', 'the value');
         //echo $c->get('key');
-        
         //$c->delete('key');
-       
 	}
 }
 ```
