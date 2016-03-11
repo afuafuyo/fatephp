@@ -117,7 +117,7 @@ trait AppServiceTrait {
             if( false !== ($pos = strrpos($_controllerId, '/')) ) {
                 $_routePrefix .= '/' . substr($_controllerId, 0, $pos);
                 $_controllerId = substr($_controllerId, $pos + 1);
-                $_routePrefix = str_replace('/', '\\', $_routePrefix);
+                $_routePrefix = str_replace('/', DIRECTORY_SEPARATOR, $_routePrefix);
             }
         }
         
