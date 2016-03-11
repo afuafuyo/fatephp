@@ -98,7 +98,8 @@ trait AppServiceTrait {
         if('' !== $resolveRoute[0] || '' !== $resolveRoute[1]) {
             $_moduleId = $resolveRoute[0];
             $_controllerId = $resolveRoute[1];
-            $_routePrefix = $resolveRoute[2];
+            $_routePrefix = str_replace('/', '\\', $resolveRoute[2]);  // namespace path
+            
             if('' !== $_moduleId && !isset($this->modules[$_moduleId])) {
                 throw new InvalidConfigException('The config module ' . $_moduleId . ' not found');
             }
@@ -117,7 +118,7 @@ trait AppServiceTrait {
             if( false !== ($pos = strrpos($_controllerId, '/')) ) {
                 $_routePrefix .= '/' . substr($_controllerId, 0, $pos);
                 $_controllerId = substr($_controllerId, $pos + 1);
-                $_routePrefix = str_replace('/', '\\', $_routePrefix);
+                $_routePrefix = str_replace('/', '\\', $_routePrefix);  // namespace path
             }
         }
         

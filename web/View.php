@@ -39,6 +39,7 @@ class View extends \y\core\View {
         }
         
         // 模块无子目录 普通控制器有子目录
+        // 注意转换 namespace path 为目录路径
         return $path . '/views/' . (null === $app->routePrefix ? '.' : str_replace('\\', '/', $app->routePrefix)) .
             '/' . $view . $this->defaultExtension;
     }
