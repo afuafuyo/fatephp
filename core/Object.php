@@ -15,11 +15,21 @@ use y\core\ClassNotFoundException;
  */
 class Object {
 
-    /*
+    /**
+     * 设置不存在或私有的属性
+     *
+     * @param string $name 属性名
+     * @param string $value 属性值
+     */
     public function __set($name, $value) {
-        $this->$name = $value;
+        $setter = 'set' . $name;
+        if(method_exists($this, $setter)) {
+            $this->$setter($value);
+            
+        } else {
+            throw new UnknownPropertyException('Setting unknown property: ' . get_class($this) . '::' . $name);
+        }
     }
-    */
 
     /**
      * 读取不存在或私有的属性

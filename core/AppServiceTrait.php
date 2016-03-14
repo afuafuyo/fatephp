@@ -59,6 +59,13 @@ trait AppServiceTrait {
     public $routePrefix;
 
     /**
+     * 设置属性
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
+    
+    /**
      * 添加一条路由规则
      *
      * @param string $route 路由规则 eg. /post/show/(\d+)
