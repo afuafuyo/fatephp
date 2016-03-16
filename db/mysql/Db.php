@@ -278,8 +278,9 @@ class Db extends \y\db\ImplDb {
         $this->_operate = self::$INSERT;
         $this->_data = $data;
         $sql = $this->_sql = $this->initSql();
-
-        return $this->executeSql($sql);
+        $this->executeSql($sql);
+        
+        return $this->pdo->lastInsertId();
     }
     
     public function delete() {
