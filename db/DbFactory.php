@@ -70,7 +70,7 @@ final class DbFactory {
             } catch(PDOException $e) {
                 static::$_links[$dbFlag] = null;
                 
-                echo 'PDOException: ' . $e->getMessage();
+                throw new DbException('Failed to connect to database');
             }
         }
 
