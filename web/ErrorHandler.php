@@ -5,19 +5,15 @@
  */
 namespace y\web;
 
-class ErrorHandler {
+class ErrorHandler extends \y\core\ErrorHandler {
     
     /**
      * 注册异常处理函数
      */
     public function register() {
-        //ini_set('display_errors', false);
+        ini_set('display_errors', false);
         
-        //set_exception_handler([$this, 'handleException']);
-        
-        //set_error_handler([$this, 'handleError']);
-        
-        //register_shutdown_function([$this, 'handleFatalError']);
+        set_exception_handler([$this, 'handleException']);
     }
     
     /**
@@ -26,26 +22,17 @@ class ErrorHandler {
      * @param Exception $exception 异常类
      */
     public function handleException($exception) {
-        echo $exception->getMessage();
-    }
-    
-    /**
-     * 错误处理
-     *
-     * @param int $code the level of the error raised.
-     * @param string $message the error message.
-     * @param string $file the filename that the error was raised in.
-     * @param int $line the line number the error was raised at.
-     */
-    public function handleError($code, $message, $file, $line) {
-        echo $message;
-    }
-    
-    /**
-     * Handles fatal PHP errors
-     */
-    public function handleFatalError() {
-        $error = error_get_last();
-        echo $error['message'];
+        if(PHP_SAPI !== 'cli') {
+            http_response_code(500);
+        }
+        
+        if(Y_DEBUG) {
+            echo '<pre>An exception occurred: '. (string) $exception .'</pre>';
+               
+        } else {
+            echo 'An internal server error occurred';
+        }
+        
+        exit(1);
     }
 }

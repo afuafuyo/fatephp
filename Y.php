@@ -1,4 +1,6 @@
 <?php
+defined('Y_DEBUG') or define('Y_DEBUG', false);
+
 include __DIR__ . '/YBase.php';
 
 class Y extends \y\YBase {}
