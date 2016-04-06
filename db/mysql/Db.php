@@ -7,6 +7,25 @@ namespace y\db\mysql;
 
 use PDO;
 
+/**
+ * mysql 驱动类
+ *
+ * 配置
+ *
+ * 'db' => [
+ *      'main' => [
+ *          'dsn' => 'mysql:host=HOST;dbname=DBNAME',
+ *          'username' => '',
+ *          'password' => '',
+ *          'charset' => 'utf8',
+ *          'attributes' => [
+ *              PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+ *          ],
+ *          'prefix'=> ''
+ *      ]
+ * ]
+ *
+ */
 class Db extends \y\db\ImplDb {
     use \y\db\DbOperationTrait;
     
@@ -35,12 +54,8 @@ class Db extends \y\db\ImplDb {
      */
     private $_tablePrefix;
 
-    public function __construct($dsn, $username, $password, $options = []) {
-        $options = array_merge($options, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
-        
-        $this->pdo = new PDO($dsn, $username, $password, $options);
+    public function __construct($dsn, $username, $password) {
+        $this->pdo = new PDO($dsn, $username, $password);
     }
     
     private function reset() {
@@ -51,9 +66,23 @@ class Db extends \y\db\ImplDb {
     }
     
     public function initConnection(& $config) {
-        if(isset($config['charset'])) {
-            $this->pdo->exec('SET NAMES \''. $config['charset'] .'\'');
+        $charset = isset($config['charset']) ? $config['charset'] : 'utf8';
+        $this->pdo->exec('SET NAMES \''. $charset .'\'');
+        
+        /**
+         * [PHP manual](http://www.php.net/manual/en/function.PDO-setAttribute.php) for
+         * details about available attributes.
+         */
+        if(isset($config['attributes'])) {
+            foreach($config['attributes'] as $key => $val) {
+                $this->pdo->setAttribute($key, $val);
+            }
+            
+        } else {
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }
+        
         if(isset($config['prefix'])) {
             $this->_tablePrefix = $config['prefix'];
         }
@@ -246,23 +275,6 @@ class Db extends \y\db\ImplDb {
         return $this;
     }
     
-    public function getAll() {
-        $this->_operate = self::$SELECT;
-        $sql = $this->_sql = $this->initSql();
-        $data = $this->querySql($sql);
-        
-        return $data;
-    }
-    
-    public function getOne() {
-        $this->_operate = self::$SELECTONE;
-        $sql = $this->_sql = $this->initSql();
-        
-        $stat = $this->prepareStatement($sql);
-        
-        return $stat->fetch(PDO::FETCH_ASSOC);
-    }
-    
     /**
      * 限制条数
      *
@@ -296,6 +308,23 @@ class Db extends \y\db\ImplDb {
         $sql = $this->_sql = $this->initSql();
         
         return $this->executeSql($sql);
+    }
+    
+    public function getAll() {
+        $this->_operate = self::$SELECT;
+        $sql = $this->_sql = $this->initSql();
+        $data = $this->querySql($sql);
+        
+        return $data;
+    }
+    
+    public function getOne() {
+        $this->_operate = self::$SELECTONE;
+        $sql = $this->_sql = $this->initSql();
+        
+        $stat = $this->prepareStatement($sql);
+        
+        return $stat->fetch();
     }
     
     /**
@@ -339,10 +368,10 @@ class Db extends \y\db\ImplDb {
      * @param string $sql sql 语句
      * @return array 结果数组
      */
-    public function querySql($sql, $fetchStyle = PDO::FETCH_ASSOC) {
+    public function querySql($sql) {
         $this->trigger(self::EVENT_BEFORE_QUERY, $this);
         $this->prepareStatement($sql);
-        $data = $this->pdoStatement->fetchAll($fetchStyle);
+        $data = $this->pdoStatement->fetchAll();
         $this->closeStatement();
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
         

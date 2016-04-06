@@ -19,13 +19,6 @@ final class DbFactory {
     private static $_links = [];
 
     /**
-     * @var array PDO attributes [name => value]
-     * [PHP manual](http://www.php.net/manual/en/function.PDO-setAttribute.php) for
-     * details about available attributes.
-     */
-    public static $attributes = [];
-    
-    /**
      * @var string 数据库命名空间
      */
     private static $_dbNamespace = 'y\\db';
@@ -62,8 +55,7 @@ final class DbFactory {
                 static::$_links[$dbFlag] = new $dbClass(
                     $dsn
                     ,$config['username']
-                    ,$config['password']
-                    /*,static::$attributes*/);
+                    ,$config['password']);
                 
                 static::$_links[$dbFlag]->initConnection($config);    
 
