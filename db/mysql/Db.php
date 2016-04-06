@@ -168,12 +168,12 @@ class Db extends \y\db\ImplDb {
                 // delete from t where x
                 $table = isset($this->_options['table']) ? $this->_options['table'] : '';
                 
-                $where = isset($this->_options['where']) ? 
+                $where = isset($this->_options['where']) ?
                     ' WHERE ' . $this->_options['where'] : '';
                 
                 if('' !== $where) {
                     $sql = 'DELETE FROM ' . $table . $where;
-                }   
+                }
                 
                 break;
             
@@ -182,7 +182,7 @@ class Db extends \y\db\ImplDb {
                 $table = isset($this->_options['table']) ? $this->_options['table'] : '';
                 $set = $this->buildSet();
                 
-                $where = isset($this->_options['where']) ? 
+                $where = isset($this->_options['where']) ?
                     ' WHERE ' . $this->_options['where'] : '';
                 
                 if('' !== $where) {
@@ -202,32 +202,32 @@ class Db extends \y\db\ImplDb {
                 $fields = isset($this->_options['fields']) ? $this->_options['fields'] : '*';
                 $table = isset($this->_options['table']) ? $this->_options['table'] : '';
                 
-                $where = isset($this->_options['where']) ? 
+                $where = isset($this->_options['where']) ?
                     ' WHERE ' . $this->_options['where'] : '';
-                $groupBy = isset($this->_options['groupBy']) ? 
+                $groupBy = isset($this->_options['groupBy']) ?
                     ' GROUP BY ' . $this->_options['groupBy'] : '';
-                $having = isset($this->_options['having']) ? 
+                $having = isset($this->_options['having']) ?
                     ' HAVING ' . $this->_options['having'] : '';
-                $orderBy = isset($this->_options['orderBy']) ? 
+                $orderBy = isset($this->_options['orderBy']) ?
                     ' ORDER BY ' . $this->_options['orderBy'] : '';
-                $limit = self::$SELECTONE === $this->_operate ? 
+                $limit = self::$SELECTONE === $this->_operate ?
                     ' LIMIT 0,1' :
-                    (isset($this->_options['limit']) ? 
+                    (isset($this->_options['limit']) ?
                         ' LIMIT ' . $this->_options['limit'] : '');
                 
-                $sql = 'SELECT ' . $fields . ' FROM ' . $table . 
-                    $where . 
-                    $groupBy . 
-                    $having . 
-                    $orderBy . 
+                $sql = 'SELECT ' . $fields . ' FROM ' . $table .
+                    $where .
+                    $groupBy .
+                    $having .
+                    $orderBy .
                     $limit;
                     
                 break;
             
-            case self::$COUNT : 
+            case self::$COUNT :
                 $table = isset($this->_options['table']) ? $this->_options['table'] : '';
                 $field = isset($this->_options['countField']) ? $this->_options['countField'] : '*';
-                $where = isset($this->_options['where']) ? 
+                $where = isset($this->_options['where']) ?
                     ' WHERE ' . $this->_options['where'] : '';
             
                 $sql = $this->_sql = "SELECT COUNT({$field}) FROM `{$table}` {$where}";
