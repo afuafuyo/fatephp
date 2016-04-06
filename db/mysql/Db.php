@@ -70,8 +70,8 @@ class Db extends \y\db\ImplDb {
         $this->pdo->exec('SET NAMES \''. $charset .'\'');
         
         /**
-         * [PHP manual](http://www.php.net/manual/en/function.PDO-setAttribute.php) for
-         * details about available attributes.
+         * http://www.php.net/manual/en/function.PDO-setAttribute.php
+         * for details about available attributes.
          */
         if(isset($config['attributes'])) {
             foreach($config['attributes'] as $key => $val) {
