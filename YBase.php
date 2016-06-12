@@ -17,7 +17,7 @@ class YBase {
     public static $pathAliases = ['@y' => __DIR__];
 
     /**
-     * 根据别名的到真实路径
+     * 根据别名得到真实路径
      *
      * @param string $alias 路径别名
      * @return string 路径
@@ -31,8 +31,8 @@ class YBase {
         $pos = strpos($alias, '/');
         $root = false === $pos ? $alias : substr($alias, 0, $pos);
         if(isset(static::$pathAliases[$root])) {
-            return false === $pos ? 
-                static::$pathAliases[$root] : 
+            return false === $pos ?
+                static::$pathAliases[$root] :
                 static::$pathAliases[$root] . substr($alias, $pos);
         }
 
