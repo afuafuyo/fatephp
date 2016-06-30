@@ -1,0 +1,21 @@
+{
+    "name": "yulipu/yframework",
+    "description": "A light php framework",
+    "keywords": [
+        "framework"
+    ],
+    "homepage": "https://github.com/yulipu/YFramework",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "lipu yu",
+            "email": "ylp1127@126.com",
+            "homepage": "https://github.com/yulipu/YFramework",
+            "role": "Founder and project lead"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
