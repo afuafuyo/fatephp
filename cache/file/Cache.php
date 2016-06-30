@@ -61,7 +61,7 @@ class Cache extends \y\cache\ImplCache {
         $rs = null;
         $cacheFile = $this->getCacheFile($key);
         
-        if (@filemtime($cacheFile) > time()) {
+        if (is_file($cacheFile) && filemtime($cacheFile) > time()) {
             $fp = @fopen($cacheFile, 'r');
             if (false !== $fp) {
                 $rs = @stream_get_contents($fp);
