@@ -79,7 +79,7 @@ class YBase {
      * @param string $clazz 类全名
      * @return null | Object 类实例
      */
-    public static function createObject($clazz) {
+    public static function createObject($clazz, array $params = []) {
         $real = static::namespaceTranslate($clazz);
         if('' === $real || !is_file($real)) {
             return null;
@@ -87,7 +87,7 @@ class YBase {
 
         $reflection = new \ReflectionClass($clazz);
 
-        return $reflection->newInstance();
+        return $reflection->newInstanceArgs($params);
     }
 
     /**
