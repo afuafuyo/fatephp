@@ -77,6 +77,7 @@ class YBase {
      * 创建对象
      *
      * @param string $clazz 类全名
+     * @param array $params 参数
      * @return null | Object 类实例
      */
     public static function createObject($clazz, array $params = []) {

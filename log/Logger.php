@@ -73,12 +73,24 @@ class Logger extends \y\core\Object {
      */
     public $flushInterval = 10;
     
+    /**
+     * @var array the targets class
+     */
+    public $targets = [];
+    
     public function __construct() {
         if(!isset(Y::$app->log['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
         
-        
+        foreach(Y::$app->log['targets'] as $config) {
+            if(isset($config['class'])) {
+                $clazz = $this->createObject($config['class']);
+                $clazz->on($clazz::EVENT_FLUSH, $clazz->flush);
+                
+                $this->targets[] = $clazz;
+            }
+        }
     }
     
     /**
@@ -116,11 +128,15 @@ class Logger extends \y\core\Object {
     /**
      * 清空 log 并写入目的地
      */
-    public function flush()
-    {
+    public function flush() {
         $messages = $this->messages;
         $this->messages = [];
         
+        $target = null;
+        for($i=0,$len=count($this->targets); $i<$len; $i++) {
+            $target = $this->targets[$i];
+            $target->trigger($target::EVENT_FLUSH, $messages);
+        }
     }
     
 }
