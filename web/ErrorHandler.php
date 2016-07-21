@@ -11,7 +11,7 @@ class ErrorHandler extends \y\core\ErrorHandler {
      * 注册异常处理函数
      */
     public function register() {
-        ini_set('display_errors', false);
+        //ini_set('display_errors', false);
         
         set_exception_handler([$this, 'handleException']);
     }

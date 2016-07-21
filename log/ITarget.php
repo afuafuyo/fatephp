@@ -5,4 +5,6 @@
  */
 namespace y\log;
 
-interface ITarget {}
+interface ITarget {
+    public function flush($messages);
+}

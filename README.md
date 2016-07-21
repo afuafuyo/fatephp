@@ -95,6 +95,14 @@ $res = (new y\web\Application([
         'file' => [
             'class' => 'y\cache\file\Cache'
         ]
+    ],
+    'log' => [
+        'targets' => [
+            'file' => [
+                'class' => 'y\log\file\Target',
+                'logpath' => '@app/runtime/logs/'
+            ]
+        ]
     ]
 	
 ]))->run();
@@ -108,6 +116,7 @@ namespace app\controllers\index;
 
 use y\db\DbFactory;
 use y\cache\CacheFactory;
+use y\log\Logger;
 
 class IndexController extends \y\web\Controller {
 	
@@ -150,6 +159,11 @@ class IndexController extends \y\web\Controller {
         //$c->set('key', 'the value');
         //echo $c->get('key');
         //$c->delete('key');
+        
+        //$log = Logger::getLogger();
+        //$log->trace('trace info');
+        //$log->error('error info');
+        //$log->flush();  // 手动 flush log
 	}
 }
 ```

@@ -13,7 +13,7 @@ class Event extends Object {
     /**
      * @var array 事件回调
      */
-    private $_handlers = [];
+    protected $_handlers = [];
 
     /**
      * 注册事件处理
@@ -54,7 +54,7 @@ class Event extends Object {
      * 触发
      *
      * @param string $eventName 事件名称
-     * @param object $param 参数
+     * @param mixed $param 参数
      */
     public function trigger($eventName, $param = null) {
         if(isset($this->_handlers[$eventName])) {

@@ -14,7 +14,7 @@ use Y;
  *      'targets' => [
  *          'file' => [
  *              'class' => 'y\log\file\Target',
- *              'levels' => ['trace', 'info']
+ *              'logpath' => '@app/runtime/logs/'
  *          ],
  *          ...
  *      ]
@@ -44,11 +44,6 @@ class Logger extends \y\core\Object {
     const LEVEL_TRACE = 0x08;
     
     /**
-     * Profiling message level
-     */
-    const LEVEL_PROFILE = 0x40;
-    
-    /**
      * @var integer how much call stack information should be logged for each message
      */
     public $traceLevel = 0;
@@ -61,8 +56,8 @@ class Logger extends \y\core\Object {
      * [
      *   [0] => string:message
      *   [1] => int:level
-     *   [3] => float:timestamp
-     *   [4] => array:traces
+     *   [2] => float:timestamp
+     *   [3] => array:traces
      * ]
      * </pre>
      */
@@ -78,19 +73,31 @@ class Logger extends \y\core\Object {
      */
     public $targets = [];
     
-    public function __construct() {
+    private static $_logger = null;
+    
+    private function __construct() {
         if(!isset(Y::$app->log['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
         
         foreach(Y::$app->log['targets'] as $config) {
             if(isset($config['class'])) {
-                $clazz = $this->createObject($config['class']);
-                $clazz->on($clazz::EVENT_FLUSH, $clazz->flush);
-                
+                $clazz = Y::createObject($config['class'], [$config]);
+                $clazz->on($clazz::EVENT_FLUSH, $clazz);
                 $this->targets[] = $clazz;
             }
         }
+    }
+    
+    /**
+     * 获取日志类实例
+     */
+    public function getLogger() {
+        if(null === self::$_logger) {
+            self::$_logger = new self();
+        }
+        
+        return self::$_logger;
     }
     
     /**
@@ -137,6 +144,63 @@ class Logger extends \y\core\Object {
             $target = $this->targets[$i];
             $target->trigger($target::EVENT_FLUSH, $messages);
         }
+    }
+    
+    /**
+     * Logs a error message
+     * @param string $message the message to be logged
+     */
+    public function error($message) {
+        $this->log($message, self::LEVEL_ERROR);
+    }
+    
+    /**
+     * Logs a warning message
+     * @param string $message the message to be logged
+     */
+    public function warning($message) {
+        $this->log($message, self::LEVEL_WARNING);
+    }
+    
+    /**
+     * Logs a info message
+     * @param string $message the message to be logged
+     */
+    public function info($message) {
+        $this->log($message, self::LEVEL_INFO);
+    }
+    
+    /**
+     * Logs a trace message
+     * @param string $message the message to be logged
+     */
+    public function trace($message) {
+        $this->log($message, self::LEVEL_TRACE);
+    }
+    
+    /**
+     * 获取日志级别描述
+     */
+    public static function getLevelName($level) {
+        $name = 'unknown';
+        switch($level) {
+            case self::LEVEL_ERROR :
+                $name = 'error';
+                break;
+            case self::LEVEL_WARNING :
+                $name = 'warning';
+                break;
+            case self::LEVEL_INFO :
+                $name = 'info';
+                break;
+            case self::LEVEL_TRACE :
+                $name = 'trace';
+                break;
+            default :
+                break;
+        }
+
+        return $name;
     }
     
 }

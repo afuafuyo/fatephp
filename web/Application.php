@@ -5,6 +5,7 @@
  */
 namespace y\web;
 
+use Y;
 use y\core\InvalidCallException;
 
 /**
@@ -39,7 +40,7 @@ class Application extends \y\core\Application {
      * 异常处理
      */
     public function errorHandler() {
-        $handler = $this->createObject($this->errorHandler);
+        $handler = Y::createObject($this->errorHandler);
         
         $handler->register();
     }

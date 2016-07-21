@@ -5,6 +5,8 @@
  */
 namespace y;
 
+use y\core\ClassNotFoundException;
+
 class YBase {
     /**
      * @var object 当前应用
@@ -17,7 +19,7 @@ class YBase {
     public static $pathAliases = ['@y' => __DIR__];
 
     /**
-     * 根据别名得到真实路径
+     * @ 别名路径转换真实路径
      *
      * @param string $alias 路径别名
      * @return string 路径
@@ -78,12 +80,13 @@ class YBase {
      *
      * @param string $clazz 类全名
      * @param array $params 参数
-     * @return null | Object 类实例
+     * @throws ClassNotFoundException 类未找到
+     * @return Object 类实例
      */
     public static function createObject($clazz, array $params = []) {
         $real = static::namespaceTranslate($clazz);
         if('' === $real || !is_file($real)) {
-            return null;
+            throw new ClassNotFoundException('The class: '. $clazz .' not found');
         }
 
         $reflection = new \ReflectionClass($clazz);
@@ -92,7 +95,7 @@ class YBase {
     }
 
     /**
-     * namespace 路径转换
+     * namespace 路径转换真实路径
      *
      * @param string $namespace 命名空间
      * @param string $extension 扩展

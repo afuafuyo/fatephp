@@ -5,6 +5,7 @@
  */
 namespace y\core;
 
+use Y;
 use y\web\Request;
 use y\core\InvalidConfigException;
 
@@ -139,13 +140,13 @@ trait AppServiceTrait {
                 ucfirst($this->controllerId) . 'Controller';
             $this->moduleId = $_moduleId;
             
-            return $this->createObject($clazz);
+            return Y::createObject($clazz);
         }
         
         // 普通控制器有前缀目录
         $this->routePrefix = '' === $_routePrefix ? $this->controllerId : $_routePrefix;
 
-        return $this->createObject( $this->defaultControllerNamespace . '\\' .
+        return Y::createObject( $this->defaultControllerNamespace . '\\' .
             $this->routePrefix . '\\' . ucfirst($this->controllerId) . 'Controller' );
     }
     

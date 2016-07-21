@@ -5,6 +5,8 @@
  */
 namespace y\web;
 
+use Y;
+
 class Controller extends ActionEvent {
     
     /**
@@ -18,7 +20,7 @@ class Controller extends ActionEvent {
     public $view = null;
     
     public function __construct() {
-        $this->view = $this->createObject($this->defaultView);
+        $this->view = Y::createObject($this->defaultView);
     }
     
     /**

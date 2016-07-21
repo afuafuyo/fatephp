@@ -5,6 +5,4 @@
  */
 namespace y\log;
 
-abstract class ImplTarget extends TargetEvent implements ITarget {
-    public function flush($messages) {}
-}
+abstract class ImplTarget extends TargetEvent implements ITarget {}
