@@ -42,12 +42,7 @@ final class Logger {
      * Tracing message level
      */
     const LEVEL_TRACE = 0x08;
-    
-    /**
-     * @var integer how much call stack information should be logged for each message
-     */
-    public $traceLevel = 0;
-    
+        
     /**
      * @var array logged messages
      *
@@ -64,6 +59,11 @@ final class Logger {
     public $messages = [];
     
     /**
+     * @var integer how much call stack information should be logged for each message
+     */
+    public $traceLevel = 0;
+    
+    /**
      * @var integer how many messages should be logged before they are flushed from memory
      */
     public $flushInterval = 10;
@@ -78,6 +78,12 @@ final class Logger {
     private function __construct() {
         if(!isset(Y::$app->log['targets'])) {
             throw new InvalidConfigException('No log targets found');
+        }
+        if(isset(Y::$app->log['traceLevel'])) {
+            $this->traceLevel = Y::$app->log['traceLevel'];
+        }
+        if(isset(Y::$app->log['flushInterval'])) {
+            $this->flushInterval = Y::$app->log['flushInterval'];
         }
         
         foreach(Y::$app->log['targets'] as $config) {
