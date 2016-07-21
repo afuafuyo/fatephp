@@ -14,7 +14,7 @@ use Y;
  *      'targets' => [
  *          'file' => [
  *              'class' => 'y\log\file\Target',
- *              'logpath' => '@app/runtime/logs/'
+ *              ...
  *          ],
  *          ...
  *      ]

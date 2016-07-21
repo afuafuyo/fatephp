@@ -11,33 +11,24 @@ use y\helpers\FileHelper;
 
 class Target extends \y\log\ImplTarget {
     
-    /**
-     * @var string log file path
-     */
-    public $logpath = null;
-    
-    /**
-     * @var string log file name
-     */
-    public $logfile = null;
+    public $logPath = null;
+
+    public $logFile = null;
     
     public function __construct($config) {
-        $this->logpath = isset($config['logpath']) ?
-            Y::getPathAlias($config['logpath']) :
+        $this->logPath = isset($config['logPath']) ? rtrim(Y::getPathAlias($config['logPath']), '/') :
             Y::$app->getRuntimePath() . '/logs';
         
-        $this->logpath = rtrim($this->logpath, '/') . '/';
+        $this->logFile = $this->generateTimeLogFile();
         
-        $this->logfile = date('Y-m-d') . '.log';
-        
-        if(!is_dir($this->logpath)) {
-            FileHelper::createDirectory($this->logpath);
+        if(!is_dir($this->logPath)) {
+            FileHelper::createDirectory($this->logPath);
         }
     }
     
     public function flush($messages) {
         $msg = $this->formatMessage($messages);
-        $file = $this->logpath . $this->logfile;
+        $file = $this->logPath . '/' . $this->logFile;
         
         if(($fp = @fopen($file, 'a')) === false) {
             return;
@@ -49,10 +40,16 @@ class Target extends \y\log\ImplTarget {
         @fclose($fp);
     }
     
+    public function generateTimeLogFile($format = 'Y-m-d') {
+        return date($format) . '.log';
+    }
+    
     public function formatMessage(&$messages) {
         $msg = '';
         for($i=0, $len=count($messages); $i<$len; $i++) {
-            $msg .= date('Y-m-d H:i:s', $messages[$i][2]) . ' -- ' . Logger::getLevelName($messages[$i][1]) . ' -- ' . $messages[$i][0] . "\n";
+            $msg .= date('Y-m-d H:i:s', $messages[$i][2]) . ' -- '
+                . Logger::getLevelName($messages[$i][1]) . ' -- '
+                . $messages[$i][0] . "\n";
         }
         
         return $msg;

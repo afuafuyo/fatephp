@@ -99,8 +99,7 @@ $res = (new y\web\Application([
     'log' => [
         'targets' => [
             'file' => [
-                'class' => 'y\log\file\Target',
-                'logpath' => '@app/runtime/logs/'
+                'class' => 'y\log\file\Target'
             ]
         ]
     ]
