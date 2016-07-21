@@ -21,7 +21,7 @@ use Y;
  *  ]
  *
  */
-class Logger extends \y\core\Object {
+final class Logger {
     
     /**
      * Error message level
