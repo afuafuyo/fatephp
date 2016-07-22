@@ -10,6 +10,9 @@ use y\db\CacheException;
 use y\core\InvalidConfigException;
 use y\core\FileNotFoundException;
 
+/**
+ * 缓存
+ */
 final class CacheFactory {
     
     /**

@@ -9,15 +9,28 @@ use Y;
 use y\log\Logger;
 use y\helpers\FileHelper;
 
+/**
+ * 文件日志
+ *
+ * 'log' => [
+ *      'targets' => [
+ *          'file' => [
+ *              'class' => 'y\log\file\Target',
+ *              ...
+ *          ]
+ *      ]
+ * ]
+ *
+ */
 class Target extends \y\log\ImplTarget {
     
-    public $logPath = null;
+    public $logPath = '@runtime/logs';
 
     public $logFile = null;
     
     public function __construct($config) {
-        $this->logPath = isset($config['logPath']) ? rtrim(Y::getPathAlias($config['logPath']), '/') :
-            Y::$app->getRuntimePath() . '/logs';
+        $this->logPath = isset($config['logPath']) ? Y::getPathAlias($config['logPath']) :
+            Y::getPathAlias($this->logPath);
         
         $this->logFile = $this->generateTimeLogFile();
         
@@ -44,7 +57,7 @@ class Target extends \y\log\ImplTarget {
         return date($format) . '.log';
     }
     
-    public function formatMessage(&$messages) {
+    public function formatMessage(& $messages) {
         $msg = '';
         for($i=0, $len=count($messages); $i<$len; $i++) {
             $msg .= date('Y-m-d H:i:s', $messages[$i][2]) . ' -- '

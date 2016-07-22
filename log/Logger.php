@@ -8,18 +8,7 @@ namespace y\log;
 use Y;
 
 /**
- * 日志类
- *
- *  'log' => [
- *      'targets' => [
- *          'file' => [
- *              'class' => 'y\log\file\Target',
- *              ...
- *          ],
- *          ...
- *      ]
- *  ]
- *
+ * 日志
  */
 final class Logger {
     

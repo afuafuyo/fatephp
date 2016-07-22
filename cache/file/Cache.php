@@ -6,17 +6,17 @@
 namespace y\cache\file;
 
 use Y;
+use y\helpers\FileHelper;
 
 /**
- * 文件缓存类
+ * 文件缓存
  *
- * 配置
- *
- *  'cache' => [
+ * 'cache' => [
  *      'file' => [
- *          'class' => 'y\cache\file\Cache'  // 单引号字符串不转译
+ *          'class' => 'y\cache\file\Cache',
+ *          ...
  *      ]
- *  ]
+ * ]
  *
  */
 class Cache extends \y\cache\ImplCache {
@@ -27,26 +27,16 @@ class Cache extends \y\cache\ImplCache {
     public $cachePath = '@runtime/cache';
     
     /**
-     * @var int 目录权限
-     */
-    public $dirMode = 0775;
-    
-    /**
      * @var string 缓存文件后缀
      */
     public $cacheFileSuffix = '.bin';
     
-    /**
-     * @inheritdoc
-     */
-    public function init() {
-        parent::init();
-        
-        $this->cachePath = Y::getPathAlias($this->cachePath);
-        
+    public function __construct(& $config) {
+        $this->cachePath = isset($config['cachePath']) ? Y::getPathAlias($config['cachePath']) :
+            Y::getPathAlias($this->cachePath);
+            
         if(!is_dir($this->cachePath)) {
-            @mkdir($this->cachePath, $this->dirMode, true);
-            @chmod($this->cachePath, $this->dirMode);
+            FileHelper::createDirectory($this->cachePath);
         }
     }
     

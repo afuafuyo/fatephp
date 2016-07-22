@@ -11,6 +11,9 @@ use y\db\DbException;
 use y\core\InvalidConfigException;
 use y\core\FileNotFoundException;
 
+/**
+ * 数据库
+ */
 final class DbFactory {
 
     /**

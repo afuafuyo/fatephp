@@ -10,8 +10,6 @@ use PDO;
 /**
  * mysql 驱动类
  *
- * 配置
- *
  * 'db' => [
  *      'main' => [
  *          'dsn' => 'mysql:host=HOST;dbname=DBNAME',

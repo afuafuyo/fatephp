@@ -11,11 +11,9 @@ use y\core\InvalidConfigException;
 /**
  * memcached 缓存
  *
- * 配置
- *
- *  'cache' => [
- *      'memcached' => [
- *          'class' => 'y\cache\memcached\Cache'  // 单引号字符串不转译
+ * 'cache' => [
+ *      memcached' => [
+ *          'class' => 'y\cache\memcached\Cache'
  *          ,'servers' => [
  *              [
  *                  'host' => '127.0.0.1'
@@ -23,7 +21,7 @@ use y\core\InvalidConfigException;
  *              ]
  *          ]
  *      ]
- *  ]
+ * ]
  *
  */
 class Cache extends \y\cache\ImplCache {
@@ -33,9 +31,7 @@ class Cache extends \y\cache\ImplCache {
     /**
      * 实例化 
      */
-    public function __construct(& $config) {
-        parent::__construct($config);
-        
+    public function __construct(& $config) {        
         if(!isset($config['servers']) || empty($config['servers'])) {
             throw new InvalidConfigException('The "servers" property must be specified');
         }
