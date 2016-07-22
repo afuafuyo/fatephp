@@ -41,7 +41,7 @@ class Target extends \y\log\ImplTarget {
     
     public function flush($messages) {
         $msg = $this->formatMessage($messages);
-        $file = $this->logPath . '/' . $this->logFile;
+        $file = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile;
         
         if(($fp = @fopen($file, 'a')) === false) {
             return;
