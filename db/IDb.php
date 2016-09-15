@@ -40,6 +40,13 @@ interface IDb {
     public function orderBy($order);
     
     /**
+     * 限制条数
+     *
+     * @param string | int $limit
+     */
+    public function limit($limit);
+    
+    /**
      * 插入记录
      *
      * @param array $data 数据
@@ -76,4 +83,34 @@ interface IDb {
      */
     public function getOne();
     
+    /**
+     * 获取上一次执行的 sql 语句
+     *
+     * @return string
+     */
+    public function getLastSql();
+    
+    /**
+     * 获取记录数
+     *
+     * @param string $field 列
+     * @return int
+     */
+    public function count($field);
+    
+    /**
+     * 执行 sql 语句
+     *
+     * @param string $sql sql 语句
+     * @return array 结果数组
+     */
+    public function querySql($sql);
+    
+    /**
+     * 执行 sql 语句
+     *
+     * @param string $sql sql 语句
+     * @return int 影响行数
+     */
+    public function executeSql($sql);
 }
