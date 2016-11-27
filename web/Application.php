@@ -12,7 +12,7 @@ use y\core\InvalidCallException;
  * 应用前端控制器
  */
 class Application extends \y\core\Application {
-    use \y\core\AppServiceTrait;
+    use \y\web\AppServiceTrait;
 
     /**
      * @var Object 异常处理类

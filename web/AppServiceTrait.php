@@ -3,7 +3,7 @@
  * @author yu
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-namespace y\core;
+namespace y\web;
 
 use Y;
 use y\web\Request;
