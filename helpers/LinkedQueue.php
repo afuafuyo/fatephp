@@ -5,12 +5,12 @@ namespace y\helpers;
  * 链队列
  */
 class LinkedQueue {
-    private $headNode = null;
-    private $tailNode = null;
-    private $size = 0;
+    private $_headNode = null;
+    private $_tailNode = null;
+    private $_size = 0;
     
     public function __construct() {
-        $this->headNode = $this->tailNode = new LinkedQueueNode(null, null);
+        $this->_headNode = $this->_tailNode = new LinkedQueueNode(null, null);
     }
     
     /**
@@ -19,7 +19,7 @@ class LinkedQueue {
      * @return int
      */
     public function size() {
-        return $this->size;
+        return $this->_size;
     }
     
     /**
@@ -29,25 +29,25 @@ class LinkedQueue {
      */
     public function take() {
         // 为空直接返回
-        if($this->headNode === $this->tailNode) {
+        if($this->_headNode === $this->_tailNode) {
             return null;
         }
         
         // 队列中头节点
-        $tmpHeadNode = $this->headNode->next;
+        $tmpHeadNode = $this->_headNode->next;
         $data = $tmpHeadNode->data;
         
         // 从队列去除头节点
-        $this->headNode->next = $tmpHeadNode->next;
+        $this->_headNode->next = $tmpHeadNode->next;
         $tmpHeadNode->next = null;
         
         // 没节点了 重置 tail
-        if(null === $this->headNode->next) {
-            $this->tailNode = $this->headNode;
+        if(null === $this->_headNode->next) {
+            $this->_tailNode = $this->_headNode;
         }
         
         $tmpHeadNode = null;
-        $this->size--;
+        $this->_size--;
         
         return $data;
     }
@@ -58,11 +58,11 @@ class LinkedQueue {
     public function put($data) {
         $node = new LinkedQueueNode($data, null);
         // 队尾指向新节点
-        $this->tailNode->next = $node;
+        $this->_tailNode->next = $node;
         // 重新指定尾节点
-        $this->tailNode = $node;
+        $this->_tailNode = $node;
         // 计数
-        $this->size++;
+        $this->_size++;
     }
 }
 
