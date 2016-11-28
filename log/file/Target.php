@@ -43,7 +43,7 @@ class Target extends \y\log\ImplTarget {
         $msg = $this->formatMessage($messages);
         $file = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile;
         
-        if(($fp = @fopen($file, 'a')) === false) {
+        if(false === ($fp = @fopen($file, 'a'))) {
             return;
         }
         
