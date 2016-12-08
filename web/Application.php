@@ -28,12 +28,12 @@ class Application extends \y\core\Application {
     public function run(){
         $controller = $this->createController();
 
-        if(!method_exists($controller, 'execute')) {
-            throw new InvalidCallException('The Controller\'s execute() method not found');
+        if(!method_exists($controller, 'run')) {
+            throw new InvalidCallException('The run() method of Controller not found');
         }
 
         // 单一入口
-        return $controller->execute();
+        return $controller->run();
     }
 
     /**

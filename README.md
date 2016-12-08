@@ -1,7 +1,8 @@
 # 小型 php 框架
 
 ###### php 版本
-* php5.4+  php7
+* php5.4+
+* php7
 
 ###### 本程序特点
 * 采用控制器单一入口执行程序 解决单一文件过大不好维护问题
@@ -14,7 +15,7 @@
 
 ###### 项目目录结构
 <pre>
-app 项目目录
+app 项目目录示例
   |
   --- controllers 普通控制器目录
     |
@@ -119,7 +120,8 @@ use y\log\Logger;
 
 class IndexController extends \y\web\Controller {
 	
-	public function execute() {
+    // 控制器单入口
+	public function run() {
         $this->render('index', []);
         
 		//$db = DbFactory::instance('main');
