@@ -54,6 +54,8 @@ class LinkedQueue {
     
     /**
      * 入队列
+     *
+     * @param Object $data 数据
      */
     public function put($data) {
         $node = new LinkedQueueNode($data, null);
