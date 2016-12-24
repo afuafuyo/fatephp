@@ -10,7 +10,7 @@ class FileHelper {
      *
      * @param string $path 目录路径
      * @param integer $mode 目录权限
-     * @param boolean $mode 递归创建目录
+     * @param boolean $recursive 递归创建目录
      * @return boolean 目录是否创建成功
      * @throws \y\core\Exception
      */

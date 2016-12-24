@@ -64,7 +64,7 @@ class YBase {
      * 对象配置
      *
      * @param Object $object 需要配置的对象
-     * @param array $property 配置项
+     * @param array $propertys 配置项
      * @return Object 源对象
      */
     public static function config($object, $propertys) {
