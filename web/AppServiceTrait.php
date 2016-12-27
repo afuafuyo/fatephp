@@ -94,7 +94,7 @@ trait AppServiceTrait {
         
         // 检测非法 与 路径中不能有双斜线 '//'
         $route = trim($route, '/');
-        if(0 === preg_match('/^[\w\-]+$/', $route) && false !== strpos($route, '//')) {
+        if(0 === preg_match('/^[\w\-]+$/', $route) || false !== strpos($route, '//')) {
             return null;
         }
         
