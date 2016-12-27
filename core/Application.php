@@ -13,6 +13,51 @@ use y\core\InvalidConfigException;
  */
 class Application extends Object {
 
+    /**
+     * @var array 自定义路由
+     */
+    public $routes = [];
+
+    /**
+     * @var array 注册的模块
+     */
+    public $modules = [];
+
+    /**
+     * @var string 路由标识
+     */
+    public $defaultRouteParam = 'r';
+
+    /**
+     * @var string 默认路由
+     */
+    public $defaultRoute = 'index/index';
+
+    /**
+     * @var string 默认控制器命名空间
+     */
+    public $defaultControllerNamespace = 'app\\controllers';
+
+    /**
+     * @var string 默认控制器
+     */
+    public $defaultControllerId = 'index';
+
+    /**
+     * @var string 当前的模块
+     */
+    public $moduleId;
+
+    /**
+     * @var string 当前的控制器
+     */
+    public $controllerId;
+
+    /**
+     * @var string 前缀目录
+     */
+    public $routePrefix;
+    
     public function __construct($config = []) {
         // 由于多态 此时 $this 是子类 Application
         Y::$app = $this;
@@ -25,6 +70,13 @@ class Application extends Object {
     }
     
     /**
+     * 设置属性
+     */
+    public function __set($name, $value) {
+        $this->$name = $value;
+    }
+    
+    /**
      * 异常处理
      */
     public function errorHandler() {}
@@ -33,6 +85,15 @@ class Application extends Object {
      * 运行应用
      */
     public function run() {}
+    
+    /**
+     * 创建控制器
+     * 路由 'xxx/yyy' 中 xxx 可能为模块 id 或前缀目录  
+     * 如 xxx 模块的 yyy 控制器 或 xxx 目录下的 yyy 控制器
+     *
+     * @return Object 控制器
+     */
+    public function createController() {}
 	
     /**
      * 初始化应用
