@@ -6,6 +6,7 @@
 namespace y\log;
 
 use Y;
+use y\core\InvalidConfigException;
 
 /**
  * 日志
