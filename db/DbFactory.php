@@ -38,7 +38,7 @@ final class DbFactory {
             throw new DbException('Empty param: dbFlag');
         }
 
-        if(!isset(Y::$app->db[$dbFlag])) {
+        if(!isset(Y::$app->db) || !isset(Y::$app->db[$dbFlag])) {
             throw new InvalidConfigException('Unknow db config: ' . $dbFlag);
         }
 

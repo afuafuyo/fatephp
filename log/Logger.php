@@ -36,14 +36,12 @@ final class Logger {
      * @var array logged messages
      *
      * Each log message is of the following structure:
-     * <pre>
      * [
      *   [0] => string:message
      *   [1] => int:level
      *   [2] => float:timestamp
      *   [3] => array:traces
      * ]
-     * </pre>
      */
     public $messages = [];
     
@@ -65,7 +63,7 @@ final class Logger {
     private static $_logger = null;
     
     private function __construct() {
-        if(!isset(Y::$app->log['targets'])) {
+        if(!isset(Y::$app->log) || !isset(Y::$app->log['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
         if(isset(Y::$app->log['traceLevel'])) {
@@ -143,6 +141,7 @@ final class Logger {
     
     /**
      * Logs a error message
+     *
      * @param string $message the message to be logged
      */
     public function error($message) {
@@ -151,6 +150,7 @@ final class Logger {
     
     /**
      * Logs a warning message
+     *
      * @param string $message the message to be logged
      */
     public function warning($message) {
@@ -159,6 +159,7 @@ final class Logger {
     
     /**
      * Logs a info message
+     *
      * @param string $message the message to be logged
      */
     public function info($message) {
@@ -167,6 +168,7 @@ final class Logger {
     
     /**
      * Logs a trace message
+     *
      * @param string $message the message to be logged
      */
     public function trace($message) {

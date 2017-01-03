@@ -25,7 +25,7 @@ final class CacheFactory {
             throw new CacheException('Empty param: cacheFlag');
         }
 
-        if(!isset(Y::$app->cache[$cacheFlag])) {
+        if(!isset(Y::$app->cache) || !isset(Y::$app->cache[$cacheFlag])) {
             throw new InvalidConfigException('Unknow cache config: ' . $cacheFlag);
         }
         
