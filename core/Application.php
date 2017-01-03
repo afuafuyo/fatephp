@@ -16,12 +16,12 @@ class Application extends Object {
     /**
      * @var array 自定义路由
      */
-    public $routes = [];
+    public $routes = null;
 
     /**
      * @var array 注册的模块
      */
-    public $modules = [];
+    public $modules = null;
 
     /**
      * @var string 路由标识
@@ -46,18 +46,21 @@ class Application extends Object {
     /**
      * @var string 当前的模块
      */
-    public $moduleId;
+    public $moduleId = null;
 
     /**
      * @var string 当前的控制器
      */
-    public $controllerId;
+    public $controllerId = null;
 
     /**
      * @var string 前缀目录
      */
-    public $routePrefix;
+    public $routePrefix = null;
     
+    /**
+     * constructor
+     */
     public function __construct($config = []) {
         // 由于多态 此时 $this 是子类 Application
         Y::$app = $this;

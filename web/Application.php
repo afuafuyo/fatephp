@@ -61,19 +61,16 @@ class Application extends \y\core\Application {
             return null;
         }
         
-        $_moduleId = '';
-        $_controllerId = '';
-        $_routePrefix = '';  // 前缀目录
+        $_moduleId = null;
+        $_controllerId = null;
+        $_routePrefix = null;  // 前缀目录
+        
         // 优先解析自定义路由
-        $resolveRoute = $this->resolveUserRoute($route);
-        if('' !== $resolveRoute[0] || '' !== $resolveRoute[1]) {
-            $_moduleId = $resolveRoute[0];
-            $_controllerId = $resolveRoute[1];
-            $_routePrefix = str_replace('/', '\\', $resolveRoute[2]);  // namespace path
-            
-            if('' !== $_moduleId && !isset($this->modules[$_moduleId])) {
-                throw new InvalidConfigException('The config module ' . $_moduleId . ' not found');
-            }
+        $userRoute = $this->resolveUserRoute($route);
+        if(null !== $userRoute) {
+            $_moduleId = $userRoute[0];
+            $_controllerId = $userRoute[1];
+            $_routePrefix = str_replace('/', '\\', $userRoute[2]);  // namespace path
             
         } else {
             // 解析路由
@@ -81,7 +78,6 @@ class Application extends \y\core\Application {
                 list($_moduleId, $_controllerId) = explode('/', $route, 2);
             } else {
                 $_moduleId = $route;
-                $_controllerId = '';
             }
             
             // 解析前缀目录
@@ -94,11 +90,11 @@ class Application extends \y\core\Application {
         }
         
         // 保存当前控制器标示
-        $this->controllerId = '' === $_controllerId ? $this->defaultControllerId : $_controllerId;
+        $this->controllerId = null === $_controllerId ? $this->defaultControllerId : $_controllerId;
         
         // 搜索顺序 模块控制器 -> 普通控制器
         // 模块没有前缀目录
-        if('' !== $_moduleId && isset($this->modules[$_moduleId])) {
+        if(null !== $_moduleId && null !== $this->modules && isset($this->modules[$_moduleId])) {
             $clazz = trim($this->modules[$_moduleId], '\\') . '\\controllers\\' .
                 ucfirst($this->controllerId) . 'Controller';
             $this->moduleId = $_moduleId;
@@ -107,7 +103,7 @@ class Application extends \y\core\Application {
         }
         
         // 普通控制器有前缀目录
-        $this->routePrefix = '' === $_routePrefix ? $this->controllerId : $_routePrefix;
+        $this->routePrefix = null === $_routePrefix ? $this->controllerId : $_routePrefix;
 
         return Y::createObject( $this->defaultControllerNamespace . '\\' .
             $this->routePrefix . '\\' . ucfirst($this->controllerId) . 'Controller' );
@@ -119,11 +115,11 @@ class Application extends \y\core\Application {
      * @param string $route 路由
      */
     public function resolveUserRoute($route) {
-        $_moduleId = '';
-        $_controllerId = '';
-        $_routePrefix = '';
-        
-        if(!empty($this->routes)) {
+        if(null !== $this->routes) {
+            $_moduleId = null;
+            $_controllerId = null;
+            $_routePrefix = null;
+            
             $matches = null;
             foreach($this->routes as $regularRoute => $mapping) {
                 if(1 === preg_match('/' . str_replace('/', '\\/', trim($regularRoute, '/')) . '/', $route, $matches)) {
@@ -156,8 +152,11 @@ class Application extends \y\core\Application {
                     break;
                 }
             }
+            
+            return (null !== $_moduleId || null !== $_controllerId) ?
+                [$_moduleId, $_controllerId, $_routePrefix] : null;
         }
         
-        return [$_moduleId, $_controllerId, $_routePrefix];
+        return null;
     }
 }
