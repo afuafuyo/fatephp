@@ -82,7 +82,7 @@ class Application extends \y\core\Application {
             
             // 解析前缀目录
             $_routePrefix = $_moduleId;
-            if( false !== ($pos = strrpos($_controllerId, '/')) ) {
+            if(null !== $_controllerId && false !== ($pos = strrpos($_controllerId, '/')) ) {
                 $_routePrefix .= '/' . substr($_controllerId, 0, $pos);
                 $_controllerId = substr($_controllerId, $pos + 1);
                 $_routePrefix = str_replace('/', '\\', $_routePrefix);  // namespace path
