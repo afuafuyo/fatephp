@@ -61,6 +61,9 @@ final class Logger {
      */
     public $targets = [];
     
+    /**
+     * @var Logger the logger instance
+     */
     private static $_logger = null;
     
     private function __construct() {
@@ -178,6 +181,8 @@ final class Logger {
     
     /**
      * 获取日志级别描述
+     *
+     * @param integer $level 级别
      */
     public static function getLevelName($level) {
         $name = 'unknown';

@@ -24,8 +24,14 @@ use y\helpers\FileHelper;
  */
 class Target extends \y\log\ImplTarget {
     
+    /**
+     * @var string log file path
+     */
     public $logPath = '@runtime/logs';
 
+    /**
+     * @var string log file name
+     */
     public $logFile = null;
     
     public function __construct($config) {
@@ -39,6 +45,9 @@ class Target extends \y\log\ImplTarget {
         }
     }
     
+    /**
+     * @inheritdoc
+     */
     public function flush($messages) {
         $msg = $this->formatMessage($messages);
         $file = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile;
@@ -53,10 +62,20 @@ class Target extends \y\log\ImplTarget {
         @fclose($fp);
     }
     
+    /**
+     * 生成日志文件名
+     *
+     * @param string $format 格式
+     */
     public function generateTimeLogFile($format = 'Y-m-d') {
         return date($format) . '.log';
     }
     
+    /**
+     * 格式化内容
+     *
+     * @param array $messages 内容
+     */
     public function formatMessage(& $messages) {
         $msg = '';
         for($i=0, $len=count($messages); $i<$len; $i++) {

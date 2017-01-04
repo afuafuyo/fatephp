@@ -9,7 +9,7 @@ class TargetEvent extends \y\core\Event {
     const EVENT_FLUSH = 'flush';
     
     /**
-     * @inheritdoc
+     * 重写
      */
     public function trigger($eventName, $param = null) {
         if(isset($this->_handlers[$eventName])) {
