@@ -14,6 +14,7 @@ abstract class Request extends Object {
     
     /**
      * 返回入口文件名
+     *
      * @return string
      */
     public function getScriptFile() {

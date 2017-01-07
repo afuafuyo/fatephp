@@ -17,6 +17,7 @@ class Request extends \y\core\Request {
     
     /**
      * 获得单例对象
+     *
      * @return Object
      */
     public static function getInstance() {
@@ -27,6 +28,11 @@ class Request extends \y\core\Request {
         return self::$_instance;
     }
 
+    /**
+     * 获取 get 参数
+     *
+     * @param string $routeParam 参数名
+     */
     public function getParam($routeParam) {
         if( isset($_GET[$routeParam]) ) {
             return $this->filter($_GET[$routeParam]);
@@ -35,6 +41,11 @@ class Request extends \y\core\Request {
         return '';
     }
     
+    /**
+     * 获取 post 参数
+     *
+     * @param string $routeParam 参数名
+     */
     public function postParam($routeParam) {
         if( isset($_POST[$routeParam]) ) {
             return $this->filter($_POST[$routeParam]);
@@ -45,7 +56,8 @@ class Request extends \y\core\Request {
 
     /**
      * 过滤
-     * @return string
+     *
+     * @param string $string 待处理字符串
      */
     public function filter($string) {
         return htmlspecialchars($string, ENT_QUOTES);
