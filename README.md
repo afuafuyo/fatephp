@@ -172,3 +172,19 @@ class IndexController extends \y\web\Controller {
 	}
 }
 ```
+
+###### 系统扩展规范
+
+系统路径除了类名外一律小写
+
+* 数据库
+
+目前只提供了 mysql 支持 扩展参照 mysql 的实现 需要继承 \y\db\ImplDb 类并实现其中的方法
+
+* 缓存
+
+目前提供了 file 和 memcache 缓存 扩展参照这两个实现 需要继承 \y\cache\ImplCache 类并实现其中的方法
+
+* 日志
+
+目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \y\log\ImplTarget 类并实现其中的方法
