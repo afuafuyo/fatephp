@@ -31,7 +31,7 @@ class View extends \y\core\View {
         $app = Y::$app;
         $path = '';
         
-        if(null !== $app->moduleId) {
+        if('' !== $app->moduleId) {
             $path = Y::namespaceTranslate($app->modules[$app->moduleId], '');
             
         } else {
@@ -40,7 +40,7 @@ class View extends \y\core\View {
         
         // 模块无子目录 普通控制器有子目录
         // 注意转换 namespace path 为目录路径
-        return $path . '/views/' . (null === $app->routePrefix ? '.' : str_replace('\\', '/', $app->routePrefix)) .
+        return $path . '/views/' . ('' === $app->routePrefix ? '.' : str_replace('\\', '/', $app->routePrefix)) .
             '/' . $view . $this->defaultExtension;
     }
     

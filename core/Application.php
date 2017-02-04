@@ -46,17 +46,17 @@ class Application extends Object {
     /**
      * @var string 当前的模块
      */
-    public $moduleId = null;
+    public $moduleId = '';
 
     /**
      * @var string 当前的控制器
      */
-    public $controllerId = null;
+    public $controllerId = '';
 
     /**
      * @var string 前缀目录
      */
-    public $routePrefix = null;
+    public $routePrefix = '';
     
     /**
      * constructor
