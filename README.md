@@ -19,54 +19,58 @@
 ###### 项目目录结构
 
 <pre>
-app 项目目录示例
-  |
-  --- controllers 普通控制器目录
-    |
-    |--- user 用户组目录
-    |   |
-    |   |--- IndexController.php 用户组下的控制器
-    |   |--- OtherController.php
-    |
-    |--- goods 商品组目录
-    |   |
-    |   |--- IndexController.php
-    |   |--- OtherController.php
-    |
-  --- views 普通控制器模板目录
-    |
-    |--- user 用户组模板 对应上面用户组
-    |   |
-    |   |--- index.php
-    |   |--- other.php
-    |
-    --- goods 商品组模板
-    |   |
-    |   |--- index.php
-    |   |--- other.php
-    |
-  --- modules 模块
-    |
-    |--- reg
-    |   |
-    |   |--- controllers 模块控制器目录 其下无子目录
-    |   |   |
-    |   |   |--- IndexController.php
-    |   |
-    |   |--- views 模块模板目录
-    |   |   |
-    |   |   |--- index.php
-    |   |
-    |   |--- 其他目录
-    |
-  --- runtime 缓存目录
-    |
+|- index.php
+|
+|- public 目录
+|
+|- app 项目目录
+|  |
+|  |-- controllers 普通控制器目录
+|      |
+|      |-- user 用户组目录
+|      |   |
+|      |   |-- IndexController.php 用户组下的控制器
+|      |   |-- OtherController.php
+|      |
+|      |-- goods 商品组目录
+|      |   |
+|      |   |-- IndexController.php
+|      |   |-- OtherController.php
+|      |
+|   -- views 普通控制器模板目录
+|      |
+|      |-- user 用户组模板 对应上面用户组
+|      |   |
+|      |   |-- index.php
+|      |   |-- other.php
+|      |
+|   -- goods 商品组模板
+|      |   |
+|      |   |-- index.php
+|      |   |-- other.php
+|      |
+|   -- modules 模块
+|      |
+|      |-- reg
+|      |   |
+|      |   |-- controllers 模块控制器目录 其下无子目录
+|      |   |   |
+|      |   |   |-- IndexController.php
+|      |   |
+|      |   |-- views 模块模板目录
+|      |   |   |
+|      |   |   |-- index.php
+|      |   |
+|      |   |-- 其他目录
+|      |
+|   -- runtime 缓存目录
+|
 </pre>
 
 ```php
 路由格式
 
-index.php?r=模块id或前缀目录/控制器id
+/index.php?r=[:route_prefix|:moduleId]/[:controllerId]
 ```
 
 ```php
