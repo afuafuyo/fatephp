@@ -39,23 +39,18 @@ class Router {
                     if(isset($mapping['controllerId'])) {
                         $controllerId = $mapping['controllerId'];
                     }
-                    if(isset($mapping['prefix'])) {
-                        $routePrefix = $mapping['prefix'];
+                    if(isset($mapping['routePrefix'])) {
+                        $routePrefix = $mapping['routePrefix'];
                     }
                     
                     // 用户自定义路由需要处理参数
                     if(isset($mapping['params'])) {
-                        if(is_array($mapping['params']) &&
-                            isset($mapping['params']['key']) &&
-                            isset($mapping['params']['segment'])) {
+                        if(is_string($mapping['params'])) {
+                            $_GET[$mapping['params']] = $matches[1];
                             
-                            if(is_array($mapping['params']['key'])) {
-                                for($j=0,$len=count($mapping['params']['key']); $j<$len; $j++) {
-                                    $_GET[$mapping['params']['key'][$j]] = $matches[$mapping['params']['segment'][$j]];
-                                }
-                            
-                            } else {
-                                $_GET[$mapping['params']['key']] = $matches[$mapping['params']['segment']];
+                        } else {
+                            for($j=0,$len=count($mapping['params']); $j<$len; $j++) {
+                                $_GET[$mapping['params'][$j]] = $matches[$j+1];
                             }
                         }
                     }
