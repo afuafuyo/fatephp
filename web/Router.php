@@ -5,7 +5,7 @@
  */
 namespace y\web;
 
-class Router {
+class Router extends \y\core\Router {
     
     /**
      * 解析路由
@@ -31,8 +31,13 @@ class Router {
         
         if(null !== $app->routes) {
             $matches = null;
+            $parsedRoute = null;
+            
             foreach($app->routes as $regularRoute => $mapping) {
-                if(1 === preg_match('/' . str_replace('/', '\\/', trim($regularRoute, '/')) . '/', $route, $matches)) {
+                $parsedRoute = static::parse($regularRoute);
+                $mapping['params'] = $parsedRoute['params'];
+                
+                if(1 === preg_match('/' . $parsedRoute['pattern'] . '/', $route, $matches)) {
                     if(isset($mapping['moduleId'])) {
                         $moduleId = $mapping['moduleId'];
                     }
@@ -44,14 +49,9 @@ class Router {
                     }
                     
                     // 用户自定义路由需要处理参数
-                    if(isset($mapping['params'])) {
-                        if(is_string($mapping['params'])) {
-                            $_GET[$mapping['params']] = $matches[1];
-                            
-                        } else {
-                            for($j=0,$len=count($mapping['params']); $j<$len; $j++) {
-                                $_GET[$mapping['params'][$j]] = $matches[$j+1];
-                            }
+                    if(null !== $mapping['params']) {
+                        for($j=0,$len=count($mapping['params']); $j<$len; $j++) {
+                            $_GET[$mapping['params'][$j]] = $matches[$j+1];
                         }
                     }
                     
