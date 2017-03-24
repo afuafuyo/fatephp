@@ -37,8 +37,7 @@ class Router {
         }
         
         $pattern = trim($pattern, '/');
-        $pattern = rtrim($pattern, '$');
-        $pattern = str_replace('/', '\\/', $pattern) . '$';
+        $pattern = str_replace('/', '\\/', $pattern);
         
         return [
             'pattern' => $pattern,

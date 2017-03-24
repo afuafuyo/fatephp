@@ -37,7 +37,8 @@ class Router extends \y\core\Router {
                 $parsedRoute = static::parse($regularRoute);
                 $mapping['params'] = $parsedRoute['params'];
                 
-                if(1 === preg_match('/' . $parsedRoute['pattern'] . '/', $route, $matches)) {
+                // 路由 end with $ 精确匹配
+                if(1 === preg_match('/' . $parsedRoute['pattern'] . '$/', $route, $matches)) {
                     if(isset($mapping['moduleId'])) {
                         $moduleId = $mapping['moduleId'];
                     }
