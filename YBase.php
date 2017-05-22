@@ -64,11 +64,11 @@ class YBase {
      * 对象配置
      *
      * @param Object $object 需要配置的对象
-     * @param array $propertys 配置项
+     * @param array $properties 配置项
      * @return Object 源对象
      */
-    public static function config($object, $propertys) {
-        foreach($propertys as $key => $val) {
+    public static function config($object, $properties) {
+        foreach($properties as $key => $val) {
             $object->$key = $val;
         }
 
@@ -78,20 +78,37 @@ class YBase {
     /**
      * 创建对象
      *
-     * @param string $clazz 类全名
+     * @param string | array $clazz 类全名 或 类配置
      * @param array $params 参数
      * @throws ClassNotFoundException 类未找到
      * @return Object 类实例
      */
     public static function createObject($clazz, array $params = []) {
-        $real = static::namespaceTranslate($clazz);
+        $real = '';
+        $properties = null;
+        
+        if(is_string($clazz)) {
+            $real = static::namespaceToNormal($clazz);
+            
+        } else if(is_array($clazz) && isset($clazz['class'])) {
+            $real = static::namespaceToNormal($clazz['class']);
+            
+            $properties = $clazz;
+            unset($properties['class']);
+        }
+        
         if('' === $real || !is_file($real)) {
             throw new ClassNotFoundException('The class: '. $clazz .' not found');
         }
 
         $reflection = new \ReflectionClass($clazz);
+        $instance = $reflection->newInstanceArgs($params);
+        
+        if(null !== $properties) {
+            static::config($instance, $properties);
+        }
 
-        return $reflection->newInstanceArgs($params);
+        return $instance;
     }
 
     /**
@@ -101,7 +118,7 @@ class YBase {
      * @param string $extension 扩展
      * @return 文件路径
      */
-    public static function namespaceTranslate($namespace, $extension = '.php') {
+    public static function namespaceToNormal($namespace, $extension = '.php') {
         $path = static::getPathAlias('@' . str_replace('\\', '/', $namespace));
         
         return $path . $extension;
@@ -115,7 +132,7 @@ class YBase {
     public static function autoload($className) {
         // 导入有命名空间的类
         if(false !== strpos($className, '\\')) {
-            $classFile = static::namespaceTranslate($className);
+            $classFile = static::namespaceToNormal($className);
             if('' === $classFile || !is_file($classFile)) {
                 return;
             }

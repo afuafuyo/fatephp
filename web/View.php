@@ -32,16 +32,17 @@ class View extends \y\core\View {
         $path = '';
         
         if('' !== $app->moduleId) {
-            $path = Y::namespaceTranslate($app->modules[$app->moduleId], '');
+            $path = Y::namespaceToNormal($app->modules[$app->moduleId], '');
             
         } else {
-            $path = Y::namespaceTranslate('app', '');
+            $path = Y::namespaceToNormal('app', '');
         }
         
         // 模块无子目录 普通控制器有子目录
         // 注意转换 namespace path 为目录路径
-        return $path . '/views/' . ('' === $app->routePrefix ? '.' : str_replace('\\', '/', $app->routePrefix)) .
-            '/' . $view . $this->defaultExtension;
+        return $path . '/views/'
+            . ('' === $app->subRoute ? '.' : str_replace('\\', '/', $app->subRoute))
+            . '/' . $view . $this->defaultExtension;
     }
     
     /**

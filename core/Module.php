@@ -11,11 +11,12 @@ use Y;
  * MVC 基类
  */
 class Module extends Object {
+    
     /**
      * @var array 实现路由到控制器转换配置
      */
     public $routesMap = null;
-    
+
     /**
      * @var array 注册的模块
      */
@@ -55,14 +56,14 @@ class Module extends Object {
      * @var string 前缀目录
      */
     public $subRoute = '';
-    
+
     /**
      * 设置属性
      */
     public function __set($name, $value) {
         $this->$name = $value;
     }
-    
+
     /**
      * 创建控制器
      *
@@ -125,7 +126,7 @@ class Module extends Object {
             
             return Y::createObject($clazz);
         }
-        echo $this->subRoute;
+        
         $clazz = $this->defaultControllerNamespace
             . '\\'
             . $this->subRoute
@@ -134,5 +135,5 @@ class Module extends Object {
         
         return Y::createObject($clazz);
     }
-   
+
 }

@@ -36,7 +36,7 @@ final class CacheFactory {
         if( !isset(static::$_caches[$cacheFlag]) || null === static::$_caches[$cacheFlag] ){
             $config = Y::$app->cache[$cacheFlag];
             $cacheClass = $config['class'];
-            $cacheFile = Y::namespaceTranslate($cacheClass);
+            $cacheFile = Y::namespaceToNormal($cacheClass);
             
             if(!is_file($cacheFile)) {
                 throw new FileNotFoundException('The cacheFile: ' . $cacheFile . ' not found');

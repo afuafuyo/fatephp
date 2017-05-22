@@ -19,15 +19,7 @@ class Object {
      * @param string $name 属性名
      * @param string $value 属性值
      */
-    public function __set($name, $value) {
-        $setter = 'set' . $name;
-        if(method_exists($this, $setter)) {
-            $this->$setter($value);
-            
-        } else {
-            throw new UnknownPropertyException('Setting unknown property: ' . get_class($this) . '::' . $name);
-        }
-    }
+    public function __set($name, $value) {}
 
     /**
      * 读取不存在或私有的属性
@@ -37,13 +29,13 @@ class Object {
     public function __get($name) {
         $getter = 'get' . $name;
         if (method_exists($this, $getter)) {
-            return $this->$getter();
             
-        } else {
-            throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
+            return $this->$getter();
         }
+        
+        throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
     }
-    
+
     /**
      * 调用不存在或私有的方法
      *
@@ -52,6 +44,26 @@ class Object {
      */
     public function __call($name, $params) {
         throw new InvalidCallException('Calling unknown method: ' . get_class($this) . "::$name()");
+    }
+
+    /**
+     * 判断属性是否存在
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasProperty($name) {
+        return property_exists($this, $name);
+    }
+
+    /**
+     * 判断方法是否存在
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function hasMethod($name) {
+        return method_exists($this, $name);
     }
 
 }

@@ -25,17 +25,21 @@ class Application extends \y\core\Application {
      * @throws InvalidCallException 方法未找到
      * @return array | null
      */
-    public function run(){
+    public function run() {
         $route = Request::getInstance()->getParam($this->defaultRouteParam);
         
         $controller = $this->createController($route);
-
-        if(!method_exists($controller, 'run')) {
-            throw new InvalidCallException('The run() method of Controller not found');
+        
+        if(null === $controller) {
+            throw new InvalidCallException('The route is invalid: ' . $route);
         }
-
-        // 单一入口
-        return $controller->run();
+        
+        if(!method_exists($controller, 'runControllerAction')) {
+            // 单一入口
+            return $controller->run();
+        }
+        
+        return $controller->runControllerAction();
     }
 
     /**
@@ -46,5 +50,5 @@ class Application extends \y\core\Application {
         
         $handler->register();
     }
-    
+
 }

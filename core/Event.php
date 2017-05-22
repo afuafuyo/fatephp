@@ -59,10 +59,11 @@ class Event extends Object {
     public function trigger($eventName, $param = null) {
         if(isset($this->_handlers[$eventName])) {
             foreach($this->_handlers[$eventName] as $handler) {
-                null === $param ? call_user_func($handler) : 
+                null === $param ? call_user_func($handler) :
                     call_user_func($handler, $param);
             }
         }
     }
+
 }
 

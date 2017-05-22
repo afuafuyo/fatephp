@@ -48,7 +48,7 @@ final class DbFactory {
             $driver = static::getDriverName($dsn);
 
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
-            $dbFile = Y::namespaceTranslate($dbClass);
+            $dbFile = Y::namespaceToNormal($dbClass);
             
             if(!is_file($dbFile)) {
                 throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');
