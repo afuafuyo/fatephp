@@ -19,7 +19,9 @@ class Object {
      * @param string $name 属性名
      * @param string $value 属性值
      */
-    public function __set($name, $value) {}
+    //public function __set($name, $value) {
+    //    $this->$name = $value;
+    //}
 
     /**
      * 读取不存在或私有的属性
