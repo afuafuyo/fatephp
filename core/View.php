@@ -22,4 +22,5 @@ abstract class View extends Object {
      * @param array $params 参数
      */
     public abstract function render($view, $params = []);
+    
 }

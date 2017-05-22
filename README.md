@@ -80,26 +80,20 @@ index.php
 require(__DIR__ . '/system/Y.php');
 
 $res = (new y\web\Application([
-	'id'=>1, 
-	'appPath'=> __DIR__ . '/app',
-	'modules' => [
-		'reg' => 'app\\modules\\reg'
-	],
-    'routes' => [
-        // 把下面这个模式 路由到 IndexController 并且参数的键定义为 id
-        '/post/{id:\d+}' => ['controllerId' => 'index'],
-        // 把下面这个模式 路由到 user 目录下的 IndexController 两个参数分别是 id uid
-        '/show/{id:}/{uid:}' => ['routePrefix' => 'user', 'controllerId'=>'index']
+    'id'=>1, 
+    'appPath'=> __DIR__ . '/app',
+    'modules' => [
+        'reg' => 'app\\modules\\reg'
     ],
-	'db' => [
-		'main' => [
-			'dsn' => 'mysql:host=localhost;dbname=xxx',
-			'username' => 'root',
-			'password' => 'root',
-			'charset' => 'utf8',
-			'prefix'=> ''
-		]
-	],
+    'db' => [
+        'main' => [
+            'dsn' => 'mysql:host=localhost;dbname=xxx',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+            'prefix'=> ''
+        ]
+    ],
     'cache' => [
         'file' => [
             'class' => 'y\cache\file\Cache'
@@ -129,18 +123,18 @@ use y\log\Logger;
 class IndexController extends \y\web\Controller {
 	
     // 控制器单入口
-	public function run() {
+    public function run() {
         $this->render('index', []);
         
-		//$db = DbFactory::instance('main');
+        //$db = DbFactory::instance('main');
         //$db->on($db::EVENT_BEFORE_QUERY, function(){
         //    echo 'beforeQuery<br>';
         //});
         
-		//$sql = 'SELECT * FROM users';
-		//foreach ($db->querySql($sql) as $row) {
+        //$sql = 'SELECT * FROM users';
+        //foreach ($db->querySql($sql) as $row) {
         //   var_dump($row);
-		//}
+        //}
         
         //$res = $db->table('users')->where('1=1')->orderBy('id desc')->getAll();
         //$res2 = $db->table('users')->orderBy('id desc')->limit('2')->getAll();
@@ -173,7 +167,7 @@ class IndexController extends \y\web\Controller {
         //$log->trace('trace info');
         //$log->error('error info');
         //$log->flush();  // 手动 flush log
-	}
+    }
 }
 ```
 

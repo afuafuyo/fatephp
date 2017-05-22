@@ -7,7 +7,7 @@ namespace y\web;
 
 use Y;
 
-class Controller extends ActionEvent {
+class Controller extends \y\core\Controller {
     
     /**
      * @var string 默认视图类命名空间
