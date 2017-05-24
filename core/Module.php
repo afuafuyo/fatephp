@@ -58,13 +58,6 @@ class Module extends Object {
     public $subRoute = '';
 
     /**
-     * 设置属性
-     */
-    public function __set($name, $value) {
-        $this->$name = $value;
-    }
-
-    /**
      * 创建控制器
      *
      * @param string $route 路由
