@@ -6,21 +6,26 @@
 namespace y\cache;
 
 use Y;
-use y\db\CacheException;
 use y\core\InvalidConfigException;
 use y\core\FileNotFoundException;
 
 /**
  * 缓存
  */
-final class CacheFactory {
+final class Cache {
     
     /**
      * @var array 缓存对象
      */
     private static $_caches = [];
     
-    public static function instance($cacheFlag = '') {
+    /**
+     * 获取缓存实例
+     *
+     * @param string $cacheFlag
+     * @return Object
+     */
+    public static function getCache($cacheFlag = '') {
         if(empty($cacheFlag)) {
             throw new CacheException('Empty param: cacheFlag');
         }

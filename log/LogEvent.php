@@ -5,7 +5,8 @@
  */
 namespace y\log;
 
-class TargetEvent extends \y\core\Event {
+class LogEvent extends \y\core\Event {
+    
     const EVENT_FLUSH = 'flush';
     
     /**

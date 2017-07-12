@@ -32,8 +32,9 @@ class Cache extends \y\cache\ImplCache {
     public $cacheFileSuffix = '.bin';
     
     public function __construct(& $config) {
-        $this->cachePath = isset($config['cachePath']) ? Y::getPathAlias($config['cachePath']) :
-            Y::getPathAlias($this->cachePath);
+        $this->cachePath = isset($config['cachePath'])
+            ? $config['cachePath']
+            : Y::getPathAlias($this->cachePath);
             
         if(!is_dir($this->cachePath)) {
             FileHelper::createDirectory($this->cachePath);

@@ -5,4 +5,4 @@
  */
 namespace y\log;
 
-abstract class ImplTarget extends TargetEvent implements ITarget {}
+abstract class ImplLog extends LogEvent implements ILog {}

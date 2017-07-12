@@ -5,6 +5,9 @@
  */
 namespace y\cache;
 
+/**
+ * 缓存接口
+ */
 interface ICache {
     
     /**

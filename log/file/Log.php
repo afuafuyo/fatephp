@@ -22,7 +22,7 @@ use y\helpers\FileHelper;
  * ]
  *
  */
-class Target extends \y\log\ImplTarget {
+class Log extends \y\log\ImplLog {
     
     /**
      * @var string log file path
@@ -35,8 +35,9 @@ class Target extends \y\log\ImplTarget {
     public $logFile = null;
     
     public function __construct($config) {
-        $this->logPath = isset($config['logPath']) ? Y::getPathAlias($config['logPath']) :
-            Y::getPathAlias($this->logPath);
+        $this->logPath = isset($config['logPath'])
+            ? $config['logPath']
+            : Y::getPathAlias($this->logPath);
         
         $this->logFile = $this->generateTimeLogFile();
         
@@ -78,9 +79,12 @@ class Target extends \y\log\ImplTarget {
      */
     public function formatMessage(& $messages) {
         $msg = '';
+        
         for($i=0, $len=count($messages); $i<$len; $i++) {
-            $msg .= date('Y-m-d H:i:s', $messages[$i][2]) . ' -- '
-                . Logger::getLevelName($messages[$i][1]) . ' -- '
+            $msg .= date('Y-m-d H:i:s', $messages[$i][2])
+                . ' -- '
+                . Logger::getLevelName($messages[$i][1])
+                . ' -- '
                 . $messages[$i][0] . "\n";
         }
         

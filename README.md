@@ -102,73 +102,12 @@ $res = (new y\web\Application([
     'log' => [
         'targets' => [
             'file' => [
-                'class' => 'y\log\file\Target'
+                'class' => 'y\log\file\Log'
             ]
         ]
     ]
 	
 ]))->run();
-```
-
-```php
-app\controllers\index\IndexController.php
-
-<?php
-namespace app\controllers\index;
-
-use y\db\DbFactory;
-use y\cache\CacheFactory;
-use y\log\Logger;
-
-class IndexController extends \y\web\Controller {
-	
-    // 控制器单入口
-    public function run() {
-        $this->render('index', []);
-        
-        //$db = DbFactory::instance('main');
-        //$db->on($db::EVENT_BEFORE_QUERY, function(){
-        //    echo 'beforeQuery<br>';
-        //});
-        
-        //$sql = 'SELECT * FROM users';
-        //foreach ($db->querySql($sql) as $row) {
-        //   var_dump($row);
-        //}
-        
-        //$res = $db->table('users')->where('1=1')->orderBy('id desc')->getAll();
-        //$res2 = $db->table('users')->orderBy('id desc')->limit('2')->getAll();
-        
-        //$data = [
-        //    ['name'=>'zhangsan', 'age'=>20, 'b'=>'xxx'],
-        //    ['name'=>'wangwu', 'age'=>'20', 'b'=>'xxx'],
-        //    ['name'=>'lisu', 'age'=>20, 'b'=>'xxx']
-        //];
-        // $data = ['name'=>'zhangsan', 'age'=>20];
-        //$c = $db->table('users')->insert($data);
-        
-        //$c = $db->table('users')->where('id=1')->delete();
-        
-        //$data = ['name'=>'abc', 'age'=>1];
-        //$db->table('users')->where('id=1')->update($data);
-        
-        //echo $db->table('users')->count();
-        
-        //$data = $db->table('users')->getAll();
-        //$data = $db->fields('id,name')->table('users')->where('id=1')->getOne();
-        //var_dump($data);
-        
-        //$c = CacheFactory::instance('file');
-        //$c->set('key', 'the value');
-        //echo $c->get('key');
-        //$c->delete('key');
-        
-        //$log = Logger::getLogger();
-        //$log->trace('trace info');
-        //$log->error('error info');
-        //$log->flush();  // 手动 flush log
-    }
-}
 ```
 
 ###### 系统扩展规范
@@ -185,4 +124,4 @@ class IndexController extends \y\web\Controller {
 
 + 日志
 
-目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \y\log\ImplTarget 类并实现其中的方法
+目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \y\log\ImplLog 类并实现其中的方法

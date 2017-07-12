@@ -8,7 +8,7 @@ namespace y\cache;
 /**
  * Cache 基类
  */
-abstract class ImplCache extends \y\core\Object implements ICache {
+abstract class ImplCache implements ICache {
     /**
      * 进行初始化
      */

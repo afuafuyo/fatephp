@@ -5,7 +5,10 @@
  */
 namespace y\log;
 
-interface ITarget {
+/**
+ * 日志接口
+ */
+interface ILog {
     
     /**
      * flush log

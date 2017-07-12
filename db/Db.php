@@ -7,14 +7,13 @@ namespace y\db;
 
 use PDOException;
 use Y;
-use y\db\DbException;
 use y\core\InvalidConfigException;
 use y\core\FileNotFoundException;
 
 /**
  * 数据库
  */
-final class DbFactory {
+final class Db {
 
     /**
      * @var array 数据库连接
