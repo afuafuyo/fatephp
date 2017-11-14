@@ -10,7 +10,7 @@ use Y;
 /**
  * MVC 基类
  */
-class Module extends Object {
+class Core extends Object {
     
     /**
      * @var array 实现路由到控制器转换配置

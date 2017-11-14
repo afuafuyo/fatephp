@@ -19,8 +19,15 @@ class Controller extends \y\core\Controller {
      */
     public $view = null;
     
-    public function __construct() {
-        $this->view = Y::createObject($this->defaultView);
+    /**
+     * 获取 View 对象
+     */
+    public function getView() {
+        if(null === $this->view) {
+            $this->view = Y::createObject($this->defaultView);
+        }
+        
+        return $this->view;
     }
     
     /**
@@ -29,7 +36,7 @@ class Controller extends \y\core\Controller {
     public function render($view, $params = [], $output = true) {
         $this->trigger(self::EVENT_BEFORE_RENDER);
         
-        $data = $this->view->render($view, $params);
+        $data = $this->getView()->render($view, $params);
         
         $this->trigger(self::EVENT_AFTER_RENDER);
         
