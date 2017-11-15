@@ -7,7 +7,10 @@
 
 ###### 变更
 
-+ 2017-11-14 修改 web/Controller::view 获取方式 $this->view 修改为 $this->getView();
++ 2017-11-15 更改 y\helpers\LinkedQueue 到 y\util\LinkedQueue
++ 2017-11-15 修改 y\web\Request::getParam() 为 y\web\Request::getQueryString()
++ 2017-11-15 修改 y\web\Request::postParam() 为 y\web\Request::getParameter()
++ 2017-11-14 修改 y\web\Controller::view 的获取方式 $this->view 为 $this->getView()
 
 ###### 本程序特点
 
