@@ -33,7 +33,7 @@ class Request extends \y\core\Request {
      *
      * @param string $routeParam 参数名
      */
-    public function getParam($routeParam) {
+    public function getQueryString($routeParam) {
         if( isset($_GET[$routeParam]) ) {
             return $this->filter($_GET[$routeParam]);
         }
@@ -46,7 +46,7 @@ class Request extends \y\core\Request {
      *
      * @param string $routeParam 参数名
      */
-    public function postParam($routeParam) {
+    public function getParameter($routeParam) {
         if( isset($_POST[$routeParam]) ) {
             return $this->filter($_POST[$routeParam]);
         }

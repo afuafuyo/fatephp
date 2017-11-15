@@ -26,7 +26,7 @@ class Application extends \y\core\Application {
      * @return array | null
      */
     public function run() {
-        $route = Request::getInstance()->getParam($this->defaultRouteParam);
+        $route = Request::getInstance()->getQueryString($this->defaultRouteParam);
         
         $controller = $this->createController($route);
         
