@@ -13,6 +13,21 @@ use Y;
 class Core extends Object {
     
     /**
+     * @var string | array interceptAll 拦截所有路由
+     *
+     * 'app\some\Class'
+     *
+     * or a array config
+     *
+     * [
+     *      'class' => 'app\some\Class',
+     *      'property' => 'value'
+     * ]
+     *
+     */
+    public $interceptAll = null;
+    
+    /**
      * @var array 实现路由到控制器转换配置
      */
     public $routesMap = null;
@@ -73,6 +88,11 @@ class Core extends Object {
         // 检测非法 与 路径中不能有双斜线 '//'
         if(0 === preg_match('/^[\w\-\/]+$/', $route) || false !== strpos($route, '//')) {
             return null;
+        }
+        
+        // 拦截路由
+        if(null !== $this->interceptAll) {
+            return Y::createObject($this->interceptAll);
         }
         
         // 解析路由
