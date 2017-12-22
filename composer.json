@@ -4,14 +4,14 @@
     "keywords": [
         "framework"
     ],
-    "homepage": "https://github.com/yulipu/YFramework",
+    "homepage": "https://github.com/yulipu/yphp",
     "type": "library",
     "license": "Apache License",
     "authors": [
         {
             "name": "lipu yu",
             "email": "ylp1127@126.com",
-            "homepage": "https://github.com/yulipu/YFramework",
+            "homepage": "https://github.com/yulipu/yphp",
             "role": "Founder and project lead"
         }
     ],
