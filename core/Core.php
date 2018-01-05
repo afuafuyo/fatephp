@@ -29,6 +29,15 @@ class Core extends Object {
     
     /**
      * @var array 实现路由到控制器转换配置
+     *
+     * [
+     *      'u' => 'app\controllers\user\IndexController',
+     *      'account' => [
+     *         'class' => 'app\controllers\user\IndexController',
+     *         'property' => 'value'
+     *     ]
+     * ]
+     *
      */
     public $routesMap = null;
 
