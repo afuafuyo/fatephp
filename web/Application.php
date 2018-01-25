@@ -6,7 +6,6 @@
 namespace y\web;
 
 use Y;
-use y\web\Request;
 use y\core\InvalidCallException;
 
 /**
@@ -43,7 +42,7 @@ class Application extends \y\core\Application {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function errorHandler() {
         $handler = Y::createObject($this->errorHandler);

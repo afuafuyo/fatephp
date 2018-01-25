@@ -17,12 +17,12 @@ abstract class ImplDb extends \y\core\Event implements IDb {
     const EVENT_AFTER_QUERY = 'afterQuery';
 
     /**
-     * @var PDO pdo 类实例
+     * @var \PDO pdo 类实例
      */
     public $pdo = null;
     
     /**
-     * @var PDOStatement PDOStatement 类实例
+     * @var \PDOStatement PDOStatement 类实例
      */
     public $pdoStatement = null;
     

@@ -14,7 +14,7 @@ use y\core\FileNotFoundException;
 class View extends \y\core\View {
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function render($view, $params = []) {
         $file = $this->findViewFile($view);

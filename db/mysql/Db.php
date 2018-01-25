@@ -96,19 +96,6 @@ class Db extends \y\db\ImplDb {
         $this->pdo = null;
     }
     
-    private function countDim($array) {
-        static $dimcount = 1;
-        if(is_array(reset($array))) {
-           $dimcount++;
-           $ret = $this->countDim(reset($array));
-           
-        } else {
-           $ret = $dimcount;
-        }
-        
-        return $ret;
-    }
-    
     private function buildCols() {
         $ret = implode('`,`', array_keys($this->_data));
         
@@ -326,7 +313,7 @@ class Db extends \y\db\ImplDb {
      *
      * @param string $sql sql 语句
      * @param array $params 参数
-     * @return PDOStatement
+     * @return \PDOStatement
      */
     public function prepareStatement($sql, $params = null) {
         if(null === $params) {

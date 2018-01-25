@@ -31,7 +31,7 @@ class Controller extends \y\core\Controller {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function render($view, $params = [], $output = true) {
         $this->trigger(self::EVENT_BEFORE_RENDER);

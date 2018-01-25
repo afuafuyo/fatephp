@@ -46,7 +46,7 @@ class Cache extends \y\cache\ImplCache {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function get($key) {
         $rs = null;
@@ -64,7 +64,7 @@ class Cache extends \y\cache\ImplCache {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function set($key, $value, $duration = 31536000) {
         $cacheFile = $this->getCacheFile($key);
@@ -75,7 +75,7 @@ class Cache extends \y\cache\ImplCache {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function delete($key) {
         $cacheFile = $this->getCacheFile($key);

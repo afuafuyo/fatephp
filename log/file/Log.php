@@ -47,7 +47,7 @@ class Log extends \y\log\ImplLog {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function flush($messages) {
         $msg = $this->formatMessage($messages);

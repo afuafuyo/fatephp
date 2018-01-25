@@ -5,12 +5,37 @@ namespace y\util;
  * 链队列
  */
 class LinkedQueue implements Queue {
+    
     private $_headNode = null;
+    
     private $_tailNode = null;
+    
     private $_size = 0;
     
+    private $currentIteratorNode = null;
+    
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     */
+    public function iterator() {
+        if(null === $this->currentIteratorNode) {
+            $this->currentIteratorNode = $this->_headNode;
+            
+        } else {
+            $this->currentIteratorNode = $this->currentIteratorNode->next;
+        }
+        
+        if(null === $this->currentIteratorNode) {
+            $this->currentIteratorNode = null;
+            
+            return null;
+        }
+        
+        return $this->currentIteratorNode->data;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     public function add($data) {
         $node = new LinkedQueueNode($data, null);
@@ -27,7 +52,7 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function take() {
         // 为空直接返回
@@ -54,7 +79,44 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     */
+    public function remove($data) {
+        $current = $this->_headNode;
+        $previous = null;
+        
+        for(; null !== $current; $previous = $current, $current = $current->next) {
+            if($data !== $current->data) {
+                continue;
+            }
+            
+            // 删除头结点
+            if(null === $previous) {
+                $this->_headNode = $current->next;
+            }
+            
+            // 非头结点需要移动 previous
+            if(null !== $previous) {
+                $previous->next = $current->next;
+            }
+            
+            // 尾节点
+            if(null === $current->next) {
+                $this->tailNode = $previous;
+            }
+            
+            // 清除当前节点
+            $current->next = null;
+            $current = null;
+            
+            $this->size--;
+            
+            break;
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     public function clear() {
         while(0 !== $this->_size) {

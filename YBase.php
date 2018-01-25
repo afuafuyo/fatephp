@@ -8,6 +8,7 @@ namespace y;
 use y\core\ClassNotFoundException;
 
 class YBase {
+    
     /**
      * @var object 当前应用
      */
@@ -116,7 +117,7 @@ class YBase {
      *
      * @param string $namespace 命名空间
      * @param string $extension 扩展
-     * @return 文件路径
+     * @return string 文件路径
      */
     public static function namespaceToNormal($namespace, $extension = '.php') {
         $path = static::getPathAlias('@' . str_replace('\\', '/', $namespace));
@@ -142,4 +143,5 @@ class YBase {
 
         return;
     }
+    
 }

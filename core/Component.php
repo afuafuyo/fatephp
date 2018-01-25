@@ -6,9 +6,6 @@
 namespace y\core;
 
 use Y;
-use y\core\Behavior;
-use y\core\InvalidCallException;
-use y\core\UnknownPropertyException;
 
 class Component extends Object {
     
@@ -129,7 +126,7 @@ class Component extends Object {
      * 注册事件处理
      *
      * @param string $eventName 事件名称
-     * @param function $handler 回调函数
+     * @param callable $handler 回调函数
      */
     public function on($eventName, $handler) {
         if(!isset($this->eventsMap[$eventName])) {
@@ -143,7 +140,7 @@ class Component extends Object {
      * 注销事件处理
      *
      * @param string $eventName 事件名称
-     * @param function $handler 回调函数
+     * @param callable $handler 回调函数
      */
     public function off($eventName, $handler = null) {
         if(!isset($this->eventsMap[$eventName])) {
