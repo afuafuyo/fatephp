@@ -18,7 +18,7 @@ abstract class Request extends Object {
      * @return string
      */
     public function getScriptFile() {
-        if (null === $this->_scriptFile) {
+        if(null === $this->_scriptFile) {
             if(isset($_SERVER['SCRIPT_FILENAME'])) {
                 $this->_scriptFile = $_SERVER['SCRIPT_FILENAME'];
             }

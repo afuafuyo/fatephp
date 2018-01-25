@@ -32,4 +32,5 @@ interface ICache {
      * @param string $key 缓存键
      */
     public function delete($key);
+    
 }

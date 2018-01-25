@@ -43,15 +43,17 @@ class Behavior extends Object {
      * 取消监听组件的事件
      */
     public function unListen() {
-        if(null !== $this->component) {
-            $events = $this->events();
-            
-            foreach($events as $eventName => $val) {
-                $this->component->off($eventName, $val);
-            }
-            
-            $this->component = null;
+        if(null === $this->component) {
+            return;
         }
+        
+        $events = $this->events();
+        
+        foreach($events as $eventName => $val) {
+            $this->component->off($eventName, $val);
+        }
+        
+        $this->component = null;
     }
     
 }

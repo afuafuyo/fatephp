@@ -113,4 +113,5 @@ interface IDb {
      * @return int 影响行数
      */
     public function executeSql($sql);
+    
 }

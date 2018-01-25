@@ -70,9 +70,11 @@ final class Logger {
         if(!isset(Y::$app->log) || !isset(Y::$app->log['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
+        
         if(isset(Y::$app->log['traceLevel'])) {
             $this->traceLevel = Y::$app->log['traceLevel'];
         }
+        
         if(isset(Y::$app->log['flushInterval'])) {
             $this->flushInterval = Y::$app->log['flushInterval'];
         }
@@ -89,7 +91,7 @@ final class Logger {
     /**
      * 获取日志类实例
      */
-    public function getLogger() {
+    public static function getLogger() {
         if(null === self::$_logger) {
             self::$_logger = new self();
         }

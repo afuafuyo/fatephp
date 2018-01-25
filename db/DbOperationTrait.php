@@ -6,6 +6,7 @@
 namespace y\db;
 
 trait DbOperationTrait {
+    
     /**
      * @var int 插入
      */

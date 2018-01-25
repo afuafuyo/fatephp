@@ -5,8 +5,8 @@ namespace y\util;
  * 队列接口
  */
 interface Queue {
-	
-	/**
+    
+    /**
      * 列表添加元素
      *
      * @param Object $data 数据

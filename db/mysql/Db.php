@@ -25,6 +25,7 @@ use PDO;
  *
  */
 class Db extends \y\db\ImplDb {
+    
     use \y\db\DbOperationTrait;
     
     /**
@@ -109,34 +110,13 @@ class Db extends \y\db\ImplDb {
     }
     
     private function buildCols() {
-        $ret = '';
-        $length = $this->countDim($this->_data);
-        if(1 === $length) {
-            $ret = implode('`,`', array_keys($this->_data));
-            
-        } else if($length > 1) {
-            $tmp = $this->_data[0];
-            $ret = implode('`,`', array_keys($tmp));
-        }
+        $ret = implode('`,`', array_keys($this->_data));
         
         return '' === $ret ? '()' : '(`' . $ret . '`)';
     }
     
     private function buildValues() {
-        $ret = '';
-        $length = $this->countDim($this->_data);
-        if(1 === $length) {
-            $ret = implode('\',\'', array_values($this->_data));
-            
-        } else if($length > 1) {
-            $tmp = [];
-            // 二维遍历
-            foreach($this->_data as $v) {
-                $tmp[] = implode('\',\'', array_values($v));
-            }
-            
-            $ret = implode('\'),(\'', $tmp);
-        }
+        $ret = implode('\',\'', array_values($this->_data));
         
         return '' === $ret ? '()' : '(\'' . $ret . '\')';
     }
@@ -154,7 +134,7 @@ class Db extends \y\db\ImplDb {
         $sql = '';
         switch($this->_operate) {
             case self::$INSERT :
-                // insert into t() values()[,(),()...]
+                // insert into t() values()
                 $table = isset($this->_options['table']) ? $this->_options['table'] : '';
                 $cols = $this->buildCols();
                 $values = $this->buildValues();

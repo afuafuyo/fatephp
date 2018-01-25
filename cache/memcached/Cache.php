@@ -62,4 +62,5 @@ class Cache extends \y\cache\ImplCache {
     public function delete($key) {
         return $this->_memcached->delete($key);
     }
+    
 }

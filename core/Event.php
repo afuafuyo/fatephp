@@ -36,15 +36,17 @@ class Event extends Object {
      * @param function $handler 回调函数
      */
     public function off($eventName, $handler = null) {
-        if(isset($this->_handlers[$eventName])) {
-            if(null === $handler) {
-                unset($this->_handlers[$eventName]);
-                
-            } else {
-                foreach($this->_handlers[$eventName] as $i => $h) {
-                    if($handler === $h) {
-                        unset($this->_handlers[$eventName][$i]);
-                    }
+        if(!isset($this->_handlers[$eventName])) {
+            return;
+        }
+        
+        if(null === $handler) {
+            unset($this->_handlers[$eventName]);
+            
+        } else {
+            foreach($this->_handlers[$eventName] as $i => $h) {
+                if($handler === $h) {
+                    unset($this->_handlers[$eventName][$i]);
                 }
             }
         }
@@ -57,11 +59,13 @@ class Event extends Object {
      * @param mixed $param 参数
      */
     public function trigger($eventName, $param = null) {
-        if(isset($this->_handlers[$eventName])) {
-            foreach($this->_handlers[$eventName] as $handler) {
-                null === $param ? call_user_func($handler) :
-                    call_user_func($handler, $param);
-            }
+        if(!isset($this->_handlers[$eventName])) {
+            return;
+        }
+        
+        foreach($this->_handlers[$eventName] as $handler) {
+            null === $param ? call_user_func($handler)
+                : call_user_func($handler, $param);
         }
     }
 

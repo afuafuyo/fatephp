@@ -90,4 +90,5 @@ class Log extends \y\log\ImplLog {
         
         return $msg;
     }
+    
 }

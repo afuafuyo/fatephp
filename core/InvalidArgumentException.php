@@ -2,6 +2,6 @@
 namespace y\core;
 
 /**
- * 异常配置
+ * 参数异常
  */
 class InvalidArgumentException extends Exception {}

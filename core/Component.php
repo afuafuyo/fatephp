@@ -99,6 +99,7 @@ class Component extends Object {
      */
     public function ensureDeclaredBehaviorsAttached() {
         $behaviors = $this->behaviors();
+        
         foreach($behaviors as $name => $val) {
             $this->attachBehaviorInternal($name, $val);
         }
@@ -145,15 +146,17 @@ class Component extends Object {
      * @param function $handler 回调函数
      */
     public function off($eventName, $handler = null) {
-        if(isset($this->eventsMap[$eventName])) {
-            if(null === $handler) {
-                unset($this->eventsMap[$eventName]);
-                
-            } else {
-                foreach($this->eventsMap[$eventName] as $i => $h) {
-                    if($handler === $h) {
-                        unset($this->eventsMap[$eventName][$i]);
-                    }
+        if(!isset($this->eventsMap[$eventName])) {
+            return;
+        }
+        
+        if(null === $handler) {
+            unset($this->eventsMap[$eventName]);
+            
+        } else {
+            foreach($this->eventsMap[$eventName] as $i => $h) {
+                if($handler === $h) {
+                    unset($this->eventsMap[$eventName][$i]);
                 }
             }
         }
@@ -166,11 +169,13 @@ class Component extends Object {
      * @param mixed $param 参数
      */
     public function trigger($eventName, $param = null) {
-        if(isset($this->eventsMap[$eventName])) {
-            foreach($this->eventsMap[$eventName] as $handler) {
-                null === $param ? call_user_func($handler) :
-                    call_user_func($handler, $param);
-            }
+        if(!isset($this->eventsMap[$eventName])) {
+            return;
+        }
+        
+        foreach($this->eventsMap[$eventName] as $handler) {
+            null === $param ? call_user_func($handler)
+                : call_user_func($handler, $param);
         }
     }
 

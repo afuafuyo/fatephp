@@ -16,4 +16,5 @@ interface ILog {
      * @param array $message the message to be logged
      */
     public function flush($messages);
+    
 }

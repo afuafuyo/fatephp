@@ -70,7 +70,7 @@ final class Db {
 
         return static::$_links[$dbFlag];
     }
-	
+
     /**
      * 得到驱动名
      *
@@ -86,4 +86,5 @@ final class Db {
         
         return $driverName;
     }
+    
 }
