@@ -97,13 +97,13 @@ class Db extends \y\db\ImplDb {
     }
     
     private function buildCols() {
-        $ret = implode('`,`', array_keys($this->_data));
+        $ret = implode('`, `', array_keys($this->_data));
         
         return '' === $ret ? '()' : '(`' . $ret . '`)';
     }
     
     private function buildValues() {
-        $ret = implode('\',\'', array_values($this->_data));
+        $ret = implode('\', \'', array_values($this->_data));
         
         return '' === $ret ? '()' : '(\'' . $ret . '\')';
     }
