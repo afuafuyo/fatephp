@@ -66,20 +66,20 @@ final class Logger {
      */
     private static $_logger = null;
     
-    private function __construct() {
-        if(!isset(Y::$app->log) || !isset(Y::$app->log['targets'])) {
+    private function __construct($settings = null) {
+        if(null === $settings || !isset($settings['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
         
-        if(isset(Y::$app->log['traceLevel'])) {
-            $this->traceLevel = Y::$app->log['traceLevel'];
+        if(isset($settings['traceLevel'])) {
+            $this->traceLevel = $settings['traceLevel'];
         }
         
-        if(isset(Y::$app->log['flushInterval'])) {
-            $this->flushInterval = Y::$app->log['flushInterval'];
+        if(isset($settings['flushInterval'])) {
+            $this->flushInterval = $settings['flushInterval'];
         }
         
-        foreach(Y::$app->log['targets'] as $config) {
+        foreach($settings['targets'] as $config) {
             if(isset($config['class'])) {
                 $clazz = Y::createObject($config['class'], [$config]);
                 $clazz->on($clazz::EVENT_FLUSH, $clazz);
@@ -93,10 +93,20 @@ final class Logger {
      */
     public static function getLogger() {
         if(null === self::$_logger) {
-            self::$_logger = new self();
+            self::$_logger = new self(Y::$app->log);
         }
         
         return self::$_logger;
+    }
+    
+    /**
+     * 获取新日志对象
+     *
+     * @param array $settings
+     * @return Object
+     */
+    public function newInstance($settings) {
+        return new self($settings);
     }
     
     /**

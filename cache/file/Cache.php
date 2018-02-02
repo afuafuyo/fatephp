@@ -29,7 +29,7 @@ class Cache extends \y\cache\ImplCache {
     /**
      * @var string 缓存文件后缀
      */
-    public $cacheFileSuffix = '.bin';
+    public $fileExtension = '.bin';
     
     public function __construct(& $config) {
         $this->cachePath = isset($config['cachePath'])
@@ -42,7 +42,7 @@ class Cache extends \y\cache\ImplCache {
     }
     
     private function getCacheFile($key) {
-        return $this->cachePath . DIRECTORY_SEPARATOR . $key . $this->cacheFileSuffix;
+        return $this->cachePath . DIRECTORY_SEPARATOR . $key . $this->fileExtension;
     }
     
     /**
