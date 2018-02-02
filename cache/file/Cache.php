@@ -22,16 +22,20 @@ use y\helpers\FileHelper;
 class Cache extends \y\cache\ImplCache {
     
     /**
-     * @var string 缓存目录
-     */
-    public $cachePath = '@runtime/cache';
-    
-    /**
      * @var string 缓存文件后缀
      */
     public $fileExtension = '.bin';
     
+    /**
+     * @var string 缓存目录
+     */
+    public $cachePath = '@runtime/cache';
+    
     public function __construct(& $config) {
+        if(isset($config['fileExtension'])) {
+            $this->fileExtension = $config['fileExtension'];
+        }
+        
         $this->cachePath = isset($config['cachePath'])
             ? $config['cachePath']
             : Y::getPathAlias($this->cachePath);

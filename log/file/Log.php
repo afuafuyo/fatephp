@@ -40,6 +40,10 @@ class Log extends \y\log\ImplLog {
     public $logFile = null;
     
     public function __construct($config) {
+        if(isset($config['fileExtension'])) {
+            $this->fileExtension = $config['fileExtension'];
+        }
+        
         $this->logPath = isset($config['logPath'])
             ? $config['logPath']
             : Y::getPathAlias($this->logPath);
