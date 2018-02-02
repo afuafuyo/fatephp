@@ -25,6 +25,11 @@ use y\helpers\FileHelper;
 class Log extends \y\log\ImplLog {
     
     /**
+     * @var string log file extension
+     */
+    public $fileExtension = '.log';
+    
+    /**
      * @var string log file path
      */
     public $logPath = '@runtime/logs';
@@ -69,7 +74,7 @@ class Log extends \y\log\ImplLog {
      * @param string $format 格式
      */
     public function generateTimeLogFile($format = 'Y-m-d') {
-        return date($format) . '.log';
+        return date($format) . $this->fileExtension;
     }
     
     /**
