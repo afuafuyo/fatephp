@@ -105,7 +105,7 @@ final class Logger {
      * @param array $settings
      * @return Object
      */
-    public function newInstance($settings) {
+    public static function newInstance($settings) {
         return new self($settings);
     }
     

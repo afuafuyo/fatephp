@@ -39,10 +39,6 @@ class Cache extends \y\cache\ImplCache {
         $this->cachePath = isset($config['cachePath'])
             ? $config['cachePath']
             : Y::getPathAlias($this->cachePath);
-            
-        if(!is_dir($this->cachePath)) {
-            FileHelper::createDirectory($this->cachePath);
-        }
     }
     
     private function getCacheFile($key) {
@@ -56,9 +52,9 @@ class Cache extends \y\cache\ImplCache {
         $rs = null;
         $cacheFile = $this->getCacheFile($key);
         
-        if (is_file($cacheFile) && filemtime($cacheFile) > time()) {
+        if(is_file($cacheFile) && filemtime($cacheFile) > time()) {
             $fp = @fopen($cacheFile, 'r');
-            if (false !== $fp) {
+            if(false !== $fp) {
                 $rs = @stream_get_contents($fp);
                 @fclose($fp);
             }
@@ -71,6 +67,10 @@ class Cache extends \y\cache\ImplCache {
      * {@inheritDoc}
      */
     public function set($key, $value, $duration = 31536000) {
+        if(!is_dir($this->cachePath)) {
+            FileHelper::createDirectory($this->cachePath);
+        }
+        
         $cacheFile = $this->getCacheFile($key);
         
         @file_put_contents($cacheFile, $value);

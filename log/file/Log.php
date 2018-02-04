@@ -49,10 +49,6 @@ class Log extends \y\log\ImplLog {
             : Y::getPathAlias($this->logPath);
         
         $this->logFile = $this->generateTimeLogFile();
-        
-        if(!is_dir($this->logPath)) {
-            FileHelper::createDirectory($this->logPath);
-        }
     }
     
     /**
@@ -61,6 +57,10 @@ class Log extends \y\log\ImplLog {
     public function flush($messages) {
         $msg = $this->formatMessage($messages);
         $file = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile;
+        
+        if(!is_dir($this->logPath)) {
+            FileHelper::createDirectory($this->logPath);
+        }
         
         if(false === ($fp = @fopen($file, 'a'))) {
             return;
