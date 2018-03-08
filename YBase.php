@@ -124,7 +124,7 @@ class YBase {
         
         return $path . $extension;
     }
-	 
+
     /**
      * 类自动加载器
      *
