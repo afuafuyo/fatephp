@@ -11,7 +11,7 @@ use y\core\InvalidConfigException;
 /**
  * 应用前端控制器
  */
-class Application extends Core {
+class Application extends Fate {
     
     /**
      * constructor

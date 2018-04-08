@@ -8,9 +8,9 @@ namespace y\core;
 use Y;
 
 /**
- * MVC 基类
+ * 核心类
  */
-class Core extends Object {
+class Fate extends Object {
     
     /**
      * @var string | array 拦截所有路由
