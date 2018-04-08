@@ -13,7 +13,7 @@ use Y;
 class Core extends Object {
     
     /**
-     * @var string | array interceptAll 拦截所有路由
+     * @var string | array 拦截所有路由
      *
      * 'app\some\Class'
      *

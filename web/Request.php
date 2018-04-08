@@ -11,7 +11,7 @@ namespace y\web;
 class Request extends \y\core\Request {
 
     /**
-     * @var Object $_instance 实例
+     * @var Object 实例
      */
     private static $_instance = null;
     

@@ -14,6 +14,11 @@ use y\core\FileNotFoundException;
 class View extends \y\core\View {
     
     /**
+     * @var string 页面标题
+     */
+    public $title = '';
+    
+    /**
      * {@inheritDoc}
      */
     public function render($view, $params = []) {

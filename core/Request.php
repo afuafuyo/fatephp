@@ -8,7 +8,7 @@ namespace y\core;
 abstract class Request extends Object {
     
     /**
-     * @var string $_scriptFile 入口文件名
+     * @var string 入口文件名
      */
     private $_scriptFile;
     
