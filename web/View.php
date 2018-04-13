@@ -34,23 +34,19 @@ class View extends \y\core\View {
      */
     public function findViewFile($view) {
         $app = Y::$app;
-        $path = '';
         
         // 模块无子目录 普通控制器有子目录
         // 注意转换 namespace path 为目录路径
         if('' !== $app->moduleId) {
-            $path = Y::namespaceToNormal($app->modules[$app->moduleId], '')
+            return Y::namespaceToNormal($app->modules[$app->moduleId], '')
                 .'/views/'
                 . $view . $this->defaultExtension;
-            
-        } else {
-            $path = Y::namespaceToNormal('app', '')
-                . '/views/'
-                . str_replace('\\', '/', $app->subRoute)
-                . '/' . $view . $this->defaultExtension;
         }
         
-        return $path;
+        return Y::namespaceToNormal('app', '')
+            . '/views/'
+            . str_replace('\\', '/', $app->subRoute)
+            . '/' . $view . $this->defaultExtension;
     }
     
     /**
