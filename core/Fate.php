@@ -141,6 +141,7 @@ class Fate extends Object {
         
         if(null !== $this->modules && isset($this->modules[$id])) {
             $this->moduleId = $id;
+            $this->subRoute = '';
             
             $clazz = trim($this->modules[$id], '\\')
                 . '\\controllers\\'
