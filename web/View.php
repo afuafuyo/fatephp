@@ -36,18 +36,21 @@ class View extends \y\core\View {
         $app = Y::$app;
         $path = '';
         
-        if('' !== $app->moduleId) {
-            $path = Y::namespaceToNormal($app->modules[$app->moduleId], '');
-            
-        } else {
-            $path = Y::namespaceToNormal('app', '');
-        }
-        
         // 模块无子目录 普通控制器有子目录
         // 注意转换 namespace path 为目录路径
-        return $path . '/views/'
-            . ('' === $app->subRoute ? '.' : str_replace('\\', '/', $app->subRoute))
-            . '/' . $view . $this->defaultExtension;
+        if('' !== $app->moduleId) {
+            $path = Y::namespaceToNormal($app->modules[$app->moduleId], '')
+                .'/views/'
+                . $view . $this->defaultExtension;
+            
+        } else {
+            $path = Y::namespaceToNormal('app', '')
+                . '/views/'
+                . str_replace('\\', '/', $app->subRoute)
+                . '/' . $view . $this->defaultExtension;
+        }
+        
+        return $path;
     }
     
     /**
@@ -68,4 +71,5 @@ class View extends \y\core\View {
 
         return ob_get_clean();
     }
+    
 }
