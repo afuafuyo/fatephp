@@ -6,7 +6,7 @@
     ],
     "homepage": "https://github.com/yulipu/yphp",
     "type": "library",
-    "license": "Apache License",
+    "license": "MIT",
     "authors": [
         {
             "name": "lipu yu",
