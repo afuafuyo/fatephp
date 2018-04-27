@@ -48,4 +48,18 @@ class Controller extends \y\core\Controller {
         return $data;
     }
     
+    /**
+     * 输出 ajax 数据
+     *
+     * @param integer $status
+     * @param array $data
+     */
+    public function ajaxReturn($status, $data) {
+        echo json_encode([
+            'status' => $status,
+            'data' => $data
+        ]);
+        exit;
+    }
+    
 }
