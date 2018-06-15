@@ -1,6 +1,6 @@
 <?php
 /**
- * @author yu
+ * @author
  * @license MIT
  */
 namespace y\web;
@@ -54,7 +54,7 @@ class Controller extends \y\core\Controller {
      * @param integer $status
      * @param array $data
      */
-    public function ajaxReturn($status, $data) {
+    public function ajaxReturn($status, & $data) {
         echo json_encode([
             'status' => $status,
             'data' => $data

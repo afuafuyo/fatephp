@@ -1,6 +1,6 @@
 <?php
 /**
- * @author yu
+ * @author
  * @license MIT
  */
 namespace y;

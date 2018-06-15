@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author
+ * @license MIT
+ */
 namespace y\helpers;
 
 use y\core\Exception;
