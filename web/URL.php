@@ -28,7 +28,7 @@ class URL {
      * @return string
      */
     public static function to($url, $params = null) {
-        $host = Request.getInstance()->getHostInfo();
+        $host = Request::getInstance()->getHostInfo();
         $query = '';
         $anchor = '';
 
