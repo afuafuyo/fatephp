@@ -1,5 +1,5 @@
 <?php
-namespace y\util;
+namespace fate\util;
 
 /**
  * 链队列

@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\log;
+namespace fate\log;
 
 /**
  * 日志接口

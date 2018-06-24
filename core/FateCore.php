@@ -3,14 +3,14 @@
  * @author
  * @license MIT
  */
-namespace y\core;
+namespace fate\core;
 
-use Y;
+use Fate;
 
 /**
  * 核心类
  */
-class Fate extends Object {
+class FateCore extends Object {
     
     /**
      * @var string | array 拦截所有路由
@@ -101,7 +101,7 @@ class Fate extends Object {
         
         // 拦截路由
         if(null !== $this->interceptAll) {
-            return Y::createObject($this->interceptAll);
+            return Fate::createObject($this->interceptAll);
         }
         
         // 解析路由
@@ -136,7 +136,7 @@ class Fate extends Object {
         $clazz = null;
         if(null !== $this->routesMap && isset($this->routesMap[$id])) {
             
-            return Y::createObject($this->routesMap[$id]);
+            return Fate::createObject($this->routesMap[$id]);
         }
         
         if(null !== $this->modules && isset($this->modules[$id])) {
@@ -146,7 +146,7 @@ class Fate extends Object {
                 . '\\controllers\\'
                 . ucfirst($this->controllerId) . 'Controller';
             
-            return Y::createObject($clazz);
+            return Fate::createObject($clazz);
         }
         
         $clazz = $this->defaultControllerNamespace
@@ -155,7 +155,7 @@ class Fate extends Object {
             . '\\'
             . ucfirst($this->controllerId) . 'Controller';
         
-        return Y::createObject($clazz);
+        return Fate::createObject($clazz);
     }
 
 }

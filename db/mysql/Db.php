@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\db\mysql;
+namespace fate\db\mysql;
 
 use PDO;
 
@@ -24,9 +24,9 @@ use PDO;
  * ]
  *
  */
-class Db extends \y\db\ImplDb {
+class Db extends \fate\db\ImplDb {
     
-    use \y\db\DbOperationTrait;
+    use \fate\db\DbOperationTrait;
     
     /**
      * @var int 操作类型

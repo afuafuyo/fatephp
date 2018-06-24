@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\helpers;
+namespace fate\helpers;
 
-use y\core\Exception;
+use fate\core\Exception;
 
 class FileHelper {
     
@@ -16,7 +16,7 @@ class FileHelper {
      * @param integer $mode 目录权限
      * @param boolean $recursive 递归创建目录
      * @return boolean 目录是否创建成功
-     * @throws \y\core\Exception
+     * @throws \fate\core\Exception
      */
     public static function createDirectory($path, $mode = 0775, $recursive = true) {
         if(is_dir($path)) {

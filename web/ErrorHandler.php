@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
-class ErrorHandler extends \y\core\ErrorHandler {
+class ErrorHandler extends \fate\core\ErrorHandler {
     
     /**
      * 注册异常处理函数
@@ -26,7 +26,7 @@ class ErrorHandler extends \y\core\ErrorHandler {
             http_response_code(500);
         }
         
-        if(Y_DEBUG) {
+        if(FATE_DEBUG) {
             echo '<pre>An exception occurred: '. (string) $exception .'</pre>';
                
         } else {
@@ -35,4 +35,5 @@ class ErrorHandler extends \y\core\ErrorHandler {
         
         exit(1);
     }
+    
 }

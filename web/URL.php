@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
 /**
  * Uniform Resource Location

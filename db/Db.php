@@ -3,12 +3,12 @@
  * @author
  * @license MIT
  */
-namespace y\db;
+namespace fate\db;
 
 use PDOException;
-use Y;
-use y\core\InvalidConfigException;
-use y\core\FileNotFoundException;
+use Fate;
+use fate\core\InvalidConfigException;
+use fate\core\FileNotFoundException;
 
 /**
  * 数据库
@@ -37,17 +37,17 @@ final class Db {
             throw new DbException('Empty param: dbFlag');
         }
 
-        if(!isset(Y::$app->db) || !isset(Y::$app->db[$dbFlag])) {
+        if(!isset(Fate::$app->db) || !isset(Fate::$app->db[$dbFlag])) {
             throw new InvalidConfigException('Unknow db config: ' . $dbFlag);
         }
 
         if( !isset(static::$_links[$dbFlag]) || null === static::$_links[$dbFlag] ){
-            $config = Y::$app->db[$dbFlag];
+            $config = Fate::$app->db[$dbFlag];
             $dsn = $config['dsn'];
             $driver = static::getDriverName($dsn);
 
             $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
-            $dbFile = Y::namespaceToNormal($dbClass);
+            $dbFile = Fate::namespaceToNormal($dbClass);
             
             if(!is_file($dbFile)) {
                 throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');

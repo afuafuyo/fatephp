@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\cache;
+namespace fate\cache;
 
 /**
  * Cache 基类

@@ -3,15 +3,15 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
-use Y;
-use y\core\FileNotFoundException;
+use Fate;
+use fate\core\FileNotFoundException;
 
 /**
  * 视图类
  */
-class View extends \y\core\View {
+class View extends \fate\core\View {
     
     /**
      * @var string 页面标题
@@ -33,17 +33,17 @@ class View extends \y\core\View {
      * @return string 视图路径
      */
     public function findViewFile($view) {
-        $app = Y::$app;
+        $app = Fate::$app;
         
         // 模块无子目录 普通控制器有子目录
         // 注意转换 namespace path 为目录路径
         if('' !== $app->moduleId) {
-            return Y::namespaceToNormal($app->modules[$app->moduleId], '')
+            return Fate::namespaceToNormal($app->modules[$app->moduleId], '')
                 .'/views/'
                 . $view . $this->defaultExtension;
         }
         
-        return Y::namespaceToNormal('app', '')
+        return Fate::namespaceToNormal('app', '')
             . '/views/'
             . str_replace('\\', '/', $app->subRoute)
             . '/' . $view . $this->defaultExtension;

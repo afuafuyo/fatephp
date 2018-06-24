@@ -3,10 +3,10 @@
  * @author
  * @license MIT
  */
-namespace y\log;
+namespace fate\log;
 
-use Y;
-use y\core\InvalidConfigException;
+use Fate;
+use fate\core\InvalidConfigException;
 
 /**
  * 日志
@@ -81,7 +81,7 @@ final class Logger {
         
         foreach($settings['targets'] as $config) {
             if(isset($config['class'])) {
-                $clazz = Y::createObject($config['class'], [$config]);
+                $clazz = Fate::createObject($config['class'], [$config]);
                 $clazz->on($clazz::EVENT_FLUSH, $clazz);
                 $this->targets[] = $clazz;
             }
@@ -93,7 +93,7 @@ final class Logger {
      */
     public static function getLogger() {
         if(null === self::$_logger) {
-            self::$_logger = new self(Y::$app->log);
+            self::$_logger = new self(Fate::$app->log);
         }
         
         return self::$_logger;

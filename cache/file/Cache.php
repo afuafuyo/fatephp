@@ -3,23 +3,23 @@
  * @author
  * @license MIT
  */
-namespace y\cache\file;
+namespace fate\cache\file;
 
-use Y;
-use y\helpers\FileHelper;
+use Fate;
+use fate\helpers\FileHelper;
 
 /**
  * 文件缓存
  *
  * 'cache' => [
  *      'file' => [
- *          'class' => 'y\cache\file\Cache',
+ *          'class' => 'fate\cache\file\Cache',
  *          ...
  *      ]
  * ]
  *
  */
-class Cache extends \y\cache\ImplCache {
+class Cache extends \fate\cache\ImplCache {
     
     /**
      * @var string 缓存文件后缀
@@ -38,7 +38,7 @@ class Cache extends \y\cache\ImplCache {
         
         $this->cachePath = isset($config['cachePath'])
             ? $config['cachePath']
-            : Y::getPathAlias($this->cachePath);
+            : Fate::getPathAlias($this->cachePath);
     }
     
     private function getCacheFile($key) {

@@ -3,27 +3,26 @@
  * @author
  * @license MIT
  */
-namespace y\core;
+namespace fate\core;
 
-use Y;
-use y\core\InvalidConfigException;
+use Fate;
 
 /**
  * 应用前端控制器
  */
-class Application extends Fate {
+class Application extends FateCore {
     
     /**
      * constructor
      */
     public function __construct($config = []) {
-        Y::$app = $this;
+        Fate::$app = $this;
         
         $this->errorHandler();
         
         $this->init($config);
         
-        Y::config($this, $config);
+        Fate::config($this, $config);
     }
     
     /**
@@ -71,14 +70,14 @@ class Application extends Fate {
      * @param string $path 应用路径
      */
     public function setAppPath($path) {
-        Y::setPathAlias('@app', $path);
+        Fate::setPathAlias('@app', $path);
     }
     
     /**
      * 得到应用目录
      */
     public function getAppPath(){
-        return Y::getPathAlias('@app');
+        return Fate::getPathAlias('@app');
     }
     
     /**
@@ -87,14 +86,14 @@ class Application extends Fate {
      * @param string $path 路径
      */
     public function setRuntimePath($path) {
-        Y::setPathAlias('@runtime', $path);
+        Fate::setPathAlias('@runtime', $path);
     }
     
     /**
      * 得到 runtime 目录
      */
     public function getRuntimePath() {
-        return Y::getPathAlias('@runtime');
+        return Fate::getPathAlias('@runtime');
     }
 
 }

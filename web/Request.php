@@ -3,12 +3,12 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
 /**
  * 前端请求
  */
-class Request extends \y\core\Request {
+class Request extends \fate\core\Request {
 
     /**
      * @var Object 实例

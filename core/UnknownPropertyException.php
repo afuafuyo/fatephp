@@ -1,5 +1,5 @@
 <?php
-namespace y\core;
+namespace fate\core;
 
 /**
  * 未知属性异常

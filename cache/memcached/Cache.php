@@ -3,17 +3,17 @@
  * @author
  * @license MIT
  */
-namespace y\cache\memcached;
+namespace fate\cache\memcached;
 
 use Memcached;
-use y\core\InvalidConfigException;
+use fate\core\InvalidConfigException;
 
 /**
  * memcached 缓存
  *
  * 'cache' => [
  *      memcached' => [
- *          'class' => 'y\cache\memcached\Cache'
+ *          'class' => 'fate\cache\memcached\Cache'
  *          ,'servers' => [
  *              [
  *                  'host' => '127.0.0.1'
@@ -24,7 +24,7 @@ use y\core\InvalidConfigException;
  * ]
  *
  */
-class Cache extends \y\cache\ImplCache {
+class Cache extends \fate\cache\ImplCache {
     
     private $_memcached = null;
     

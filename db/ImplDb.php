@@ -3,14 +3,14 @@
  * @author
  * @license MIT
  */
-namespace y\db;
+namespace fate\db;
 
-use y\core\InvalidCallException;
+use fate\core\InvalidCallException;
 
 /**
  * pdo 基类
  */
-abstract class ImplDb extends \y\core\Event implements IDb {
+abstract class ImplDb extends \fate\core\Event implements IDb {
 
     const EVENT_BEFORE_QUERY = 'beforeQuery';
     

@@ -1,5 +1,5 @@
 <?php
-namespace y\util;
+namespace fate\util;
 
 /**
  * 队列接口

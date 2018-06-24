@@ -3,11 +3,11 @@
  * @author
  * @license MIT
  */
-namespace y\cache;
+namespace fate\cache;
 
-use Y;
-use y\core\InvalidConfigException;
-use y\core\FileNotFoundException;
+use Fate;
+use fate\core\InvalidConfigException;
+use fate\core\FileNotFoundException;
 
 /**
  * 缓存
@@ -30,18 +30,18 @@ final class Cache {
             throw new CacheException('Empty param: cacheFlag');
         }
 
-        if(!isset(Y::$app->cache) || !isset(Y::$app->cache[$cacheFlag])) {
+        if(!isset(Fate::$app->cache) || !isset(Fate::$app->cache[$cacheFlag])) {
             throw new InvalidConfigException('Unknow cache config: ' . $cacheFlag);
         }
         
-        if(!isset(Y::$app->cache[$cacheFlag]['class'])) {
+        if(!isset(Fate::$app->cache[$cacheFlag]['class'])) {
             throw new InvalidConfigException('Lost `class` config item of the cache class');
         }
         
         if( !isset(static::$_caches[$cacheFlag]) || null === static::$_caches[$cacheFlag] ){
-            $config = Y::$app->cache[$cacheFlag];
+            $config = Fate::$app->cache[$cacheFlag];
             $cacheClass = $config['class'];
-            $cacheFile = Y::namespaceToNormal($cacheClass);
+            $cacheFile = Fate::namespaceToNormal($cacheClass);
             
             if(!is_file($cacheFile)) {
                 throw new FileNotFoundException('The cacheFile: ' . $cacheFile . ' not found');
@@ -54,4 +54,5 @@ final class Cache {
         
         return static::$_caches[$cacheFlag];
     }
+    
 }

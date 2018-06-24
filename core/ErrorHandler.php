@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\core;
+namespace fate\core;
 
 abstract class ErrorHandler extends Object {
     

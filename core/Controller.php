@@ -3,9 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\core;
-
-use Y;
+namespace fate\core;
 
 class Controller extends Component {
     

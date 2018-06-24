@@ -3,11 +3,11 @@
  * @author
  * @license MIT
  */
-namespace y;
+namespace fate;
 
-use y\core\ClassNotFoundException;
+use fate\core\ClassNotFoundException;
 
-class YBase {
+class FateBase {
     
     /**
      * @var object 当前应用
@@ -17,7 +17,7 @@ class YBase {
     /**
      * @var array 路径别名
      */
-    public static $pathAliases = ['@y' => __DIR__];
+    public static $pathAliases = ['@fate' => __DIR__];
 
     /**
      * @ 别名路径转换真实路径
@@ -128,7 +128,7 @@ class YBase {
     /**
      * 类自动加载器
      *
-     * @param string $className 要载入的类全名 eg. y\web\Application
+     * @param string $className 要载入的类全名 eg. fate\web\Application
      */
     public static function autoload($className) {
         // 导入有命名空间的类

@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\core;
+namespace fate\core;
 
-use Y;
+use Fate;
 
 class Component extends Object {
     
@@ -110,7 +110,7 @@ class Component extends Object {
      */
     public function attachBehaviorInternal($name, $behavior) {
         if(!($behavior instanceof Behavior)) {
-            $behavior = Y::createObject(behavior);
+            $behavior = Fate::createObject(behavior);
         }
         
         if(isset($this->behaviorsMap[$name])) {

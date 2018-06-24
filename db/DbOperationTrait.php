@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace y\db;
+namespace fate\db;
 
 trait DbOperationTrait {
     

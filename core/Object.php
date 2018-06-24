@@ -3,10 +3,10 @@
  * @author
  * @license MIT
  */
-namespace y\core;
+namespace fate\core;
 
-use y\core\InvalidCallException;
-use y\core\UnknownPropertyException;
+use fate\core\InvalidCallException;
+use fate\core\UnknownPropertyException;
 
 /**
  * 所有类的父类

@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\db;
+namespace fate\db;
 
 /**
  * 数据库异常
  */
-class DbException extends \y\core\Exception {}
+class DbException extends \fate\core\Exception {}

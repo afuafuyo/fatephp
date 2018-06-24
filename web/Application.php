@@ -3,20 +3,20 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
-use Y;
-use y\core\InvalidCallException;
+use Fate;
+use fate\core\InvalidCallException;
 
 /**
  * 应用前端控制器
  */
-class Application extends \y\core\Application {
+class Application extends \fate\core\Application {
 
     /**
      * @var string 异常处理类
      */
-    public $errorHandler = 'y\\web\\ErrorHandler';
+    public $errorHandler = 'fate\\web\\ErrorHandler';
 
     /**
      * 运行应用
@@ -45,7 +45,7 @@ class Application extends \y\core\Application {
      * {@inheritDoc}
      */
     public function errorHandler() {
-        $handler = Y::createObject($this->errorHandler);
+        $handler = Fate::createObject($this->errorHandler);
         
         $handler->register();
     }

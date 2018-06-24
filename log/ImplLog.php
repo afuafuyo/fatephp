@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\log;
+namespace fate\log;
 
-abstract class ImplLog extends \y\core\Event implements ILog {
+abstract class ImplLog extends \fate\core\Event implements ILog {
     
     const EVENT_FLUSH = 'flush';
     

@@ -3,9 +3,9 @@
  * @author
  * @license MIT
  */
-namespace y\cache;
+namespace fate\cache;
 
 /**
  * 缓存异常
  */
-class CacheException extends \y\core\Exception {}
+class CacheException extends \fate\core\Exception {}

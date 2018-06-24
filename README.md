@@ -7,6 +7,7 @@
 
 ###### 变更
 
++ v2.0.0 修改框架名 yphp 更名为 fatephp 所有类路径 有 y\xxx 变为 fate\xxx
 + v1.3.0 更改 y\helpers\LinkedQueue 到 y\util\LinkedQueue
 + v1.3.0 修改 y\web\Request::getParam() 为 y\web\Request::getQueryString()
 + v1.3.0 修改 y\web\Request::postParam() 为 y\web\Request::getParameter()
@@ -19,7 +20,7 @@
 
 ###### 系统内置别名
 
-+ @y  系统目录
++ @fate  系统目录
 + @app  项目目录 由 appPath 指定
 + @runtime  缓存目录 指向 @app/runtime
 
@@ -84,9 +85,9 @@
 index.php
 
 <?php
-require(__DIR__ . '/system/Y.php');
+require(__DIR__ . '/system/Fate.php');
 
-$res = (new y\web\Application([
+$res = (new fate\web\Application([
     'id'=>1, 
     'appPath'=> __DIR__ . '/app',
     'modules' => [
@@ -103,13 +104,13 @@ $res = (new y\web\Application([
     ],
     'cache' => [
         'file' => [
-            'class' => 'y\cache\file\Cache'
+            'class' => 'fate\cache\file\Cache'
         ]
     ],
     'log' => [
         'targets' => [
             'file' => [
-                'class' => 'y\log\file\Log'
+                'class' => 'fate\log\file\Log'
             ]
         ]
     ]
@@ -123,12 +124,12 @@ $res = (new y\web\Application([
 
 + 数据库
 
-目前只提供了 mysql 支持 扩展参照 mysql 的实现 需要继承 \y\db\ImplDb 类并实现其中的方法
+目前只提供了 mysql 支持 扩展参照 mysql 的实现 需要继承 \fate\db\ImplDb 类并实现其中的方法
 
 + 缓存
 
-目前提供了 file 和 memcache 缓存 扩展参照这两个实现 需要继承 \y\cache\ImplCache 类并实现其中的方法
+目前提供了 file 和 memcache 缓存 扩展参照这两个实现 需要继承 \fate\cache\ImplCache 类并实现其中的方法
 
 + 日志
 
-目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \y\log\ImplLog 类并实现其中的方法
+目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \fate\log\ImplLog 类并实现其中的方法

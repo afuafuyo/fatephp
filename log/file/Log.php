@@ -3,11 +3,11 @@
  * @author
  * @license MIT
  */
-namespace y\log\file;
+namespace fate\log\file;
 
-use Y;
-use y\log\Logger;
-use y\helpers\FileHelper;
+use Fate;
+use fate\log\Logger;
+use fate\helpers\FileHelper;
 
 /**
  * 文件日志
@@ -15,14 +15,14 @@ use y\helpers\FileHelper;
  * 'log' => [
  *      'targets' => [
  *          'file' => [
- *              'class' => 'y\log\file\Target',
+ *              'class' => 'fate\log\file\Target',
  *              ...
  *          ]
  *      ]
  * ]
  *
  */
-class Log extends \y\log\ImplLog {
+class Log extends \fate\log\ImplLog {
     
     /**
      * @var string log file extension
@@ -46,7 +46,7 @@ class Log extends \y\log\ImplLog {
         
         $this->logPath = isset($config['logPath'])
             ? $config['logPath']
-            : Y::getPathAlias($this->logPath);
+            : Fate::getPathAlias($this->logPath);
         
         $this->logFile = $this->generateTimeLogFile();
     }

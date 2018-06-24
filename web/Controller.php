@@ -3,16 +3,16 @@
  * @author
  * @license MIT
  */
-namespace y\web;
+namespace fate\web;
 
-use Y;
+use Fate;
 
-class Controller extends \y\core\Controller {
+class Controller extends \fate\core\Controller {
     
     /**
      * @var string 默认视图类命名空间
      */
-    public $defaultView = 'y\\web\\View';
+    public $defaultView = 'fate\\web\\View';
     
     /**
      * @var Object 视图类实例
@@ -24,7 +24,7 @@ class Controller extends \y\core\Controller {
      */
     public function getView() {
         if(null === $this->view) {
-            $this->view = Y::createObject($this->defaultView);
+            $this->view = Fate::createObject($this->defaultView);
         }
         
         return $this->view;
