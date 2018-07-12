@@ -23,7 +23,7 @@ final class Db {
     /**
      * @var string 数据库命名空间
      */
-    private static $_dbNamespace = 'y\\db';
+    private static $_dbNamespace = 'fate\\db';
 
     private function __construct(){}
     
