@@ -93,7 +93,7 @@ class Request extends \fate\core\Request {
      */
     public function getQueryString($routeParam) {
         if( isset($_GET[$routeParam]) ) {
-            return $this->filter($_GET[$routeParam]);
+            return $_GET[$routeParam];
         }
 
         return null;
@@ -106,7 +106,7 @@ class Request extends \fate\core\Request {
      */
     public function getParameter($routeParam) {
         if( isset($_POST[$routeParam]) ) {
-            return $this->filter($_POST[$routeParam]);
+            return $_POST[$routeParam];
         }
 
         return null;
