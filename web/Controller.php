@@ -54,10 +54,11 @@ class Controller extends \fate\core\Controller {
      * @param integer $status
      * @param array $data
      */
-    public function ajaxReturn($status, & $data) {
+    public function ajaxReturn($status, $data, $message = '') {
         echo json_encode([
             'status' => $status,
-            'data' => $data
+            'data' => $data,
+            'message' => $message
         ]);
         exit;
     }
