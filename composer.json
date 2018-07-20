@@ -1,21 +1,20 @@
 {
-    "name": "yulipu/yphp",
-    "description": "A light php framework",
-    "keywords": [
+    "name" : "yulipu/fatephp",
+    "description" : "A light php framework",
+    "keywords" : [
         "framework"
     ],
-    "homepage": "https://github.com/yulipu/yphp",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "lipu yu",
-            "email": "ylp1127@126.com",
-            "homepage": "https://github.com/yulipu/yphp",
-            "role": "Founder and project lead"
+    "homepage" : "https://github.com/yulipu/fatephp",
+    "type" : "library",
+    "license" : "MIT",
+    "authors" : [{
+            "name" : "lipu yu",
+            "email" : "ylp1127@126.com",
+            "homepage" : "https://github.com/yulipu/fatephp",
+            "role" : "Founder and project lead"
         }
     ],
-    "require": {
-        "php": ">=5.4.0"
+    "require" : {
+        "php" : ">=5.4.0"
     }
 }

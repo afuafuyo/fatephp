@@ -19,7 +19,7 @@ use fate\helpers\FileHelper;
  * ]
  *
  */
-class Cache extends \fate\cache\ImplCache {
+class Cache extends \fate\cache\AbstractCache {
     
     /**
      * @var string 缓存文件后缀
@@ -46,7 +46,7 @@ class Cache extends \fate\cache\ImplCache {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($key) {
         $rs = null;
@@ -64,7 +64,7 @@ class Cache extends \fate\cache\ImplCache {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($key, $value, $duration = 31536000) {
         if(!is_dir($this->cachePath)) {
@@ -79,7 +79,7 @@ class Cache extends \fate\cache\ImplCache {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete($key) {
         $cacheFile = $this->getCacheFile($key);

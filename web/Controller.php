@@ -31,7 +31,7 @@ class Controller extends \fate\core\Controller {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render($view, $params = [], $output = true) {
         $this->trigger(self::EVENT_BEFORE_RENDER);

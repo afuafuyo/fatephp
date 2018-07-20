@@ -8,7 +8,7 @@ namespace fate\cache;
 /**
  * Cache 基类
  */
-abstract class ImplCache implements ICache {
+abstract class AbstractCache implements ICache {
     
     /**
      * 进行初始化

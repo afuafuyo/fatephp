@@ -19,7 +19,7 @@ class ErrorHandler extends \fate\core\ErrorHandler {
     /**
      * 异常处理
      *
-     * @param Exception $exception 异常类
+     * @param \Exception $exception 异常类
      */
     public function handleException($exception) {
         if(PHP_SAPI !== 'cli') {

@@ -19,7 +19,7 @@ class View extends \fate\core\View {
     public $title = '';
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render($view, $params = []) {
         $file = $this->findViewFile($view);

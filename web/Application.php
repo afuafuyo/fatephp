@@ -42,7 +42,7 @@ class Application extends \fate\core\Application {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function errorHandler() {
         $handler = Fate::createObject($this->errorHandler);

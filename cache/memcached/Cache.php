@@ -24,7 +24,7 @@ use fate\core\InvalidConfigException;
  * ]
  *
  */
-class Cache extends \fate\cache\ImplCache {
+class Cache extends \fate\cache\AbstractCache {
     
     private $_memcached = null;
     
@@ -43,21 +43,21 @@ class Cache extends \fate\cache\ImplCache {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($key) {
         return $this->_memcached->get($key);
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($key, $value, $duration = 0) {
         $this->_memcached->set($key, $value);
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete($key) {
         return $this->_memcached->delete($key);

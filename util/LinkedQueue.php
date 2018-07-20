@@ -15,7 +15,7 @@ class LinkedQueue implements Queue {
     private $currentIteratorNode = null;
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function iterator() {
         if(null === $this->currentIteratorNode) {
@@ -35,7 +35,7 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function add($data) {
         $node = new LinkedQueueNode($data, null);
@@ -52,7 +52,7 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function take() {
         // 为空直接返回
@@ -79,7 +79,7 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function remove($data) {
         $current = $this->_headNode;
@@ -116,7 +116,7 @@ class LinkedQueue implements Queue {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clear() {
         while(0 !== $this->_size) {

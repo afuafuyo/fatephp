@@ -22,7 +22,7 @@ use fate\helpers\FileHelper;
  * ]
  *
  */
-class Log extends \fate\log\ImplLog {
+class Log extends \fate\log\AbstractLog {
     
     /**
      * @var string log file extension
@@ -52,7 +52,7 @@ class Log extends \fate\log\ImplLog {
     }
     
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function flush($messages) {
         $msg = $this->formatMessage($messages);
