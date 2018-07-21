@@ -26,11 +26,11 @@ use PDO;
  * 
  * $db = Db::instance('xxx');
  *
- * $data = $db->prepareSql('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
+ * $data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
  *
  * $data = $db->prepareSql('select title from xxx')->queryAll();
  *
- * $n = $db->prepareSql('update xxx set username = :name')->bindValue(':name', "li's")->execute();
+ * $n = $db->prepareStatement('update xxx set username = :name')->bindValue(':name', "li's")->execute();
  *
  * 查询生成器使用
  *
@@ -101,12 +101,20 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * Prepares a sql for execution
-     *
-     * @param string $sql
-     * @return $this
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::prepareSql()
      */
     public function prepareSql($sql) {
+        $this->sqlString = $sql;
+        
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::prepareStatement()
+     */
+    public function prepareStatement($sql) {
         $this->sqlString = $sql;
         
         $this->pdoStatement = $this->pdo->prepare($sql);
@@ -115,11 +123,8 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * 绑定一个参数 只能用于绑定命名参数
-     *
-     * @param string $param
-     * @param string $value
-     * @return $this
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::bindValue()
      */
     public function bindValue($param, $value) {
         $this->bindingParams[$param] = $value;
@@ -128,10 +133,8 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * 绑定多个参数 可以用于绑定命名参数和占位符参数
-     *
-     * @param array $params
-     * @return $this
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::bindValues()
      */
     public function bindValues($params) {
         foreach($params as $i => $v) {
@@ -142,20 +145,36 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * 获取所有数据
-     *
-     * @return array 结果数组
+     * @return void
      */
-    public function queryAll() {
-        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
+    private function makeStatement() {
+        // simple sql query
+        if(null === $this->pdoStatement) {
+            $this->pdoStatement = $this->pdo->query($this->sqlString);
+            
+            return;
+        }
         
+        // prepared sql query
         if( empty($this->bindingParams) ) {
             $this->pdoStatement->execute();
             
         } else {
             $this->pdoStatement->execute($this->bindingParams);
         }
-     
+    }
+    
+    /**
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::queryAll()
+     */
+    public function queryAll() {
+        $data = null;
+        
+        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
+        
+        $this->makeStatement();
+        
         $data = $this->pdoStatement->fetchAll();
         
         $this->closeStatement();
@@ -166,19 +185,15 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * 获取一条数据
-     *
-     * @return array 结果数组
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::queryOne()
      */
     public function queryOne() {
+        $data = null;
+        
         $this->trigger(self::EVENT_BEFORE_QUERY, $this);
         
-        if( empty($this->bindingParams) ) {
-            $this->pdoStatement->execute();
-            
-        } else {
-            $this->pdoStatement->execute($this->bindingParams);
-        }
+        $this->makeStatement();
         
         $data = $this->pdoStatement->fetch();
         
@@ -193,16 +208,16 @@ class Db extends \fate\db\AbstractDb {
     }
     
     /**
-     * 执行 sql 修改语句
-     *
-     * @return int 影响行数
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::execute()
      */
     public function execute() {
         $rows = 0;
         
         $this->trigger(self::EVENT_BEFORE_EXECUTE, $this);
         
-        if( empty($this->bindingParams) ) {
+        // simple sql query
+        if( null === $this->pdoStatement || empty($this->bindingParams)) {
             $rows = $this->pdo->exec($this->sqlString);
             
         } else {
@@ -223,16 +238,17 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::queryColumn()
      */
     public function queryColumn() {
-        if( empty($this->bindingParams) ) {
-            $this->pdoStatement->execute();
-            
-        } else {
-            $this->pdoStatement->execute($this->bindingParams);
-        }
+        $data = null;
+        
+        $this->trigger(self::EVENT_BEFORE_QUERY, $this);
+        
+        $this->makeStatement();
         
         $data = $this->pdoStatement->fetchColumn();
         
         $this->closeStatement();
+        
+        $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
         return $data;
     }
@@ -244,7 +260,14 @@ class Db extends \fate\db\AbstractDb {
      * @return $this
      */
     public function buildQuery($query) {
-        $this->prepareSql($query->sqlString)->bindValues($query->params);
+        // simple query
+        if(empty($query->params)) {
+            $this->prepareSql($query->sqlString);
+            
+        } else {
+            $this->prepareStatement($query->sqlString);
+            $this->bindValues($query->params);
+        }
         
         return $this;
     }

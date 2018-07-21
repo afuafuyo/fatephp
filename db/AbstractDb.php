@@ -33,14 +33,68 @@ abstract class AbstractDb extends \fate\core\Event {
     public function initConnection(& $config) {}
     
     /**
+     * 创建查询生成器
+     */
+    public abstract function createQuery();
+    
+    /**
+     * Prepares a sql for execution
+     *
+     * @param string $sql
+     * @return $this
+     */
+    public abstract function prepareSql($sql);
+    
+    /**
+     * Prepares a sql statement for execution
+     *
+     * @param string $param
+     * @return $this
+     */
+    public abstract function prepareStatement($sql);
+    
+    /**
+     * 绑定一个参数 只能用于绑定命名参数
+     *
+     * @param string $param
+     * @param string $value
+     * @return $this
+     */
+    public abstract function bindValue($param, $value);
+    
+    /**
+     * 绑定多个参数 可以用于绑定命名参数和占位符参数
+     *
+     * @param array $params
+     * @return $this
+     */
+    public abstract function bindValues($params);
+    
+    /**
+     * 获取所有数据
+     *
+     * @return array 结果数组
+     */
+    public abstract function queryAll();
+    
+    /**
+     * 获取一条数据
+     *
+     * @return array 结果数组
+     */
+    public abstract function queryOne();
+    
+    /**
      * 获取单独一列的值
      */
     public abstract function queryColumn();
     
     /**
-     * 创建查询生成器
+     * 执行 sql 修改语句
+     *
+     * @return integer 影响行数
      */
-    public abstract function createQuery();
+    public abstract function execute();
     
     /**
      * 获取执行的 sql 语句
