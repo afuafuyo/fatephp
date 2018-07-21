@@ -28,7 +28,7 @@ use PDO;
  *
  * $data = $db->prepareSql('select title from xxx')->queryAll();
  *
- * $n = $db->prepareSql('select count(id) from x_read_cate')->queryColumn();
+ * $n = $db->prepareSql('select count(id) from xxx')->queryColumn();
  *
  * $data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
  *
@@ -41,7 +41,7 @@ use PDO;
  * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = ?', [1])->getOne();
  * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
  *
- * $n = $db->createQuery()->from('t_nav')->where('id > 2')->count('id');
+ * $n = $db->createQuery()->from('xxx')->where('id > 2')->count('id');
  *
  */
 class Db extends \fate\db\AbstractDb {

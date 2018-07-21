@@ -118,18 +118,30 @@ $res = (new fate\web\Application([
 ]))->run();
 ```
 
-###### 系统扩展规范
+###### Db
 
-系统路径除了类名外一律小写
+```
+$db = Db::instance('xxx');
 
-+ 数据库
+// getAll
+$data = $db->prepareSql('select title from xxx')->queryAll();
 
-目前只提供了 mysql 支持 扩展参照 mysql 的实现 需要继承 \fate\db\ImplDb 类并实现其中的方法
+// getOne
+$data = $db->prepareSql('select title from xxx limit 0, 1')->queryOne();
 
-+ 缓存
+// single column
+$n = $db->prepareSql('select count(id) from xxx')->queryColumn();
 
-目前提供了 file 和 memcache 缓存 扩展参照这两个实现 需要继承 \fate\cache\ImplCache 类并实现其中的方法
+// with params
+$data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
 
-+ 日志
+$n = $db->prepareStatement('update xxx set username = ?')->bindValues(["li's"])->execute();
 
-目前提供了 file 日志 扩展参照 file 日志的实现 需要继承 \fate\log\ImplLog 类并实现其中的方法
+// 使用查询生成器
+$data = $db->createQuery()->select('id,title')->from('xxx')->getAll();
+
+$data = $db->createQuery()->select('id,title')->from('xxx')->where('id = ?', [1])->getOne();
+$data = $db->createQuery()->select('id,title')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
+
+$n = $db->createQuery()->from('xxx')->where('id > 2')->count('id');
+```
