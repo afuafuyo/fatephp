@@ -23,19 +23,22 @@ use PDO;
  * ]
  *
  * eg.
- * 
- * $db = Db::instance('xxx');
  *
- * $data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
+ * $db = Db::instance('xxx');
  *
  * $data = $db->prepareSql('select title from xxx')->queryAll();
  *
- * $n = $db->prepareStatement('update xxx set username = :name')->bindValue(':name', "li's")->execute();
+ * $n = $db->prepareSql('select count(id) from x_read_cate')->queryColumn();
+ *
+ * $data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
+ *
+ * $n = $db->prepareStatement('update xxx set username = ?')->bindValues(["li's"])->execute();
  *
  * 查询生成器使用
  *
  * $data = $db->createQuery()->select('id,title')->from('xxx')->getAll();
  *
+ * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = ?', [1])->getOne();
  * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
  *
  * $n = $db->createQuery()->from('t_nav')->where('id > 2')->count('id');
