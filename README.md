@@ -120,7 +120,7 @@ $res = (new fate\web\Application([
 
 ###### Db
 
-```
+```php
 $db = Db::instance('xxx');
 
 // getAll
