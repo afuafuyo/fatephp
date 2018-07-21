@@ -26,14 +26,14 @@ abstract class AbstractDb extends \fate\core\Event {
     public $pdoStatement = null;
     
     /**
-     * 初始化操作
+     * Init
      *
      * @param array $config 配置信息
      */
     public function initConnection(& $config) {}
     
     /**
-     * 创建查询生成器
+     * Create QueryBuilder
      */
     public abstract function createQuery();
     
@@ -95,6 +95,13 @@ abstract class AbstractDb extends \fate\core\Event {
      * @return integer 影响行数
      */
     public abstract function execute();
+    
+    /**
+     * 获取最后插入的数据的 ID
+     *
+     * @param string $name
+     */
+    public abstract function getLastInsertId($name);
     
     /**
      * 获取执行的 sql 语句

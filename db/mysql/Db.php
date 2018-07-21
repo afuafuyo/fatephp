@@ -34,7 +34,7 @@ use PDO;
  *
  * $n = $db->prepareStatement('update xxx set username = ?')->bindValues(["li's"])->execute();
  *
- * 查询生成器使用
+ * Use QueryBuilder
  *
  * $data = $db->createQuery()->select('id,title')->from('xxx')->getAll();
  *
@@ -277,9 +277,18 @@ class Db extends \fate\db\AbstractDb {
     
     /**
      * {@inheritdoc}
+     * @see \fate\db\AbstractDb::getLastInsertId()
+     */
+    public function getLastInsertId($name) {
+        return $this->pdo->lastInsertId($name);
+    }
+    
+    /**
+     * {@inheritdoc}
      * @see \fate\db\AbstractDb::getLastSql()
      */
     public function getLastSql() {
         return $this->sqlString;
     }
+    
 }
