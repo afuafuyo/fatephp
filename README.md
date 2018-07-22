@@ -98,8 +98,7 @@ $res = (new fate\web\Application([
             'dsn' => 'mysql:host=localhost;dbname=xxx',
             'username' => 'root',
             'password' => 'root',
-            'charset' => 'utf8',
-            'prefix'=> ''
+            'charset' => 'utf8'
         ]
     ],
     'cache' => [
