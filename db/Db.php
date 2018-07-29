@@ -43,7 +43,8 @@ final class Db {
      */
     private $_slave = null;
     
-    private function __construct(){}
+    private static $_instance = null;
+    private function __construct() {}
     
     /**
      * 连接数据库
@@ -55,11 +56,15 @@ final class Db {
             throw new InvalidConfigException('Db config not found: ' . $flag);
         }
         
-        if('slaves' === $flag) {
-            return $this->getSlave($flag);
+        if(null === self::$_instance) {
+            self::$_instance = new self();
         }
         
-        return $this->getMaster($flag);
+        if('slaves' === $flag) {
+            return self::$_instance->getSlave($flag);
+        }
+        
+        return self::$_instance->getMaster($flag);
     }
     
     /**
