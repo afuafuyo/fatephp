@@ -97,6 +97,11 @@ abstract class AbstractDb extends \fate\core\Event {
     public abstract function execute();
     
     /**
+     * 关闭数据库连接
+     */
+    public abstract function close();
+    
+    /**
      * 获取最后插入的数据的 ID
      *
      * @param string $name

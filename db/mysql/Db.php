@@ -91,13 +91,6 @@ class Db extends \fate\db\AbstractDb {
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }
     }
-   
-    private function closeStatement() {
-        $this->pdoStatement->closeCursor();
-        $this->pdoStatement = null;
-        
-        $this->bindingParams = [];
-    }
     
     private function closePdo() {
         $this->pdo = null;
@@ -180,7 +173,7 @@ class Db extends \fate\db\AbstractDb {
         
         $data = $this->pdoStatement->fetchAll();
         
-        $this->closeStatement();
+        $this->close();
         
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
@@ -203,7 +196,7 @@ class Db extends \fate\db\AbstractDb {
         // make sure fetch end so can fetch other result
         // while(false !== $this->pdoStatement->fetch()) {}
         
-        $this->closeStatement();
+        $this->close();
         
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
@@ -229,11 +222,22 @@ class Db extends \fate\db\AbstractDb {
             $rows = $this->pdoStatement->rowCount();
         }
         
-        $this->closeStatement();
+        $this->close();
         
         $this->trigger(self::EVENT_AFTER_EXECUTE, $this);
         
         return $rows;
+    }
+    
+    /**
+     * {@inheritdoc}
+     * @see \fate\db\AbstractDb::close()
+     */
+    public function close() {
+        $this->pdoStatement->closeCursor();
+        $this->pdoStatement = null;
+        
+        $this->bindingParams = [];
     }
     
     /**
@@ -249,7 +253,7 @@ class Db extends \fate\db\AbstractDb {
         
         $data = $this->pdoStatement->fetchColumn();
         
-        $this->closeStatement();
+        $this->close();
         
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
         
