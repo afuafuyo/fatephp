@@ -5,79 +5,158 @@
  */
 namespace fate\db;
 
-use PDOException;
 use Fate;
 use fate\core\InvalidConfigException;
-use fate\core\FileNotFoundException;
 
 /**
  * 数据库
+ *
+ * 'db' => [
+ *      'xxx' => [
+ *          'dsn' => 'schema:host=HOST;dbname=DBNAME',
+ *          'username' => '',
+ *          'password' => '',
+ *          'charset' => 'utf8'
+ *      ],
+ *      
+ *      'slaves' => [
+ *          [ 'dsn' => 'dsn for slave server 1', 'username' => 'slave1', 'password' => '' ],
+ *          [ 'dsn' => 'dsn for slave server 2', 'username' => 'slave2', 'password' => '' ]
+ *      ]
+ * ]
+ *
  */
 final class Db {
-
-    /**
-     * @var array 数据库连接
-     */
-    private static $_links = [];
-
+    
     /**
      * @var string 数据库命名空间
      */
-    private static $_dbNamespace = 'fate\\db';
-
+    public static $_dbNamespace = 'fate\\db';
+    
+    /**
+     * @var Db the current active master db
+     */
+    private $_master = null;
+    
+    /**
+     * @var Db the current active slave db
+     */
+    private $_slave = null;
+    
     private function __construct(){}
     
     /**
      * 连接数据库
      *
-     * @param string $dbFlag 数据库配置命名空间
+     * @param string $flag 数据库配置名
      */
-    public static function instance($dbFlag = '') {
-        if(empty($dbFlag)) {
-            throw new DbException('Empty param: dbFlag');
+    public static function instance($flag = '') {
+        if(!isset(Fate::$app->db) || !isset(Fate::$app->db[$flag])) {
+            throw new InvalidConfigException('Db config not found: ' . $flag);
         }
-
-        if(!isset(Fate::$app->db) || !isset(Fate::$app->db[$dbFlag])) {
-            throw new InvalidConfigException('Unknow db config: ' . $dbFlag);
+        
+        if('slaves' === $flag) {
+            return $this->getSlave($flag);
         }
-
-        if( !isset(static::$_links[$dbFlag]) || null === static::$_links[$dbFlag] ){
-            $config = Fate::$app->db[$dbFlag];
-            $dsn = $config['dsn'];
-            $driver = static::getDriverName($dsn);
-
-            $dbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
-            $dbFile = Fate::namespaceToNormal($dbClass);
+        
+        return $this->getMaster($flag);
+    }
+    
+    /**
+     * 获取一个主库连接
+     *
+     * @return Db
+     */
+    public function getMaster($flag) {
+        if(null === $this->_master) {
+            $config = Fate::$app->db[$flag];
             
-            if(!is_file($dbFile)) {
-                throw new FileNotFoundException('The Classfile: ' . $dbFile . ' not found');
-            }
-
-            try {
-                static::$_links[$dbFlag] = new $dbClass(
-                    $dsn
-                    ,$config['username']
-                    ,$config['password']);
-                
-                static::$_links[$dbFlag]->initConnection($config);    
-
-            } catch(PDOException $e) {
-                static::$_links[$dbFlag] = null;
-                
+            $this->_master = $this->connect($config);
+            
+            if(null === $this->_master) {
                 throw new DbException('Failed to connect to database');
             }
         }
 
-        return static::$_links[$dbFlag];
+        return $this->_master;
     }
+    
+    /**
+     * 获取一个从库连接
+     *
+     * @return Db
+     */
+    public function getSlave($flag) {
+        if(null === $this->_slave) {
+            $this->_slave = $this->openFromPool(Fate::$app->db[$flag]);
+        }
+        
+        return $this->_slave;
+    }
+    
+    /**
+     * 根据配置打开一个连接
+     *
+     * @param array $pool
+     */
+    public function openFromPool(array $pool) {
+        shuffle($pool);
+        
+        $db = null;
+        
+        foreach($pool as $conf) {
+            $db = $this->connect($conf);
+            
+            if(null !== $db) {
+                break;
+            }
+        }
+        
+        return $db;
+    }
+    
+    /**
+     * 打开一个连接
+     *
+     * @param array $config
+     * @return \fate\db\AbstractDb | null
+     */
+    public function connect($config) {
+        $db = null;
+        
+        $dsn = $config['dsn'];
+        $driver = $this->getDriverName($dsn);
+        
+        $DbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
+        $dbFile = Fate::namespaceToNormal($DbClass);
+        
+        if(!is_file($dbFile)) {
+            throw new DbException('The driver class not found: ' . $dbFile);
+        }
 
+        try {
+            $db = new $DbClass(
+                $dsn
+                ,$config['username']
+                ,$config['password']);
+            
+            $db->initConnection($config);
+
+        } catch(\PDOException $e) {
+            $db = null;
+        }
+        
+        return $db;
+    }
+    
     /**
      * 得到驱动名
      *
      * @return string name of the DB driver
      */
-    public static function getDriverName($dsn = '') {
+    public function getDriverName($dsn = '') {
         $driverName = '';
+        
         if('' !== $dsn) {
             if(false !== ($pos = strpos($dsn, ':'))) {
                 $driverName = strtolower(substr($dsn, 0, $pos));
