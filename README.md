@@ -7,6 +7,7 @@
 
 ###### 变更
 
++ v2.1.0 重构数据库部分
 + v2.0.0 修改框架名 yphp 更名为 fatephp 所有类路径 有 y\xxx 变为 fate\xxx
 + v1.3.0 更改 y\helpers\LinkedQueue 到 y\util\LinkedQueue
 + v1.3.0 修改 y\web\Request::getParam() 为 y\web\Request::getQueryString()
