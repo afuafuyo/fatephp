@@ -80,29 +80,40 @@ class FateBase {
      * 创建对象
      *
      * @param string | array $clazz 类全名 或 类配置
+     *
+     * 'some\namespace\Class'
+     * or
+     * [
+     *    'classPath' => 'some\namespace\Class'
+     *    '...' => ...
+     * ]
+     *
      * @param array $params 参数
      * @throws ClassNotFoundException 类未找到
      * @return Object 类实例
      */
     public static function createObject($clazz, array $params = []) {
-        $real = '';
+        $file = '';
+        $classPath = '';
         $properties = null;
         
         if(is_string($clazz)) {
-            $real = static::namespaceToNormal($clazz);
+            $classPath = $clazz;
+            $file = static::namespaceToNormal($clazz);
             
-        } else if(is_array($clazz) && isset($clazz['class'])) {
-            $real = static::namespaceToNormal($clazz['class']);
+        } else if(is_array($clazz) && isset($clazz['classPath'])) {
+            $classPath = $clazz['classPath'];
+            $file = static::namespaceToNormal($clazz['classPath']);
             
             $properties = $clazz;
-            unset($properties['class']);
+            unset($properties['classPath']);
         }
         
-        if('' === $real || !is_file($real)) {
+        if('' === $file || !is_file($file)) {
             throw new ClassNotFoundException('The class: '. $clazz .' not found');
         }
 
-        $reflection = new \ReflectionClass($clazz);
+        $reflection = new \ReflectionClass($classPath);
         $instance = $reflection->newInstanceArgs($params);
         
         if(null !== $properties) {

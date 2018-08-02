@@ -15,12 +15,12 @@ class FateCore extends Object {
     /**
      * @var string | array 拦截所有路由
      *
-     * 'app\some\Class'
+     * 'some\namespace\Class'
      *
      * or a array config
      *
      * [
-     *      'class' => 'app\some\Class',
+     *      'classPath' => 'some\namespace\Class',
      *      'property' => 'value'
      * ]
      *
@@ -33,7 +33,7 @@ class FateCore extends Object {
      * [
      *      'u' => 'app\controllers\user\IndexController',
      *      'account' => [
-     *         'class' => 'app\controllers\user\IndexController',
+     *         'classPath' => 'app\controllers\user\IndexController',
      *         'property' => 'value'
      *     ]
      * ]

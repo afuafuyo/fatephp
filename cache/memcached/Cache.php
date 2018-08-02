@@ -13,7 +13,7 @@ use fate\core\InvalidConfigException;
  *
  * 'cache' => [
  *      memcached' => [
- *          'class' => 'fate\cache\memcached\Cache'
+ *          'classPath' => 'fate\cache\memcached\Cache'
  *          ,'servers' => [
  *              [
  *                  'host' => '127.0.0.1'

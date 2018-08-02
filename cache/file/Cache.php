@@ -13,7 +13,7 @@ use fate\helpers\FileHelper;
  *
  * 'cache' => [
  *      'file' => [
- *          'class' => 'fate\cache\file\Cache',
+ *          'classPath' => 'fate\cache\file\Cache',
  *          ...
  *      ]
  * ]

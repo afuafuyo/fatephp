@@ -15,7 +15,7 @@ use fate\helpers\FileHelper;
  * 'log' => [
  *      'targets' => [
  *          'file' => [
- *              'class' => 'fate\log\file\Target',
+ *              'classPath' => 'fate\log\file\Target',
  *              ...
  *          ]
  *      ]

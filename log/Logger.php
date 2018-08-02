@@ -80,8 +80,8 @@ final class Logger {
         }
         
         foreach($settings['targets'] as $config) {
-            if(isset($config['class'])) {
-                $clazz = Fate::createObject($config['class'], [$config]);
+            if(isset($config['classPath'])) {
+                $clazz = Fate::createObject($config['classPath'], [$config]);
                 $clazz->on($clazz::EVENT_FLUSH, $clazz);
                 $this->targets[] = $clazz;
             }

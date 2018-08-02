@@ -34,13 +34,13 @@ final class Cache {
             throw new InvalidConfigException('Unknow cache config: ' . $cacheFlag);
         }
         
-        if(!isset(Fate::$app->cache[$cacheFlag]['class'])) {
-            throw new InvalidConfigException('Lost `class` config item of the cache class');
+        if(!isset(Fate::$app->cache[$cacheFlag]['classPath'])) {
+            throw new InvalidConfigException('Lost `classPath` config item of the cache class');
         }
         
         if( !isset(static::$_caches[$cacheFlag]) || null === static::$_caches[$cacheFlag] ){
             $config = Fate::$app->cache[$cacheFlag];
-            $cacheClass = $config['class'];
+            $cacheClass = $config['classPath'];
             $cacheFile = Fate::namespaceToNormal($cacheClass);
             
             if(!is_file($cacheFile)) {
