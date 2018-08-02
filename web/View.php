@@ -45,7 +45,7 @@ class View extends \fate\core\View {
         
         return Fate::namespaceToNormal('app', '')
             . '/views/'
-            . str_replace('\\', '/', $app->subRoute)
+            . str_replace('\\', '/', $app->viewPath)
             . '/' . $view . $this->defaultExtension;
     }
     

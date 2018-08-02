@@ -79,7 +79,7 @@ class FateCore extends Object {
     /**
      * @var string 前缀目录
      */
-    public $subRoute = '';
+    public $viewPath = '';
 
     /**
      * 创建控制器
@@ -119,13 +119,13 @@ class FateCore extends Object {
         }
         
         // 保存前缀
-        $this->subRoute = $id;
+        $this->viewPath = $id;
         
         // 保存当前控制器标识
         if( false !== ($pos = strrpos($route, '/')) ) {
-            $this->subRoute = $this->subRoute . '/' . substr($route, 0, $pos);
+            $this->viewPath = $this->viewPath . '/' . substr($route, 0, $pos);
             $this->controllerId = substr($route, $pos + 1);
-            $this->subRoute = str_replace('/', '\\', $this->subRoute);  // namespace path
+            $this->viewPath = str_replace('/', '\\', $this->viewPath);  // namespace path
         }
         if('' === $this->controllerId) {
             $this->controllerId = $this->defaultControllerId;
@@ -151,7 +151,7 @@ class FateCore extends Object {
         
         $clazz = $this->defaultControllerNamespace
             . '\\'
-            . $this->subRoute
+            . $this->viewPath
             . '\\'
             . ucfirst($this->controllerId) . 'Controller';
         
