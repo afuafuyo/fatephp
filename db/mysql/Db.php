@@ -234,8 +234,10 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::close()
      */
     public function close() {
-        $this->pdoStatement->closeCursor();
-        $this->pdoStatement = null;
+        if(null !== $this->pdoStatement) {
+            $this->pdoStatement->closeCursor();
+            $this->pdoStatement = null;
+        }
         
         $this->bindingParams = [];
     }
