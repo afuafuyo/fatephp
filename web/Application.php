@@ -5,7 +5,6 @@
  */
 namespace fate\web;
 
-use Fate;
 use fate\core\InvalidCallException;
 
 /**
@@ -16,7 +15,7 @@ class Application extends \fate\core\Application {
     /**
      * @var string 异常处理类
      */
-    public $errorHandler = 'fate\\web\\ErrorHandler';
+    public $errorHandler = '';
 
     /**
      * 运行应用
@@ -45,7 +44,7 @@ class Application extends \fate\core\Application {
      * {@inheritdoc}
      */
     public function errorHandler() {
-        $handler = Fate::createObject($this->errorHandler);
+        $handler = new ErrorHandler();
         
         $handler->register();
     }
