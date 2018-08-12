@@ -13,11 +13,6 @@ use fate\core\InvalidCallException;
 class Application extends \fate\core\Application {
 
     /**
-     * @var string 异常处理类
-     */
-    public $errorHandler = '';
-
-    /**
      * 运行应用
      *
      * @throws InvalidCallException 方法未找到
@@ -43,7 +38,7 @@ class Application extends \fate\core\Application {
     /**
      * {@inheritdoc}
      */
-    public function errorHandler() {
+    public function handlerError() {
         $handler = new ErrorHandler();
         
         $handler->register();

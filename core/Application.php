@@ -11,6 +11,11 @@ use Fate;
  * 应用前端控制器
  */
 class Application extends FateCore {
+
+    /**
+     * @property string 异常处理类
+     */
+    public $errorHandler = '';
     
     /**
      * constructor
@@ -18,7 +23,7 @@ class Application extends FateCore {
     public function __construct($config = []) {
         Fate::$app = $this;
         
-        $this->errorHandler();
+        $this->handlerError();
         
         $this->init($config);
         
@@ -28,7 +33,7 @@ class Application extends FateCore {
     /**
      * 异常处理
      */
-    public function errorHandler() {}
+    public function handlerError() {}
     
     /**
      * 运行应用
