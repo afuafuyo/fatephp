@@ -163,6 +163,7 @@ class Db extends \fate\db\AbstractDb {
     /**
      * {@inheritdoc}
      * @see \fate\db\AbstractDb::queryAll()
+     * @return array | boolean
      */
     public function queryAll() {
         $data = null;
@@ -183,6 +184,7 @@ class Db extends \fate\db\AbstractDb {
     /**
      * {@inheritdoc}
      * @see \fate\db\AbstractDb::queryOne()
+     * @return array | boolean
      */
     public function queryOne() {
         $data = null;

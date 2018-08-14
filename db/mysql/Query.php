@@ -188,6 +188,7 @@ class Query extends \fate\db\AbstractQuery {
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::getAll()
+     * @return array | boolean
      */
     public function getAll() {
         $this->op = self::$OPERATE_QUERYALL;
@@ -200,6 +201,7 @@ class Query extends \fate\db\AbstractQuery {
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::getOne()
+     * @return array | boolean
      */
     public function getOne() {
         $this->op = self::$OPERATE_QUERYONE;
