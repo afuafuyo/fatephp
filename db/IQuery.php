@@ -11,7 +11,7 @@ namespace fate\db;
 interface IQuery {
     
     /**
-     * Executes the query and returns a single column of result
+     * Executes the query and returns a single column of row
      *
      * @return string 结果集的第一行第一列记录
      */
