@@ -213,6 +213,19 @@ class Query extends \fate\db\AbstractQuery {
     
     /**
      * {@inheritdoc}
+     * @see \fate\db\IQuery::getColumn()
+     * @return string | boolean
+     */
+    public function getColumn() {
+        $this->op = self::$OPERATE_QUERYONE;
+        
+        $this->sqlString = $this->buildSql();
+        
+        return $this->db->buildQuery($this)->queryColumn();
+    }
+    
+    /**
+     * {@inheritdoc}
      * @see \fate\db\IQuery::count()
      */
     public function count($column = '*') {
