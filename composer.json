@@ -4,13 +4,13 @@
     "keywords" : [
         "framework"
     ],
-    "homepage" : "https://github.com/yulipu/fatephp",
+    "homepage" : "https://github.com/afuafuyo/fatephp",
     "type" : "library",
     "license" : "MIT",
     "authors" : [{
             "name" : "lipu yu",
             "email" : "ylp1127@126.com",
-            "homepage" : "https://github.com/yulipu/fatephp",
+            "homepage" : "https://github.com/afuafuyo/fatephp",
             "role" : "Founder and project lead"
         }
     ],
