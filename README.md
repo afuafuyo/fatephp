@@ -118,6 +118,18 @@ $res = (new fate\web\Application([
 ]))->run();
 ```
 
+###### install
+
+1. use composer
+
+```shell
+composer require afuafuyo/fatephp
+```
+
+2. github source
+
+Download source code from github and place it under the project
+
 ###### Db
 
 ```php
@@ -142,6 +154,7 @@ $data = $db->createQuery()->select('id,title')->from('xxx')->getAll();
 
 $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = ?', [1])->getOne();
 $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
+$data = $db->createQuery()->select('content')->from('xxx')->where('id=1')->getColumn();
 
 $n = $db->createQuery()->from('xxx')->where('id > 2')->count('id');
 ```
