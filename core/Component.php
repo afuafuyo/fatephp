@@ -7,18 +7,7 @@ namespace fate\core;
 
 use Fate;
 
-class Component extends Object {
-    
-    /**
-     * @var array the attached event handlers
-     *
-     * [
-     *     'eventName' => [fn1, fn2...]
-     *     'eventName2' => [fn1, fn2...]
-     * ]
-     *
-     */
-    public $eventsMap = [];
+class Component extends Event {
     
     /**
      * @var array the attached behaviors
@@ -88,7 +77,7 @@ class Component extends Object {
      *
      */
     public function behaviors() {
-        return [];
+        return null;
     }
     
     /**
@@ -96,6 +85,10 @@ class Component extends Object {
      */
     public function ensureDeclaredBehaviorsAttached() {
         $behaviors = $this->behaviors();
+        
+        if(null === $behaviors) {
+            return;
+        }
         
         foreach($behaviors as $name => $val) {
             $this->attachBehaviorInternal($name, $val);
@@ -122,58 +115,4 @@ class Component extends Object {
         $this->behaviorsMap[$name] = $behavior;
     }
     
-    /**
-     * 注册事件处理
-     *
-     * @param string $eventName 事件名称
-     * @param callable $handler 回调函数
-     */
-    public function on($eventName, $handler) {
-        if(!isset($this->eventsMap[$eventName])) {
-            $this->eventsMap[$eventName] = [];
-        }
-        
-        $this->eventsMap[$eventName][] = $handler;
-    }
-
-    /**
-     * 注销事件处理
-     *
-     * @param string $eventName 事件名称
-     * @param callable $handler 回调函数
-     */
-    public function off($eventName, $handler = null) {
-        if(!isset($this->eventsMap[$eventName])) {
-            return;
-        }
-        
-        if(null === $handler) {
-            unset($this->eventsMap[$eventName]);
-            
-        } else {
-            foreach($this->eventsMap[$eventName] as $i => $h) {
-                if($handler === $h) {
-                    unset($this->eventsMap[$eventName][$i]);
-                }
-            }
-        }
-    }
-
-    /**
-     * 触发
-     *
-     * @param string $eventName 事件名称
-     * @param mixed $param 参数
-     */
-    public function trigger($eventName, $param = null) {
-        if(!isset($this->eventsMap[$eventName])) {
-            return;
-        }
-        
-        foreach($this->eventsMap[$eventName] as $handler) {
-            null === $param ? call_user_func($handler)
-                : call_user_func($handler, $param);
-        }
-    }
-
 }

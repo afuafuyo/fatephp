@@ -21,7 +21,7 @@ class Behavior extends Object {
      *
      */
     public function events() {
-        return [];
+        return null;
     }
     
     /**
@@ -33,6 +33,10 @@ class Behavior extends Object {
         $this->component = $component;
         
         $events = $this->events();
+        
+        if(null === $events) {
+            return;
+        }
         
         foreach($events as $eventName => $val) {
             $this->component->on($eventName, $val);
@@ -48,6 +52,10 @@ class Behavior extends Object {
         }
         
         $events = $this->events();
+        
+        if(null === $events) {
+            return;
+        }
         
         foreach($events as $eventName => $val) {
             $this->component->off($eventName, $val);

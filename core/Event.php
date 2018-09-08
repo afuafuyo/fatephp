@@ -11,7 +11,13 @@ namespace fate\core;
 class Event extends Object {
 
     /**
-     * @var array 事件回调
+     * @var array the attached event handlers
+     *
+     * [
+     *     'eventName' => [fn1, fn2...]
+     *     'eventName2' => [fn1, fn2...]
+     * ]
+     *
      */
     protected $_handlers = [];
 
