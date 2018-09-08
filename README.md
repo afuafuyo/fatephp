@@ -7,6 +7,7 @@
 
 ###### 变更
 
++ v3.0.0 重构控制器部分 添加 web\ApiController
 + v2.1.0 重构数据库部分
 + v2.0.0 修改框架名 yphp 更名为 fatephp 所有类路径 有 y\xxx 变为 fate\xxx
 + v1.3.0 更改 y\helpers\LinkedQueue 到 y\util\LinkedQueue
