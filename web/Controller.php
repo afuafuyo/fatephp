@@ -51,7 +51,7 @@ class Controller extends \fate\core\Controller {
     /**
      * 输出 ajax 数据
      *
-     * @param array $data
+     * @param any $data
      * @param integer $status
      */
     public function ajaxReturn($data, $status = 0, $message = '') {
