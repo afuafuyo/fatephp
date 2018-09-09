@@ -11,7 +11,7 @@ namespace fate\core;
 abstract class View extends Object {
 
     /**
-     * @var string 默认视图文件后缀
+     * @property string 默认视图文件后缀
      */
     public $defaultExtension = '.php';
 

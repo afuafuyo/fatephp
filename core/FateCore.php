@@ -13,7 +13,7 @@ use Fate;
 class FateCore extends Object {
     
     /**
-     * @var string | array 拦截所有路由
+     * @property string | array 拦截所有路由
      *
      * 'some\namespace\Class'
      *
@@ -28,7 +28,7 @@ class FateCore extends Object {
     public $interceptAll = null;
     
     /**
-     * @var array 实现路由到控制器转换配置
+     * @property array 实现路由到控制器转换配置
      *
      * [
      *      'u' => 'app\controllers\user\IndexController',
@@ -42,42 +42,42 @@ class FateCore extends Object {
     public $routesMap = null;
 
     /**
-     * @var array 注册的模块
+     * @property array 注册的模块
      */
     public $modules = null;
 
     /**
-     * @var string 路由标识
+     * @property string 路由标识
      */
     public $defaultRouteParam = 'r';
 
     /**
-     * @var string 默认路由
+     * @property string 默认路由
      */
     public $defaultRoute = 'index/index';
 
     /**
-     * @var string 默认控制器命名空间
+     * @property string 默认控制器命名空间
      */
     public $defaultControllerNamespace = 'app\\controllers';
 
     /**
-     * @var string 默认控制器
+     * @property string 默认控制器
      */
     public $defaultControllerId = 'index';
 
     /**
-     * @var string 当前的模块
+     * @property string 当前的模块
      */
     public $moduleId = '';
 
     /**
-     * @var string 当前的控制器
+     * @property string 当前的控制器
      */
     public $controllerId = '';
 
     /**
-     * @var string 前缀目录
+     * @property string 前缀目录
      */
     public $viewPath = '';
 

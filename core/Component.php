@@ -7,10 +7,13 @@ namespace fate\core;
 
 use Fate;
 
+/**
+ * 组件基类
+ */
 class Component extends Event {
     
     /**
-     * @var array the attached behaviors
+     * @property array the attached behaviors
      *
      * [
      *     'behaviorName' => BehaviorInstance

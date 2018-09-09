@@ -5,10 +5,13 @@
  */
 namespace fate\core;
 
+/**
+ * 行为基类
+ */
 class Behavior extends Object {
     
     /**
-     * @var Component 拥有行为的组件
+     * @property Component 拥有行为的组件
      */
     public $component = null;
     

@@ -10,12 +10,12 @@ use Fate;
 class Controller extends \fate\core\Controller {
     
     /**
-     * @var string 默认视图类命名空间
+     * @property string 默认视图类命名空间
      */
     public $defaultView = 'fate\\web\\View';
     
     /**
-     * @var Object 视图类实例
+     * @property Object 视图类实例
      */
     public $view = null;
     
@@ -60,6 +60,7 @@ class Controller extends \fate\core\Controller {
             'status' => $status,
             'message' => $message
         ]);
+        
         exit;
     }
     

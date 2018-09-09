@@ -14,7 +14,7 @@ use fate\core\FileNotFoundException;
 class View extends \fate\core\View {
     
     /**
-     * @var string 页面标题
+     * @property string 页面标题
      */
     public $title = '';
     
