@@ -79,9 +79,9 @@ final class Logger {
             $this->flushInterval = $settings['flushInterval'];
         }
         
-        foreach($settings['targets'] as $config) {
-            if(isset($config['classPath'])) {
-                $clazz = Fate::createObject($config['classPath'], [$config]);
+        foreach($settings['targets'] as $t) {
+            if(isset($t['classPath'])) {
+                $clazz = Fate::createObject($t['classPath'], [$t]);
                 $clazz->on($clazz::EVENT_FLUSH, $clazz);
                 $this->targets[] = $clazz;
             }

@@ -16,39 +16,34 @@ use fate\helpers\FileHelper;
  *      'targets' => [
  *          'file' => [
  *              'classPath' => 'fate\log\file\Target',
- *              ...
+ *              'logPath' => '@runtime/logs',
+ *              'logFile' => 'system.log'
  *          ]
- *      ]
+ *      ],
+ *      flushInterval: 10
  * ]
  *
  */
 class Log extends \fate\log\AbstractLog {
     
     /**
-     * @var string log file extension
-     */
-    public $fileExtension = '.log';
-    
-    /**
-     * @var string log file path
+     * @property string log file path
      */
     public $logPath = '@runtime/logs';
-
+    
     /**
-     * @var string log file name
+     * @property string log file name
      */
-    public $logFile = null;
+    public $logFile = 'system.log';
     
     public function __construct($config) {
-        if(isset($config['fileExtension'])) {
-            $this->fileExtension = $config['fileExtension'];
-        }
-        
         $this->logPath = isset($config['logPath'])
             ? $config['logPath']
             : Fate::getPathAlias($this->logPath);
         
-        $this->logFile = $this->generateTimeLogFile();
+        if(isset($config['logFile'])) {
+            $this->logFile = $config['logFile'];
+        }
     }
     
     /**
@@ -73,15 +68,6 @@ class Log extends \fate\log\AbstractLog {
     }
     
     /**
-     * 生成日志文件名
-     *
-     * @param string $format 格式
-     */
-    public function generateTimeLogFile($format = 'Y-m-d') {
-        return date($format) . $this->fileExtension;
-    }
-    
-    /**
      * 格式化内容
      *
      * @param array $messages 内容
@@ -91,9 +77,9 @@ class Log extends \fate\log\AbstractLog {
         
         for($i=0, $len=count($messages); $i<$len; $i++) {
             $msg .= date('Y-m-d H:i:s', $messages[$i][2])
-                . ' -- '
+                . ' [ '
                 . Logger::getLevelName($messages[$i][1])
-                . ' -- '
+                . ' ] '
                 . $messages[$i][0] . "\n";
         }
         
