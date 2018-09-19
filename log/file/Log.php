@@ -36,6 +36,11 @@ class Log extends \fate\log\AbstractLog {
      */
     public $logFile = 'system.log';
     
+    /**
+     * @property integer maxFileSize maximum log file size in KB
+     */
+    public $maxFileSize = 10240;
+    
     public function __construct($config) {
         $this->logPath = isset($config['logPath'])
             ? $config['logPath']
@@ -43,6 +48,10 @@ class Log extends \fate\log\AbstractLog {
         
         if(isset($config['logFile'])) {
             $this->logFile = $config['logFile'];
+        }
+        
+        if(isset($config['maxFileSize'])) {
+            $this->maxFileSize = $config['maxFileSize'];
         }
     }
     
@@ -61,8 +70,26 @@ class Log extends \fate\log\AbstractLog {
             return;
         }
         
+        // write file
         @flock($fp, LOCK_EX);
+        
+        clearstatcache();
+        
+        // file size too big
+        if( @filesize($file) > $this->maxFileSize * 1024 ) {
+            @flock($fp, LOCK_UN);
+            @fclose($fp);
+            
+            $newFile = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile . '.bak';
+            rename($file, $newFile);
+            file_put_contents($file, $msg);
+            
+            return;
+        }
+        
+        // file size normal
         @fwrite($fp, $msg);
+        
         @flock($fp, LOCK_UN);
         @fclose($fp);
     }
