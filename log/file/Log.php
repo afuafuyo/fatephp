@@ -67,6 +67,7 @@ class Log extends \fate\log\AbstractLog {
             FileHelper::createDirectory($this->logPath);
         }
         
+        // here fopen() automatically create file when not exists
         if(false === ($fp = fopen($file, 'a'))) {
             return;
         }
