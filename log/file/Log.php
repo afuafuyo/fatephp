@@ -17,7 +17,8 @@ use fate\helpers\FileHelper;
  *          'file' => [
  *              'classPath' => 'fate\log\file\Target',
  *              'logPath' => '@runtime/logs',
- *              'logFile' => 'system.log'
+ *              'logFile' => 'system.log',
+ *              'maxFileSize' => 10240
  *          ]
  *      ],
  *      flushInterval: 10
