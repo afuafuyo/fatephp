@@ -27,7 +27,7 @@ use fate\helpers\FileHelper;
 class Log extends \fate\log\AbstractLog {
     
     /**
-     * @property string log file path
+     * @property string absolute path of log file. default at runtime directory of the application
      */
     public $logPath = '@runtime/logs';
     
@@ -66,21 +66,21 @@ class Log extends \fate\log\AbstractLog {
             FileHelper::createDirectory($this->logPath);
         }
         
-        if(false === ($fp = @fopen($file, 'a'))) {
+        if(false === ($fp = fopen($file, 'a'))) {
             return;
         }
         
         // write file
-        @flock($fp, LOCK_EX);
+        flock($fp, LOCK_EX);
         
         clearstatcache();
         
         // file size too big
-        if( @filesize($file) > $this->maxFileSize * 1024 ) {
-            @flock($fp, LOCK_UN);
-            @fclose($fp);
+        if( filesize($file) > $this->maxFileSize * 1024 ) {
+            flock($fp, LOCK_UN);
+            fclose($fp);
             
-            $newFile = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile . '.bak';
+            $newFile = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile . date('YmdHis');
             rename($file, $newFile);
             file_put_contents($file, $msg);
             
@@ -88,10 +88,10 @@ class Log extends \fate\log\AbstractLog {
         }
         
         // file size normal
-        @fwrite($fp, $msg);
+        fwrite($fp, $msg);
         
-        @flock($fp, LOCK_UN);
-        @fclose($fp);
+        flock($fp, LOCK_UN);
+        fclose($fp);
     }
     
     /**
