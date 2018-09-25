@@ -80,7 +80,7 @@ class Log extends \fate\log\AbstractLog {
             flock($fp, LOCK_UN);
             fclose($fp);
             
-            $newFile = $this->logPath . DIRECTORY_SEPARATOR . $this->logFile . date('YmdHis');
+            $newFile = $file . date('YmdHis');
             rename($file, $newFile);
             file_put_contents($file, $msg);
             
