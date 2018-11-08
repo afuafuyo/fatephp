@@ -9,6 +9,8 @@ use Fate;
 
 class Controller extends \fate\core\Controller {
     
+    use ControllerTrait;
+    
     /**
      * @property string 默认视图类命名空间
      */
@@ -46,22 +48,6 @@ class Controller extends \fate\core\Controller {
         }
         
         return $data;
-    }
-    
-    /**
-     * 输出 ajax 数据
-     *
-     * @param any $data
-     * @param integer $status
-     */
-    public function ajaxReturn($data, $status = 0, $message = '') {
-        echo json_encode([
-            'data' => $data,
-            'status' => $status,
-            'message' => $message
-        ]);
-        
-        exit;
     }
     
 }

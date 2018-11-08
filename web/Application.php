@@ -27,7 +27,7 @@ class Application extends \fate\core\Application {
             throw new InvalidCallException('The route is invalid: ' . $route);
         }
         
-        if(!method_exists($controller, 'runControllerAction')) {
+        if( !($controller instanceof Controller) ) {
             // 单一入口
             return $controller->run();
         }
