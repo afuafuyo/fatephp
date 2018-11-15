@@ -6,9 +6,9 @@
 namespace fate\web;
 
 /**
- * 简单控制器 不包含复杂继承关系
+ * 简单控制器
  */
-class PureController {
+class PureController extends \fate\core\Object {
     
     use ControllerTrait;
     

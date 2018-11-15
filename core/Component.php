@@ -8,7 +8,7 @@ namespace fate\core;
 use Fate;
 
 /**
- * 组件基类
+ * 组件类是实现 属性 (property) 行为 (behavior) 事件 (event) 的基类
  */
 class Component extends Event {
     

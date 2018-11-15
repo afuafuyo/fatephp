@@ -5,6 +5,9 @@
  */
 namespace fate\core;
 
+/**
+ * 核心控制器类
+ */
 class Controller extends Component {
     
     /**
