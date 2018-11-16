@@ -133,8 +133,8 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::bindValues()
      */
     public function bindValues($params) {
-        foreach($params as $i => $v) {
-            $this->bindingParams[$i] = $v;
+        foreach($params as $k => $v) {
+            $this->bindingParams[$k] = $v;
         }
         
         return $this;
