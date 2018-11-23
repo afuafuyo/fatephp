@@ -82,6 +82,11 @@ class FateCore extends Object {
     public $viewPath = '';
 
     /**
+     * @property string 布局文件路径
+     */
+    public $layout = '';
+
+    /**
      * 创建控制器
      *
      * @param string $route 路由

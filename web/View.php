@@ -14,58 +14,108 @@ use fate\core\FileNotFoundException;
 class View extends \fate\core\View {
     
     /**
+     * @property boolean 是否开启布局视图
+     */
+    public $enableLayout = false;
+    
+    /**
      * @property string 页面标题
      */
     public $title = '';
     
     /**
-     * {@inheritdoc}
+     * @property string 页面描述
      */
-    public function render($view, $params = []) {
-        $file = $this->findViewFile($view);
-        
-        return $this->renderFile($file, $params);
+    public $description = '';
+    
+    /**
+     * @property string 内容 html
+     */
+    public $contentHtml = '';
+    
+    /**
+     * @property array Head 部分资源
+     */
+    public $headAssets = null;
+    
+    /**
+     * @property array Footer 部分资源
+     */
+    public $footerAssets = null;
+    
+    /**
+     * 获取 head 部分资源
+     *
+     * @return string
+     */
+    public function getHeadAssets() {
+        return implode("\n", $this->headAssets);
     }
     
     /**
-     * 得到视图所在路径
+     * 添加 head 部分资源
      *
-     * @return string 视图路径
+     * @param string $asset 资源
      */
-    public function findViewFile($view) {
-        $app = Fate::$app;
-        
-        // 模块无子目录 普通控制器有子目录
-        // 注意转换 namespace path 为目录路径
-        if('' !== $app->moduleId) {
-            return Fate::namespaceToNormal($app->modules[$app->moduleId], '')
-                .'/views/'
-                . $view . $this->defaultExtension;
+    public function addHeadAssets($asset) {
+        if(null === $this->headAssets) {
+            $this->headAssets = [];
         }
         
-        return Fate::namespaceToNormal('app', '')
-            . '/views/'
-            . str_replace('\\', '/', $app->viewPath)
-            . '/' . $view . $this->defaultExtension;
+        $this->headAssets[] = $asset;
     }
     
     /**
-     * 渲染文件
+     * 获取 footer 部分资源
      *
-     * @param string $file 文件
-     * @param array $params 参数
+     * @return string
+     */
+    public function getFooterAssets() {
+        return implode("\n", $this->footerAssets);
+    }
+    
+    /**
+     * 添加 footer 部分资源
+     *
+     * @param string $asset 资源
+     */
+    public function addFooterAssets($asset) {
+        if(null === $this->footerAssets) {
+            $this->footerAssets = [];
+        }
+        
+        $this->footerAssets[] = $asset;
+    }
+    
+    /**
+     * {@inheritdoc}
      */
     public function renderFile($file, $params) {
         if(!is_file($file)) {
-            throw new FileNotFoundException('The view file: ' . $file . ' not found');
+            throw new FileNotFoundException('The view file not found: ' . $file);
         }
         
+        // view
         ob_start();
         ob_implicit_flush(false);
         extract($params, EXTR_OVERWRITE);
         include($file);
-
-        return ob_get_clean();
+        
+        $this->contentHtml = ob_get_clean();
+        
+        // layout
+        if($this->enableLayout && '' !== Fate::$app->layout) {
+            $layoutFile = Fate::getPathAlias(Fate::$app->layout);
+            
+            ob_start();
+            ob_implicit_flush(false);
+            
+            include($layoutFile);
+            
+            $this->contentHtml = ob_get_clean();
+        }
+        
+        return $this->contentHtml;
     }
     
 }
