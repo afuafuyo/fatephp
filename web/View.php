@@ -57,7 +57,7 @@ class View extends \fate\core\View {
      *
      * @param string $asset 资源
      */
-    public function addHeadAssets($asset) {
+    public function addHeadAsset($asset) {
         if(null === $this->headAssets) {
             $this->headAssets = [];
         }
@@ -79,7 +79,7 @@ class View extends \fate\core\View {
      *
      * @param string $asset 资源
      */
-    public function addFooterAssets($asset) {
+    public function addFooterAsset($asset) {
         if(null === $this->footerAssets) {
             $this->footerAssets = [];
         }
