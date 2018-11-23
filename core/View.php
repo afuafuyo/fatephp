@@ -50,7 +50,7 @@ abstract class View extends Object {
      * @param string $view 视图名
      * @param array $params 参数
      */
-    public abstract function render($view, $params = []) {
+    public function render($view, $params = []) {
         $file = $this->findViewFile($view);
         
         return $this->renderFile($file, $params);
