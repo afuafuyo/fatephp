@@ -49,7 +49,7 @@ class View extends \fate\core\View {
      * @return string
      */
     public function getHeadAssets() {
-        return implode("\n", $this->headAssets);
+        return null === $this->headAssets ? '' : implode("\n", $this->headAssets);
     }
     
     /**
@@ -71,7 +71,7 @@ class View extends \fate\core\View {
      * @return string
      */
     public function getFooterAssets() {
-        return implode("\n", $this->footerAssets);
+        return null === $this->footerAssets ? '' : implode("\n", $this->footerAssets);
     }
     
     /**
