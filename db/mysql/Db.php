@@ -22,27 +22,6 @@ use PDO;
  *      ]
  * ]
  *
- * eg.
- *
- * $db = Db::instance('xxx');
- *
- * $data = $db->prepareSql('select title from xxx')->queryAll();
- *
- * $n = $db->prepareSql('select count(id) from xxx')->queryColumn();
- *
- * $data = $db->prepareStatement('select name from xxx where id = :id limit 0, 1')->bindValue(':id', 1)->queryOne();
- *
- * $n = $db->prepareStatement('update xxx set username = ?')->bindValues(["li's"])->execute();
- *
- * Use QueryBuilder
- *
- * $data = $db->createQuery()->select('id,title')->from('xxx')->getAll();
- *
- * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = ?', [1])->getOne();
- * $data = $db->createQuery()->select('id,title')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
- *
- * $n = $db->createQuery()->from('xxx')->where('id > 2')->count('id');
- *
  */
 class Db extends \fate\db\AbstractDb {
     
@@ -55,7 +34,7 @@ class Db extends \fate\db\AbstractDb {
      * @var string sql string
      */
     public $sqlString = '';
-
+    
     public function __construct($dsn, $username, $password) {
         $this->pdo = new PDO($dsn, $username, $password);
     }
