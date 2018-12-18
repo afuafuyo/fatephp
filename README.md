@@ -2,6 +2,8 @@
 
 ###### 与 [YNode](https://github.com/afuafuyo/ynode) 保持统一架构的 php 框架
 
+# [DOC](./DOC.md)
+
 ###### php 版本
 
 + php5.4+
@@ -132,65 +134,3 @@ composer require afuafuyo/fatephp
 2. github source
 
 Download source code from github and place it under the project
-
-###### Db
-
-```php
-$db = Db::instance('main');
-
-// 1. 使用 sql 操作数据库
-
-// 增加
-$db->prepareSql('INSERT INTO xxx(id, age) VALUES(1, 20)')->execute();
-$insertId = $db->getLastInsertId('id');
-
-// 删除
-$db->prepareSql('DELETE FROM xxx WHERE id = 1')->execute();
-
-// 修改
-$db->prepareSql('UPDATE xxx SET age = 22 WHERE id = 1')->execute();
-
-// 查询所有
-$data = $db->prepareSql('SELECT age FROM xxx')->queryAll();
-
-// 查询一条
-$data = $db->prepareSql('SELECT age FROM xxx WHERE id = 1')->queryOne();
-
-// 查询单列
-$n = $db->prepareSql('SELECT count(id) FROM xxx')->queryColumn();
-
-
-// 2. 使用预处理语句
-
-// 增加
-$db->prepareStatement('INSERT INTO xxx(id, age) VALUES(:id, :age)')
-    ->bindValues([':id' => 1, ':age' => 20])->execute();
-
-$db->prepareStatement('INSERT INTO xxx(id, age) VALUES(?, ?)')
-    ->bindValues([1, 20])->execute();
-
-// 删除
-$db->prepareStatement('DELETE FROM xxx WHERE id = ?')->bindValues([1])->execute();
-
-// 修改
-$db->prepareStatement('UPDATE xxx SET age = ? WHERE id = ?')->bindValues([22, 1])->execute();
-
-// 查询一条
-$data = $db->prepareStatement('SELECT age FROM xxx WHERE id = :id')->bindValue(':id', 1)->queryOne();
-
-
-// 3. 使用查询生成器 只能执行查询操作
-
-// 查询所有
-$data = $db->createQuery()->select('id, age')->from('xxx')->getAll();
-
-// 查询一条
-$data = $db->createQuery()->select('id, age')->from('xxx')->where('id = ?', [1])->getOne();
-$data = $db->createQuery()->select('id, age')->from('xxx')->where('id = :id', [':id' => 1])->getOne();
-
-// 查询单列
-$data = $db->createQuery()->select('age')->from('xxx')->where('id = 1')->getColumn();
-
-// 统计
-$n = $db->createQuery()->from('xxx')->where('id > 2')->count('id');
-```
