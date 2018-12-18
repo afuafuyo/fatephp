@@ -84,7 +84,20 @@ class Request extends \fate\core\Request {
     public function getUserIP() {
         return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
     }
+    
+    /**
+     * 获取当前请求使用的方法
+     *
+     * @return string
+     */
+    public function getMethod() {
+        if(isset($_SERVER['REQUEST_METHOD'])) {
+            return strtoupper($_SERVER['REQUEST_METHOD']);
+        }
 
+        return 'GET';
+    }
+    
     /**
      * 获取 get 参数
      *

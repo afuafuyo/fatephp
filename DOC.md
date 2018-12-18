@@ -103,9 +103,7 @@ server {
     index  index.html index.php;
     root d:/www/MY_FIRST_APP;
     
-    location ~ \.php$ {
-        fastcgi_param YUBA_ENVIRONMENT 'development';
-    
+    location ~ \.php$ {    
         fastcgi_pass   127.0.0.1:9000;
         fastcgi_index  index.php;
         fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
@@ -247,7 +245,7 @@ $res = (new fate\web\Application([
 
 - `interceptAll` 用于拦截所有路由
 
-一下配置会使得所有请求都交由 app\Deny 类处理
+以下配置会使得所有请求都交由 app\Deny 类处理
 
 ```php
 [
@@ -257,7 +255,7 @@ $res = (new fate\web\Application([
 
 - `routesMap` 用于自定义路由
 
-以下配置使得， account 路由和 u 路由使用 `app\controllers\user\IndexController` 类做处理， account 路由同时还向 `app\controllers\user\IndexController` 类传入了一个参数
+以下配置使得， account 路由和 u 路由都使用 `app\controllers\user\IndexController` 类做处理， account 路由同时还向 `app\controllers\user\IndexController` 类传入了一个属性
 
 ```
 [
@@ -281,7 +279,7 @@ $res = (new fate\web\Application([
 
 ### 动作
 
-控制器由动作组成，它是执行终端用户请求的最基础的单元。在 fatephp 中，一个控制器有且只有一个入口动作叫做 `run`
+控制器由动作组成，它是执行终端用户请求的最基础的单元。在 fatephp 中，一个控制器必须有一个 `run` 入口
 
 ```php
 namespace app\controllers\index;
@@ -333,7 +331,7 @@ class IndexController extends \fate\web\Controller {
 ### 系统内置别名
 
 - `@fate` 指向 fatephp 目录
-- `@app` 项目目录，由入口文件 appPath 属性指定
+- `@app` 项目目录，由入口文件 `appPath` 属性指定
 - `@runtime` 缓存目录，默认指向 `@app/runtime`
 
 ### 自定义别名
