@@ -1,7 +1,5 @@
 # 小型 php 框架 非线程安全
 
-###### 与 [YNode](https://github.com/afuafuyo/ynode) 保持统一架构的 php 框架
-
 # [DOC](./DOC.md)
 
 ###### php 版本
