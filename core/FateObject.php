@@ -11,7 +11,7 @@ use fate\core\UnknownPropertyException;
 /**
  * 所有类的父类
  */
-class Object {
+class FateObject {
 
     /**
      * 设置不存在或私有的属性

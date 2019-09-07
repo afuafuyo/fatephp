@@ -8,7 +8,7 @@ namespace fate\core;
 /**
  * 行为基类
  */
-class Behavior extends Object {
+class Behavior extends FateObject {
     
     /**
      * @property Component 拥有行为的组件

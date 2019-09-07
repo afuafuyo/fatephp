@@ -10,7 +10,7 @@ use Fate;
 /**
  * 核心类
  */
-class FateCore extends Object {
+class FateCore extends FateObject {
     
     /**
      * @property string | array 拦截所有路由

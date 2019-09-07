@@ -8,7 +8,7 @@ namespace fate\core;
 /**
  * 事件基类
  */
-class Event extends Object {
+class Event extends FateObject {
 
     /**
      * @var array the attached event handlers

@@ -5,8 +5,7 @@
  */
 namespace fate\core;
 
-abstract class Request extends Object {
-    
+abstract class Request extends FateObject {
     /**
      * @var string 入口文件名
      */

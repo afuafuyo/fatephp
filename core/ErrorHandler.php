@@ -5,7 +5,7 @@
  */
 namespace fate\core;
 
-abstract class ErrorHandler extends Object {
+abstract class ErrorHandler extends FateObject {
     
     /**
      * Register a error handler

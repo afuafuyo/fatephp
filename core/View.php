@@ -10,7 +10,7 @@ use Fate;
 /**
  * 视图类
  */
-abstract class View extends Object {
+abstract class View extends FateObject {
     
     /**
      * @property string 默认视图文件后缀

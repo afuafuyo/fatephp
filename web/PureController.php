@@ -8,7 +8,7 @@ namespace fate\web;
 /**
  * 简单控制器
  */
-class PureController extends \fate\core\Object {
+class PureController extends \fate\core\FateObject {
     
     use ControllerTrait;
     
