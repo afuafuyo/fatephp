@@ -100,12 +100,12 @@ class Query extends \fate\db\AbstractQuery {
      * @return string
      */
     private function buildGroupBy() {
-        if( !isset($this->options['groupBy']) ) {
+        if('' === $this->groupBy) {
             return '';
         }
 
         /*
-        $fields = explode(',', $this->options['groupBy']);
+        $fields = explode(',', $this->groupBy);
 
         // trim & quote
         foreach($fields as $i => $field) {
@@ -114,18 +114,18 @@ class Query extends \fate\db\AbstractQuery {
 
         return 'GROUP BY ' . implode(', ', $fields);
         */
-        return 'GROUP BY ' . $this->options['groupBy'];
+        return 'GROUP BY ' . $this->groupBy;
     }
 
     /**
      * @return string
      */
     private function buildHaving() {
-        if( !isset($this->options['having']) ) {
+        if('' === $this->having) {
             return '';
         }
 
-        return 'HAVING ' . $this->options['having'];
+        return 'HAVING ' . $this->having;
     }
 
     /**
@@ -280,23 +280,21 @@ class Query extends \fate\db\AbstractQuery {
     }
 
     /**
-     * 分组
-     *
-     * @param string $column
+     * {@inheritdoc}
+     * @see \fate\db\IQuery::groupBy()
      */
     public function groupBy($column) {
-        $this->options['groupBy'] = $column;
+        $this->groupBy = $column;
 
         return $this;
     }
 
     /**
-     * 筛选
-     *
-     * @param string $condition
+     * {@inheritdoc}
+     * @see \fate\db\IQuery::having()
      */
     public function having($condition) {
-        $this->options['having'] = $condition;
+        $this->having = $condition;
 
         return $this;
     }
