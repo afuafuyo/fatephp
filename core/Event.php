@@ -31,7 +31,7 @@ class Event extends FateObject {
         if(!isset($this->_handlers[$eventName])) {
             $this->_handlers[$eventName] = [];
         }
-        
+
         $this->_handlers[$eventName][] = $handler;
     }
 
@@ -45,10 +45,10 @@ class Event extends FateObject {
         if(!isset($this->_handlers[$eventName])) {
             return;
         }
-        
+
         if(null === $handler) {
             unset($this->_handlers[$eventName]);
-            
+
         } else {
             foreach($this->_handlers[$eventName] as $i => $h) {
                 if($handler === $h) {
@@ -68,7 +68,7 @@ class Event extends FateObject {
         if(!isset($this->_handlers[$eventName])) {
             return;
         }
-        
+
         foreach($this->_handlers[$eventName] as $handler) {
             null === $param ? call_user_func($handler)
                 : call_user_func($handler, $param);

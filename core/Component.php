@@ -11,7 +11,7 @@ use Fate;
  * 组件类是实现 属性 (property) 行为 (behavior) 事件 (event) 的基类
  */
 class Component extends Event {
-    
+
     /**
      * @property array the attached behaviors
      *
@@ -22,14 +22,14 @@ class Component extends Event {
      *
      */
     public $behaviorsMap = [];
-    
+
     /**
      * construct
      */
     public function __construct() {
         $this->ensureDeclaredBehaviorsAttached();
     }
-    
+
     /**
      * 读取不存在或私有的属性
      *
@@ -41,10 +41,10 @@ class Component extends Event {
                 return $instance->$name;
             }
         }
-        
+
         throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
     }
-    
+
     /**
      * 调用不存在或私有的方法
      *
@@ -57,10 +57,10 @@ class Component extends Event {
                 return call_user_func_array([$instance, $name], $params);
             }
         }
-        
+
         throw new InvalidCallException('Calling unknown method: ' . get_class($this) . "::$name()");
     }
-    
+
     /**
      * 声明该组件的行为列表
      *
@@ -82,22 +82,22 @@ class Component extends Event {
     public function behaviors() {
         return null;
     }
-    
+
     /**
      * 确保 behaviors() 声明的行为已保存到组件
      */
     public function ensureDeclaredBehaviorsAttached() {
         $behaviors = $this->behaviors();
-        
+
         if(null === $behaviors) {
             return;
         }
-        
+
         foreach($behaviors as $name => $val) {
             $this->attachBehaviorInternal($name, $val);
         }
     }
-    
+
     /**
      * 保存行为类到组件
      *
@@ -108,14 +108,14 @@ class Component extends Event {
         if(!($behavior instanceof Behavior)) {
             $behavior = Fate::createObject(behavior);
         }
-        
+
         if(isset($this->behaviorsMap[$name])) {
             $this->behaviorsMap[$name]->unListen();
         }
-        
+
         // 行为类可以监听组件的事件并处理
         $behavior->listen($this);
         $this->behaviorsMap[$name] = $behavior;
     }
-    
+
 }

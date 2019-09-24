@@ -9,7 +9,7 @@ namespace fate\web;
  * trait
  */
 trait ControllerTrait {
-    
+
     /**
      * 输出 ajax 数据
      *
@@ -22,8 +22,8 @@ trait ControllerTrait {
             'status' => $status,
             'message' => $message
         ]);
-        
+
         exit;
     }
-    
+
 }

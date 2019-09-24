@@ -16,30 +16,30 @@ class Application extends FateCore {
      * @property string 异常处理类
      */
     public $errorHandler = '';
-    
+
     /**
      * constructor
      */
     public function __construct($config = []) {
         Fate::$app = $this;
-        
+
         $this->handlerError();
-        
+
         $this->init($config);
-        
+
         Fate::config($this, $config);
     }
-    
+
     /**
      * 异常处理
      */
     public function handlerError() {}
-    
+
     /**
      * 运行应用
      */
     public function run() {}
-    
+
     /**
      * 初始化应用
      *
@@ -50,19 +50,19 @@ class Application extends FateCore {
         if(!isset($config['id'])) {
             throw new InvalidConfigException('The "id" configuration is required');
         }
-        
+
         if(isset($config['appPath'])) {
             $this->setAppPath($config['appPath']);
             unset($config['appPath']);
-            
+
         } else {
             throw new InvalidConfigException('The "appPath" configuration is required');
         }
-        
+
         if(isset($config['runtimePath'])) {
             $this->setRuntimePath($config['runtimePath']);
             unset($config['runtimePath']);
-            
+
         } else {
             // set "app/runtime"
             $this->setRuntimePath( $this->getAppPath() . '/runtime');
@@ -77,14 +77,14 @@ class Application extends FateCore {
     public function setAppPath($path) {
         Fate::setPathAlias('@app', $path);
     }
-    
+
     /**
      * 得到应用目录
      */
     public function getAppPath(){
         return Fate::getPathAlias('@app');
     }
-    
+
     /**
      * 设置 runtime 路径
      *
@@ -93,7 +93,7 @@ class Application extends FateCore {
     public function setRuntimePath($path) {
         Fate::setPathAlias('@runtime', $path);
     }
-    
+
     /**
      * 得到 runtime 目录
      */

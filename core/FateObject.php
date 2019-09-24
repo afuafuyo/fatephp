@@ -29,12 +29,13 @@ class FateObject {
      * @param string $name 属性名
      */
     public function __get($name) {
+        // 不区分大小写
         $getter = 'get' . $name;
-        
+
         if(method_exists($this, $getter)) {
             return $this->$getter();
         }
-        
+
         throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
     }
 

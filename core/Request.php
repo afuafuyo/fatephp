@@ -10,7 +10,7 @@ abstract class Request extends FateObject {
      * @var string 入口文件名
      */
     private $_scriptFile;
-    
+
     /**
      * 返回入口文件名
      *
@@ -22,7 +22,7 @@ abstract class Request extends FateObject {
                 $this->_scriptFile = $_SERVER['SCRIPT_FILENAME'];
             }
         }
-        
+
         return $this->_scriptFile;
     }
 }

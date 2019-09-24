@@ -11,7 +11,7 @@ use Fate;
  * 核心类
  */
 class FateCore extends FateObject {
-    
+
     /**
      * @property string | array 拦截所有路由
      *
@@ -26,7 +26,7 @@ class FateCore extends FateObject {
      *
      */
     public $interceptAll = null;
-    
+
     /**
      * @property array 实现路由到控制器转换配置
      *
@@ -94,21 +94,21 @@ class FateCore extends FateObject {
      */
     public function createController($route) {
         $route = trim($route, '/');
-        
+
         if('' === $route || '/' === $route) {
             $route = $this->defaultRoute;
         }
-        
+
         // 检测非法 与 路径中不能有双斜线 '//'
         if(0 === preg_match('/^[\w\-\/]+$/', $route) || false !== strpos($route, '//')) {
             return null;
         }
-        
+
         // 拦截路由
         if(null !== $this->interceptAll) {
             return Fate::createObject($this->interceptAll);
         }
-        
+
         // 解析路由
         // 目录前缀或模块 id
         $id = '';
@@ -117,15 +117,15 @@ class FateCore extends FateObject {
             $id = substr($route, 0, $pos);
             $route = substr($route, $pos + 1);
             $this->controllerId = $route;
-            
+
         } else {
             $id = $route;
             $route = '';
         }
-        
+
         // 保存前缀
         $this->viewPath = $id;
-        
+
         // 保存当前控制器标识
         if( false !== ($pos = strrpos($route, '/')) ) {
             $this->viewPath = $this->viewPath . '/' . substr($route, 0, $pos);
@@ -135,31 +135,31 @@ class FateCore extends FateObject {
         if('' === $this->controllerId) {
             $this->controllerId = $this->defaultControllerId;
         }
-        
+
         // 搜索顺序 配置 -> 模块控制器 -> 普通控制器
         // 模块没有前缀目录
         $clazz = null;
         if(null !== $this->routesMap && isset($this->routesMap[$id])) {
-            
+
             return Fate::createObject($this->routesMap[$id]);
         }
-        
+
         if(null !== $this->modules && isset($this->modules[$id])) {
             $this->moduleId = $id;
-            
+
             $clazz = trim($this->modules[$id], '\\')
                 . '\\controllers\\'
                 . ucfirst($this->controllerId) . 'Controller';
-            
+
             return Fate::createObject($clazz);
         }
-        
+
         $clazz = $this->defaultControllerNamespace
             . '\\'
             . $this->viewPath
             . '\\'
             . ucfirst($this->controllerId) . 'Controller';
-        
+
         return Fate::createObject($clazz);
     }
 
