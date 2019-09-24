@@ -9,12 +9,12 @@ namespace fate\db\mysql;
  * Mysql sql 查询生成器
  */
 class Query extends \fate\db\AbstractQuery {
-    
+
     public static $OPERATE_QUERYALL = 1;
     public static $OPERATE_QUERYONE = 2;
     public static $OPERATE_COUNT = 3;
     public static $MAX_LIMIT = 10000;
-    
+
     /**
      * @var Db
      */
@@ -22,11 +22,11 @@ class Query extends \fate\db\AbstractQuery {
     public $op = -1;
     public $data = null;
     public $sqlString = '';
-    
+
     public function __construct($db) {
         $this->db = $db;
     }
-    
+
     /**
      * @param string $name
      * @return string
@@ -34,7 +34,7 @@ class Query extends \fate\db\AbstractQuery {
     private function quote($name) {
         return false !== strpos($name, '`') || '*' === $name ? $name : "`$name`";
     }
-    
+
     /**
      * @return string
      */
@@ -42,16 +42,16 @@ class Query extends \fate\db\AbstractQuery {
         if(false === strpos($field, '.')) {
             return $this->quote($field);
         }
-        
+
         $parts = explode('.', $field);
-        
+
         foreach($parts as $i => $v) {
             $parts[$i] = $this->quote($v);
         }
-        
+
         return implode('.', $parts);
     }
-    
+
     /**
      * 生成 select
      *
@@ -59,21 +59,24 @@ class Query extends \fate\db\AbstractQuery {
      */
     private function buildSelect() {
         $select = 'SELECT';
-        
+
         if('' === $this->select || '*' === $this->select) {
             return $select . ' *';
         }
-        
+
+        /*
         $fields = explode(',', $this->select);
-        
+
         // trim & quote
         foreach($fields as $i => $field) {
             $fields[$i] = $this->quoteField( trim($field, ' ') );
         }
-        
+
         return $select . ' ' . implode(', ', $fields);
+        */
+        return $select . ' ' . $this->select;
     }
-    
+
     /**
      * @return string
      */
@@ -81,17 +84,18 @@ class Query extends \fate\db\AbstractQuery {
         if('' === $this->from) {
             return '';
         }
-        
-        return 'FROM ' . $this->quoteField($this->from);
+
+        // return 'FROM ' . $this->quoteField($this->from);
+        return 'FROM ' . $this->from;
     }
-    
+
     /**
      * @return string
      */
     private function buildWhere() {
         return '' === $this->where ? '' : 'WHERE ' . $this->where;
     }
-    
+
     /**
      * @return string
      */
@@ -99,17 +103,20 @@ class Query extends \fate\db\AbstractQuery {
         if( !isset($this->options['groupBy']) ) {
             return '';
         }
-        
+
+        /*
         $fields = explode(',', $this->options['groupBy']);
-        
+
         // trim & quote
         foreach($fields as $i => $field) {
             $fields[$i] = $this->quoteField( trim($field, ' ') );
         }
-        
+
         return 'GROUP BY ' . implode(', ', $fields);
+        */
+        return 'GROUP BY ' . $this->options['groupBy'];
     }
-    
+
     /**
      * @return string
      */
@@ -117,10 +124,10 @@ class Query extends \fate\db\AbstractQuery {
         if( !isset($this->options['having']) ) {
             return '';
         }
-        
+
         return 'HAVING ' . $this->options['having'];
     }
-    
+
     /**
      * @return string
      */
@@ -128,10 +135,10 @@ class Query extends \fate\db\AbstractQuery {
         if('' === $this->orderBy) {
             return '';
         }
-        
+
         return 'ORDER BY ' . $this->orderBy;
     }
-    
+
     /**
      * @return string
      */
@@ -139,15 +146,15 @@ class Query extends \fate\db\AbstractQuery {
         if( !isset($this->options['limit']) ) {
             return 'LIMIT 0, ' . self::$MAX_LIMIT;
         }
-        
+
         return self::$OPERATE_QUERYONE === $this->op ?
             'LIMIT 0, 1' :
             'LIMIT ' . $this->options['limit'];
     }
-    
+
     public function buildSql() {
         $sql = '';
-        
+
         switch($this->op) {
             case self::$OPERATE_QUERYONE :
             case self::$OPERATE_QUERYALL :
@@ -166,25 +173,25 @@ class Query extends \fate\db\AbstractQuery {
                     $this->buildOrderBy(),
                     $this->buildLimit()
                 ];
-                
+
                 $sql = implode(' ', $parts);
-                
+
                 break;
-                
+
             case self::$OPERATE_COUNT :
                 $field = $this->select;
                 $from = $this->buildFrom();
                 $where = $this->buildWhere();
-                
+
                 $sql = "SELECT COUNT(`{$field}`) {$from} {$where}";
-            
+
             default :
                 break;
         }
-        
+
         return $sql;
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::getAll()
@@ -192,12 +199,12 @@ class Query extends \fate\db\AbstractQuery {
      */
     public function getAll() {
         $this->op = self::$OPERATE_QUERYALL;
-        
+
         $this->sqlString = $this->buildSql();
-        
+
         return $this->db->buildQuery($this)->queryAll();
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::getOne()
@@ -205,12 +212,12 @@ class Query extends \fate\db\AbstractQuery {
      */
     public function getOne() {
         $this->op = self::$OPERATE_QUERYONE;
-        
+
         $this->sqlString = $this->buildSql();
-        
+
         return $this->db->buildQuery($this)->queryOne();
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::getColumn()
@@ -218,70 +225,92 @@ class Query extends \fate\db\AbstractQuery {
      */
     public function getColumn() {
         $this->op = self::$OPERATE_QUERYONE;
-        
+
         $this->sqlString = $this->buildSql();
-        
+
         return $this->db->buildQuery($this)->queryColumn();
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::count()
      */
     public function count($column = '*') {
         $this->op = self::$OPERATE_COUNT;
-        
+
         $this->select = $column;
-        
+
         $this->sqlString = $this->buildSql();
-        
+
         return $this->db->buildQuery($this)->queryColumn();
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::select()
      */
     public function select($columns) {
         $this->select = $columns;
-        
+
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::from()
      */
     public function from($table) {
         $this->from = $table;
-        
+
         return $this;
     }
-    
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::where()
      */
     public function where($condition, $params = null) {
         $this->where = $condition;
-        
+
         if(null !== $params) {
             $this->addParams($params);
         }
-        
+
         return $this;
     }
-    
+
+    /**
+     * 分组
+     *
+     * @param string $column
+     */
+    public function groupBy($column) {
+        $this->options['groupBy'] = $column;
+
+        return $this;
+    }
+
+    /**
+     * 筛选
+     *
+     * @param string $condition
+     */
+    public function having($condition) {
+        $this->options['having'] = $condition;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      * @see \fate\db\IQuery::orderBy()
      */
     public function orderBy($columns) {
         $this->orderBy = $columns;
-        
+
         return $this;
     }
-    
+
     /**
      * 条数限制
      *
@@ -290,8 +319,8 @@ class Query extends \fate\db\AbstractQuery {
      */
     public function limit($limit) {
         $this->options['limit'] = $limit;
-        
+
         return $this;
     }
-    
+
 }
