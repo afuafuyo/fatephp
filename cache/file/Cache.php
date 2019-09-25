@@ -20,38 +20,38 @@ use fate\helpers\FileHelper;
  *
  */
 class Cache extends \fate\cache\AbstractCache {
-    
+
     /**
      * @var string 缓存文件后缀
      */
     public $fileExtension = '.bin';
-    
+
     /**
      * @var string 缓存目录
      */
     public $cachePath = '@runtime/cache';
-    
+
     public function __construct(& $config) {
         if(isset($config['fileExtension'])) {
             $this->fileExtension = $config['fileExtension'];
         }
-        
+
         $this->cachePath = isset($config['cachePath'])
             ? $config['cachePath']
             : Fate::getPathAlias($this->cachePath);
     }
-    
+
     private function getCacheFile($key) {
         return $this->cachePath . DIRECTORY_SEPARATOR . $key . $this->fileExtension;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function get($key) {
-        $rs = null;
+        $rs = '';
         $cacheFile = $this->getCacheFile($key);
-        
+
         if(is_file($cacheFile) && filemtime($cacheFile) > time()) {
             $fp = @fopen($cacheFile, 'r');
             if(false !== $fp) {
@@ -62,7 +62,7 @@ class Cache extends \fate\cache\AbstractCache {
 
         return $rs;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -70,14 +70,14 @@ class Cache extends \fate\cache\AbstractCache {
         if(!is_dir($this->cachePath)) {
             FileHelper::createDirectory($this->cachePath);
         }
-        
+
         $cacheFile = $this->getCacheFile($key);
-        
+
         @file_put_contents($cacheFile, $value);
-        
+
         @touch($cacheFile, $duration + time());
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -86,5 +86,5 @@ class Cache extends \fate\cache\AbstractCache {
 
         return @unlink($cacheFile);
     }
-    
+
 }
