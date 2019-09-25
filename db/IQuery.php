@@ -13,14 +13,14 @@ interface IQuery {
     /**
      * Executes the query and returns a single column of row
      *
-     * @return string 结果集的第一行第一列记录
+     * @return string | boolean 结果集的第一行第一列记录
      */
     public function getColumn();
 
     /**
      * Executes the query and returns a single row of result
      *
-     * @return array 结果集的第一行记录
+     * @return array | boolean 结果集的第一行记录
      */
     public function getOne();
 
