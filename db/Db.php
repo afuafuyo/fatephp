@@ -18,7 +18,7 @@ use fate\core\InvalidConfigException;
  *          'password' => '',
  *          'charset' => 'utf8'
  *      ],
- *      
+ *
  *      'slaves' => [
  *          [ 'dsn' => 'dsn for slave server 1', 'username' => 'slave1', 'password' => '' ],
  *          [ 'dsn' => 'dsn for slave server 2', 'username' => 'slave2', 'password' => '' ]
@@ -27,25 +27,25 @@ use fate\core\InvalidConfigException;
  *
  */
 final class Db {
-    
+
     /**
      * @var string 数据库命名空间
      */
     public static $_dbNamespace = 'fate\\db';
-    
+
     /**
      * @var Db the current active master db
      */
     private $_master = null;
-    
+
     /**
      * @var Db the current active slave db
      */
     private $_slave = null;
-    
+
     private static $_instance = null;
     private function __construct() {}
-    
+
     /**
      * 连接数据库
      *
@@ -55,18 +55,18 @@ final class Db {
         if(!isset(Fate::$app->db) || !isset(Fate::$app->db[$flag])) {
             throw new InvalidConfigException('Db config not found: ' . $flag);
         }
-        
+
         if(null === self::$_instance) {
             self::$_instance = new self();
         }
-        
+
         if('slaves' === $flag) {
             return self::$_instance->getSlave($flag);
         }
-        
+
         return self::$_instance->getMaster($flag);
     }
-    
+
     /**
      * 获取一个主库连接
      *
@@ -75,9 +75,9 @@ final class Db {
     public function getMaster($flag) {
         if(null === $this->_master) {
             $config = Fate::$app->db[$flag];
-            
+
             $this->_master = $this->connect($config);
-            
+
             if(null === $this->_master) {
                 throw new DbException('Failed to connect to database');
             }
@@ -85,7 +85,7 @@ final class Db {
 
         return $this->_master;
     }
-    
+
     /**
      * 获取一个从库连接
      *
@@ -95,10 +95,10 @@ final class Db {
         if(null === $this->_slave) {
             $this->_slave = $this->openFromPool(Fate::$app->db[$flag]);
         }
-        
+
         return $this->_slave;
     }
-    
+
     /**
      * 根据配置打开一个连接
      *
@@ -106,20 +106,20 @@ final class Db {
      */
     public function openFromPool(array $pool) {
         shuffle($pool);
-        
+
         $db = null;
-        
+
         foreach($pool as $conf) {
             $db = $this->connect($conf);
-            
+
             if(null !== $db) {
                 break;
             }
         }
-        
+
         return $db;
     }
-    
+
     /**
      * 打开一个连接
      *
@@ -128,13 +128,13 @@ final class Db {
      */
     public function connect($config) {
         $db = null;
-        
+
         $dsn = $config['dsn'];
         $driver = $this->getDriverName($dsn);
-        
-        $DbClass = static::$_dbNamespace . '\\' . $driver . '\\Db';
+
+        $DbClass = self::$_dbNamespace . '\\' . $driver . '\\Db';
         $dbFile = Fate::namespaceToNormal($DbClass);
-        
+
         if(!is_file($dbFile)) {
             throw new DbException('The driver class not found: ' . $dbFile);
         }
@@ -144,16 +144,16 @@ final class Db {
                 $dsn
                 ,$config['username']
                 ,$config['password']);
-            
+
             $db->initConnection($config);
 
         } catch(\PDOException $e) {
             $db = null;
         }
-        
+
         return $db;
     }
-    
+
     /**
      * 得到驱动名
      *
@@ -161,14 +161,14 @@ final class Db {
      */
     public function getDriverName($dsn = '') {
         $driverName = '';
-        
+
         if('' !== $dsn) {
             if(false !== ($pos = strpos($dsn, ':'))) {
                 $driverName = strtolower(substr($dsn, 0, $pos));
             }
         }
-        
+
         return $driverName;
     }
-    
+
 }

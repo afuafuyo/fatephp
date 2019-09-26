@@ -144,14 +144,10 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::queryAll()
      */
     public function queryAll() {
-        $data = null;
-
         $this->trigger(self::EVENT_BEFORE_QUERY, $this);
 
         $this->makeStatement();
-
         $data = $this->pdoStatement->fetchAll();
-
         $this->close();
 
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
@@ -164,17 +160,12 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::queryOne()
      */
     public function queryOne() {
-        $data = null;
-
         $this->trigger(self::EVENT_BEFORE_QUERY, $this);
 
         $this->makeStatement();
-
         $data = $this->pdoStatement->fetch();
-
         // make sure fetch end so can fetch other result
         // while(false !== $this->pdoStatement->fetch()) {}
-
         $this->close();
 
         $this->trigger(self::EVENT_AFTER_QUERY, $this);
@@ -192,7 +183,7 @@ class Db extends \fate\db\AbstractDb {
         $this->trigger(self::EVENT_BEFORE_EXECUTE, $this);
 
         // simple sql query
-        if( null === $this->pdoStatement || empty($this->bindingParams)) {
+        if( null === $this->pdoStatement || empty($this->bindingParams) ) {
             $rows = $this->pdo->exec($this->sqlString);
 
         } else {
@@ -226,14 +217,10 @@ class Db extends \fate\db\AbstractDb {
      * @see \fate\db\AbstractDb::queryColumn()
      */
     public function queryColumn() {
-        $data = null;
-
         $this->trigger(self::EVENT_BEFORE_QUERY, $this);
 
         $this->makeStatement();
-
         $data = $this->pdoStatement->fetchColumn();
-
         $this->close();
 
         $this->trigger(self::EVENT_AFTER_QUERY, $this);

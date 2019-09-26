@@ -13,7 +13,7 @@ class Query extends \fate\db\AbstractQuery {
     public static $OPERATE_QUERYALL = 1;
     public static $OPERATE_QUERYONE = 2;
     public static $OPERATE_COUNT = 3;
-    public static $MAX_LIMIT = 10000;
+    public static $MAX_LIMIT = 2004;
 
     /**
      * @var Db
@@ -28,6 +28,8 @@ class Query extends \fate\db\AbstractQuery {
     }
 
     /**
+     * Quote a field
+     *
      * @param string $name
      * @return string
      */
@@ -156,8 +158,8 @@ class Query extends \fate\db\AbstractQuery {
         $sql = '';
 
         switch($this->op) {
-            case self::$OPERATE_QUERYONE :
-            case self::$OPERATE_QUERYALL :
+            case self::$OPERATE_QUERYONE:
+            case self::$OPERATE_QUERYALL:
                 // select * from t
                 // where x
                 // group by x
@@ -178,14 +180,14 @@ class Query extends \fate\db\AbstractQuery {
 
                 break;
 
-            case self::$OPERATE_COUNT :
+            case self::$OPERATE_COUNT:
                 $field = $this->select;
                 $from = $this->buildFrom();
                 $where = $this->buildWhere();
 
                 $sql = "SELECT COUNT(`{$field}`) {$from} {$where}";
 
-            default :
+            default:
                 break;
         }
 

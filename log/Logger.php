@@ -12,27 +12,27 @@ use fate\core\InvalidConfigException;
  * 日志
  */
 final class Logger {
-    
+
     /**
      * Error message level
      */
     const LEVEL_ERROR = 0x01;
-    
+
     /**
      * Warning message level
      */
     const LEVEL_WARNING = 0x02;
-    
+
     /**
      * Informational message level
      */
     const LEVEL_INFO = 0x04;
-    
+
     /**
      * Tracing message level
      */
     const LEVEL_TRACE = 0x08;
-        
+
     /**
      * @var array logged messages
      *
@@ -45,40 +45,40 @@ final class Logger {
      * ]
      */
     public $messages = [];
-    
+
     /**
      * @var integer how much call stack information should be logged for each message
      */
     public $traceLevel = 0;
-    
+
     /**
      * @var integer how many messages should be logged before they are flushed from memory
      */
     public $flushInterval = 10;
-    
+
     /**
      * @var array the targets class
      */
     public $targets = [];
-    
+
     /**
      * @var Logger the logger instance
      */
     private static $_logger = null;
-    
+
     private function __construct($settings = null) {
         if(null === $settings || !isset($settings['targets'])) {
             throw new InvalidConfigException('No log targets found');
         }
-        
+
         if(isset($settings['traceLevel'])) {
             $this->traceLevel = $settings['traceLevel'];
         }
-        
+
         if(isset($settings['flushInterval'])) {
             $this->flushInterval = $settings['flushInterval'];
         }
-        
+
         foreach($settings['targets'] as $t) {
             if(isset($t['classPath'])) {
                 $clazz = Fate::createObject($t['classPath'], [$t]);
@@ -87,7 +87,7 @@ final class Logger {
             }
         }
     }
-    
+
     /**
      * 获取日志类实例
      */
@@ -95,10 +95,10 @@ final class Logger {
         if(null === self::$_logger) {
             self::$_logger = new self(Fate::$app->log);
         }
-        
+
         return self::$_logger;
     }
-    
+
     /**
      * 获取新日志对象
      *
@@ -108,7 +108,7 @@ final class Logger {
     public static function newInstance($settings) {
         return new self($settings);
     }
-    
+
     /**
      * 记录日志
      *
@@ -118,12 +118,12 @@ final class Logger {
     public function log($message, $level) {
         $time = microtime(true);
         $traces = [];
-        
+
         if($this->traceLevel > 0) {
             $count = 0;
             $ts = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             array_pop($ts);  // 去掉最后一个没太大作用的信息
-            
+
             foreach($ts as $trace) {
                 if(isset($trace['file'], $trace['line'])) {
                     unset($trace['object'], $trace['args']);
@@ -134,27 +134,27 @@ final class Logger {
                 }
             }
         }
-        
+
         $this->messages[] = [$message, $level, $time, $traces];
         if($this->flushInterval > 0 && count($this->messages) >= $this->flushInterval) {
             $this->flush();
         }
     }
-    
+
     /**
      * 清空 log 并写入目的地
      */
     public function flush() {
         $messages = $this->messages;
         $this->messages = [];
-        
+
         $target = null;
         for($i=0,$len=count($this->targets); $i<$len; $i++) {
             $target = $this->targets[$i];
             $target->trigger($target::EVENT_FLUSH, $messages);
         }
     }
-    
+
     /**
      * Logs a error message
      *
@@ -163,7 +163,7 @@ final class Logger {
     public function error($message) {
         $this->log($message, self::LEVEL_ERROR);
     }
-    
+
     /**
      * Logs a warning message
      *
@@ -172,7 +172,7 @@ final class Logger {
     public function warning($message) {
         $this->log($message, self::LEVEL_WARNING);
     }
-    
+
     /**
      * Logs a info message
      *
@@ -181,7 +181,7 @@ final class Logger {
     public function info($message) {
         $this->log($message, self::LEVEL_INFO);
     }
-    
+
     /**
      * Logs a trace message
      *
@@ -190,7 +190,7 @@ final class Logger {
     public function trace($message) {
         $this->log($message, self::LEVEL_TRACE);
     }
-    
+
     /**
      * 获取日志级别描述
      *
@@ -198,24 +198,25 @@ final class Logger {
      */
     public static function getLevelName($level) {
         $name = 'unknown';
+
         switch($level) {
-            case self::LEVEL_ERROR :
+            case self::LEVEL_ERROR:
                 $name = 'error';
                 break;
-            case self::LEVEL_WARNING :
+            case self::LEVEL_WARNING:
                 $name = 'warning';
                 break;
-            case self::LEVEL_INFO :
+            case self::LEVEL_INFO:
                 $name = 'info';
                 break;
-            case self::LEVEL_TRACE :
+            case self::LEVEL_TRACE:
                 $name = 'trace';
                 break;
-            default :
+            default:
                 break;
         }
 
         return $name;
     }
-    
+
 }
