@@ -95,23 +95,20 @@ class View extends \fate\core\View {
             throw new FileNotFoundException('The view file not found: ' . $file);
         }
 
-        // view
+        // view content
         ob_start();
         ob_implicit_flush(false);
         extract($params, EXTR_OVERWRITE);
         include($file);
-
         $this->contentHtml = ob_get_clean();
 
-        // layout
+        // layout content
         if($this->enableLayout && '' !== Fate::$app->layout) {
             $layoutFile = Fate::getPathAlias(Fate::$app->layout);
 
             ob_start();
             ob_implicit_flush(false);
-
             include($layoutFile);
-
             $this->contentHtml = ob_get_clean();
         }
 
