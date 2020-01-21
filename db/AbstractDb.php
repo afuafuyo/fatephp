@@ -73,21 +73,21 @@ abstract class AbstractDb extends \fate\core\Event {
     /**
      * 获取所有数据
      *
-     * @return array 结果数组
+     * @return array | boolean 包含所有结果的数组 如果没有记录则返回一个空数组 发生错误时返回 false
      */
     public abstract function queryAll();
 
     /**
      * 获取一条数据
      *
-     * @return array | boolean 结果数组
+     * @return array | boolean 结果集的第一行记录 没有记录时返回 false
      */
     public abstract function queryOne();
 
     /**
      * 获取单独一列的值
      *
-     * @return string | boolean
+     * @return string | boolean 结果集的第一行第一列记录 如果没有记录则返回 false
      */
     public abstract function queryColumn();
 

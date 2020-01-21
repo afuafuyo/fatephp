@@ -13,21 +13,21 @@ interface IQuery {
     /**
      * Executes the query and returns a single column of row
      *
-     * @return string | boolean 结果集的第一行第一列记录
+     * @return string | boolean 结果集的第一行第一列记录 如果没有记录则返回 false
      */
     public function getColumn();
 
     /**
      * Executes the query and returns a single row of result
      *
-     * @return array | boolean 结果集的第一行记录
+     * @return array | boolean 结果集的第一行记录 没有记录时返回 false
      */
     public function getOne();
 
     /**
      * Executes the query and returns all results as an array
      *
-     * @return array 所有记录
+     * @return array | boolean @return array | boolean 包含所有结果的数组 如果没有记录则返回一个空数组 发生错误时返回 false
      */
     public function getAll();
 
