@@ -173,25 +173,18 @@ class Request extends \fate\core\Request {
      * @param string $routeParam 参数名
      * @return string | null
      */
-    public function getQueryString($routeParam) {
-        if( isset($_GET[$routeParam]) ) {
-            return $_GET[$routeParam];
-        }
-
-        return null;
+    public function getQueryString($routeParam, $defaultValue = null) {
+        return isset($_GET[$routeParam]) ? $_GET[$routeParam] : $defaultValue;
     }
 
     /**
      * 获取 post 参数
      *
      * @param string $routeParam 参数名
+     * @return string | null
      */
-    public function getParameter($routeParam) {
-        if( isset($_POST[$routeParam]) ) {
-            return $_POST[$routeParam];
-        }
-
-        return null;
+    public function getParameter($routeParam, $defaultValue = null) {
+        return isset($_POST[$routeParam]) ? $_POST[$routeParam] : $defaultValue;
     }
 
 }
