@@ -117,4 +117,25 @@ abstract class AbstractDb extends \fate\core\Event {
      */
     public abstract function getLastSql();
 
+    /**
+     * 开启事务
+     *
+     * @return boolean
+     */
+    public abstract function beginTransaction();
+
+    /**
+     * 提交事务
+     *
+     * @return boolean
+     */
+    public abstract function commitTransaction();
+
+    /**
+     * 回滚事务
+     *
+     * @return boolean
+     */
+    public abstract function rollbackTransaction();
+
 }

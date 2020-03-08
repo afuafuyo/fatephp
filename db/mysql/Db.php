@@ -263,4 +263,51 @@ class Db extends \fate\db\AbstractDb {
         return $this->sqlString;
     }
 
+    /**
+     * @var integer the nesting level of the transaction
+     */
+    private $_level = 0;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function beginTransaction() {
+        if(0 === $this->_level) {
+            $this->pdo->beginTransaction();
+            $this->_level = 1;
+
+            return true;
+        }
+
+        $this->_level++;
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function commitTransaction() {
+        $this->_level--;
+
+        if(0 === $this->_level) {
+            $this->pdo->commit();
+        }
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rollbackTransaction()  {
+        $this->_level--;
+
+        if(0 === $this->_level) {
+            $this->pdo->rollBack();
+        }
+
+        return true;
+    }
+
 }
