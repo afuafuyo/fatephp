@@ -123,18 +123,18 @@ class Request extends \fate\core\Request {
      * @return string | null
      */
     public function getHostInfo() {
-        $host = null;
         $secure = $this->getIsSecureConnection();
         $protocol = $secure ? 'https' : 'http';
 
-        if(isset($_SERVER['HTTP_HOST'])) {
-            $host = $protocol . '://' . $_SERVER['HTTP_HOST'];
-
-        } elseif(isset($_SERVER['SERVER_NAME'])) {
-            $host = $protocol . '://' . $_SERVER['SERVER_NAME'];
+        if( isset($_SERVER['HTTP_HOST']) ) {
+            return $protocol . '://' . $_SERVER['HTTP_HOST'];
         }
 
-        return $host;
+        if( isset($_SERVER['SERVER_NAME']) ) {
+            return $protocol . '://' . $_SERVER['SERVER_NAME'];
+        }
+
+        return null;
     }
 
     /**
@@ -171,6 +171,7 @@ class Request extends \fate\core\Request {
      * 获取 get 参数
      *
      * @param string $routeParam 参数名
+     * @param mixed $defaultValue 默认值
      * @return string | null
      */
     public function getQueryString($routeParam, $defaultValue = null) {
@@ -181,6 +182,7 @@ class Request extends \fate\core\Request {
      * 获取 post 参数
      *
      * @param string $routeParam 参数名
+     * @param mixed $defaultValue 默认值
      * @return string | null
      */
     public function getParameter($routeParam, $defaultValue = null) {
