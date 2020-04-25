@@ -5,6 +5,7 @@
  */
 namespace fate\web;
 
+use Fate;
 use fate\core\InvalidCallException;
 
 /**
