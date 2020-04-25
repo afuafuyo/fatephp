@@ -90,7 +90,7 @@ class View extends \fate\core\View {
     /**
      * {@inheritdoc}
      */
-    public function renderFile($file, $params) {
+    public function renderFile($file, $parameters) {
         if(!is_file($file)) {
             throw new FileNotFoundException('The view file not found: ' . $file);
         }
@@ -98,7 +98,7 @@ class View extends \fate\core\View {
         // view content
         ob_start();
         ob_implicit_flush(false);
-        extract($params, EXTR_OVERWRITE);
+        extract($parameters, EXTR_OVERWRITE);
         include($file);
         $this->contentHtml = ob_get_clean();
 

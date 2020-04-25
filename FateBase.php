@@ -8,7 +8,7 @@ namespace fate;
 use fate\core\ClassNotFoundException;
 
 class FateBase {
-    
+
     /**
      * @var object 当前应用
      */
@@ -88,37 +88,44 @@ class FateBase {
      *    '...' => ...
      * ]
      *
-     * @param array $params 参数
+     * @param array $parameters 参数
      * @throws ClassNotFoundException 类未找到
      * @return Object 类实例
      */
-    public static function createObject($clazz, array $params = []) {
-        $file = '';
-        $classPath = '';
-        $properties = null;
-        
+    public static function createObject($clazz, array $parameters = []) {
         if(is_string($clazz)) {
-            $classPath = $clazz;
-            $file = static::namespaceToNormal($clazz);
-            
-        } else if(is_array($clazz) && isset($clazz['classPath'])) {
-            $classPath = $clazz['classPath'];
-            $file = static::namespaceToNormal($clazz['classPath']);
-            
-            $properties = $clazz;
-            unset($properties['classPath']);
-        }
-        
-        if('' === $file || !is_file($file)) {
-            throw new ClassNotFoundException('The class: '. $clazz .' not found');
+            return static::createObjectAsString($clazz, $parameters);
         }
 
+        return static::createObjectAsDefinition($clazz, $parameters);
+    }
+
+    /**
+     * 字符串方式创建对象
+     *
+     * @param string classPath
+     */
+    public static function createObjectAsString($classPath, $parameters) {
         $reflection = new \ReflectionClass($classPath);
-        $instance = $reflection->newInstanceArgs($params);
-        
-        if(null !== $properties) {
-            static::config($instance, $properties);
-        }
+
+        return $reflection->newInstanceArgs($parameters);
+    }
+
+    /**
+     * 配置方式创建对象
+     *
+     * @param array definition
+     */
+    public static function createObjectAsDefinition($definition, $parameters) {
+        $classPath = $definition['classPath'];
+        $properties = $definition;
+
+        unset($properties['classPath']);
+
+        $reflection = new \ReflectionClass($classPath);
+        $instance = $reflection->newInstanceArgs($parameters);
+
+        static::config($instance, $properties);
 
         return $instance;
     }
@@ -132,7 +139,7 @@ class FateBase {
      */
     public static function namespaceToNormal($namespace, $extension = '.php') {
         $path = static::getPathAlias('@' . str_replace('\\', '/', $namespace));
-        
+
         return $path . $extension;
     }
 
@@ -154,5 +161,5 @@ class FateBase {
 
         return;
     }
-    
+
 }

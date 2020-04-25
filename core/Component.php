@@ -49,12 +49,12 @@ class Component extends Event {
      * 调用不存在或私有的方法
      *
      * @param string $name 方法名字
-     * @param array $params 方法参数
+     * @param array $parameters 方法参数
      */
-    public function __call($name, $params) {
+    public function __call($name, $parameters) {
         foreach($this->behaviorsMap as $instance) {
             if($instance->hasMethod($name)) {
-                return call_user_func_array([$instance, $name], $params);
+                return call_user_func_array([$instance, $name], $parameters);
             }
         }
 

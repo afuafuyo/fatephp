@@ -10,7 +10,7 @@ use Fate;
 /**
  * 应用前端控制器
  */
-class Application extends FateCore {
+class Application extends FateObject {
 
     /**
      * @property string 异常处理类

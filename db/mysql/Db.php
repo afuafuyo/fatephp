@@ -28,7 +28,7 @@ class Db extends \fate\db\AbstractDb {
     /**
      * @var array 待绑定的参数 可以是索引数组或关联数组
      */
-    public $bindingParams = [];
+    public $bindingParameters = [];
 
     /**
      * @var string sql string
@@ -101,8 +101,8 @@ class Db extends \fate\db\AbstractDb {
      * {@inheritdoc}
      * @see \fate\db\AbstractDb::bindValue()
      */
-    public function bindValue($param, $value) {
-        $this->bindingParams[$param] = $value;
+    public function bindValue($parameter, $value) {
+        $this->bindingParameters[$parameter] = $value;
 
         return $this;
     }
@@ -111,9 +111,9 @@ class Db extends \fate\db\AbstractDb {
      * {@inheritdoc}
      * @see \fate\db\AbstractDb::bindValues()
      */
-    public function bindValues($params) {
-        foreach($params as $k => $v) {
-            $this->bindingParams[$k] = $v;
+    public function bindValues($parameters) {
+        foreach($parameters as $k => $v) {
+            $this->bindingParameters[$k] = $v;
         }
 
         return $this;
@@ -131,11 +131,11 @@ class Db extends \fate\db\AbstractDb {
         }
 
         // prepared sql query
-        if( empty($this->bindingParams) ) {
+        if( empty($this->bindingParameters) ) {
             $this->pdoStatement->execute();
 
         } else {
-            $this->pdoStatement->execute($this->bindingParams);
+            $this->pdoStatement->execute($this->bindingParameters);
         }
     }
 
@@ -183,11 +183,11 @@ class Db extends \fate\db\AbstractDb {
         $this->trigger(self::EVENT_BEFORE_EXECUTE, $this);
 
         // simple sql query
-        if( null === $this->pdoStatement || empty($this->bindingParams) ) {
+        if( null === $this->pdoStatement || empty($this->bindingParameters) ) {
             $rows = $this->pdo->exec($this->sqlString);
 
         } else {
-            $this->pdoStatement->execute($this->bindingParams);
+            $this->pdoStatement->execute($this->bindingParameters);
 
             $rows = $this->pdoStatement->rowCount();
         }
@@ -209,7 +209,7 @@ class Db extends \fate\db\AbstractDb {
             $this->pdoStatement = null;
         }
 
-        $this->bindingParams = [];
+        $this->bindingParameters = [];
     }
 
     /**
@@ -236,12 +236,12 @@ class Db extends \fate\db\AbstractDb {
      */
     public function buildQuery($query) {
         // simple query
-        if(empty($query->params)) {
+        if(empty($query->parameters)) {
             $this->prepareSql($query->sqlString);
 
         } else {
             $this->prepareStatement($query->sqlString);
-            $this->bindValues($query->params);
+            $this->bindValues($query->parameters);
         }
 
         return $this;

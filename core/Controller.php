@@ -64,10 +64,10 @@ class Controller extends Component {
      * 渲染文件
      *
      * @param string $view 视图名
-     * @param array $params 参数
+     * @param array $parameters 参数
      * @param boolean $output 是否直接输出
      * @return string | null
      */
-    public function render($view, $params = [], $output = true) {}
+    public function render($view, $parameters = [], $output = true) {}
 
 }

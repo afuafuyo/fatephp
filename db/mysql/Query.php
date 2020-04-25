@@ -268,11 +268,11 @@ class Query extends \fate\db\AbstractQuery {
      * {@inheritdoc}
      * @see \fate\db\IQuery::where()
      */
-    public function where($condition, $params = null) {
+    public function where($condition, $parameters = null) {
         $this->where = $condition;
 
-        if(null !== $params) {
-            $this->addParams($params);
+        if(null !== $parameters) {
+            $this->addParameters($parameters);
         }
 
         return $this;

@@ -36,12 +36,21 @@ class Controller extends \fate\core\Controller {
     }
 
     /**
+     * 设置 view 对象
+     *
+     * @param any $view
+     */
+    public function setView($view) {
+        $this->view = $view;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function render($view, $params = [], $output = true) {
+    public function render($view, $parameters = [], $output = true) {
         $this->trigger(self::EVENT_BEFORE_RENDER);
 
-        $data = $this->getView()->render($view, $params);
+        $data = $this->getView()->render($view, $parameters);
 
         $this->trigger(self::EVENT_AFTER_RENDER);
 

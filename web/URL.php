@@ -24,23 +24,23 @@ class URL {
      * url.to('index/index', [id => 1, '#' => 'anchor'])
      *
      * @param string $url
-     * @param array $params
+     * @param array $parameters
      * @return string
      */
-    public static function to($url, $params = null) {
+    public static function to($url, $parameters = null) {
         $host = Request::getInstance()->getHostInfo();
         $query = '';
         $anchor = '';
 
         $url = $host . '/' . $url;
 
-        if(null !== $params) {
-            if(isset($params['#'])) {
-                $anchor = $params['#'];
-                unset($params['#']);
+        if(null !== $parameters) {
+            if(isset($parameters['#'])) {
+                $anchor = $parameters['#'];
+                unset($parameters['#']);
             }
 
-            foreach($params as $k => $v) {
+            foreach($parameters as $k => $v) {
                 $query = $query . $k . '=' . $v . '&';
             }
             $query = rtrim($query, '&');

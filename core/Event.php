@@ -19,7 +19,7 @@ class Event extends FateObject {
      * ]
      *
      */
-    protected $_handlers = [];
+    protected $eventsMap = [];
 
     /**
      * 注册事件处理
@@ -28,11 +28,11 @@ class Event extends FateObject {
      * @param callable $handler 回调函数
      */
     public function on($eventName, $handler) {
-        if(!isset($this->_handlers[$eventName])) {
-            $this->_handlers[$eventName] = [];
+        if(!isset($this->eventsMap[$eventName])) {
+            $this->eventsMap[$eventName] = [];
         }
 
-        $this->_handlers[$eventName][] = $handler;
+        $this->eventsMap[$eventName][] = $handler;
     }
 
     /**
@@ -42,17 +42,17 @@ class Event extends FateObject {
      * @param callable $handler 回调函数
      */
     public function off($eventName, $handler = null) {
-        if(!isset($this->_handlers[$eventName])) {
+        if(!isset($this->eventsMap[$eventName])) {
             return;
         }
 
         if(null === $handler) {
-            unset($this->_handlers[$eventName]);
+            unset($this->eventsMap[$eventName]);
 
         } else {
-            foreach($this->_handlers[$eventName] as $i => $h) {
+            foreach($this->eventsMap[$eventName] as $i => $h) {
                 if($handler === $h) {
-                    unset($this->_handlers[$eventName][$i]);
+                    unset($this->eventsMap[$eventName][$i]);
                 }
             }
         }
@@ -62,16 +62,16 @@ class Event extends FateObject {
      * 触发
      *
      * @param string $eventName 事件名称
-     * @param mixed $param 参数
+     * @param mixed $parameter 参数
      */
-    public function trigger($eventName, $param = null) {
-        if(!isset($this->_handlers[$eventName])) {
+    public function trigger($eventName, $parameter = null) {
+        if(!isset($this->eventsMap[$eventName])) {
             return;
         }
 
-        foreach($this->_handlers[$eventName] as $handler) {
-            null === $param ? call_user_func($handler)
-                : call_user_func($handler, $param);
+        foreach($this->eventsMap[$eventName] as $handler) {
+            null === $parameter ? call_user_func($handler)
+                : call_user_func($handler, $parameter);
         }
     }
 

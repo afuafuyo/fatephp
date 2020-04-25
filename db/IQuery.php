@@ -59,10 +59,10 @@ interface IQuery {
      * Sets the WHERE condition of a query
      *
      * @param string $condition
-     * @param array $params
+     * @param array $parameters
      * @return $this
      */
-    public function where($condition, $params = null);
+    public function where($condition, $parameters = null);
 
     /**
      * 分组

@@ -48,22 +48,22 @@ abstract class AbstractQuery implements IQuery {
     /**
      * @var array list of query parameter values. For example, [':name' => 'li', ':age' => 20]
      */
-    public $params = [];
+    public $parameters = [];
 
     /**
-     * Set params
+     * Set parameters
      *
-     * @param array $params
+     * @param array $parameters
      */
-    public function addParams($params) {
-        foreach($params as $name => $value) {
+    public function addParameters($parameters) {
+        foreach($parameters as $name => $value) {
             if(is_int($name)) {
-                $this->params[] = $value;
+                $this->parameters[] = $value;
 
                 continue;
             }
 
-            $this->params[$name] = $value;
+            $this->parameters[$name] = $value;
         }
     }
 

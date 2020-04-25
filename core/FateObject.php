@@ -19,9 +19,9 @@ class FateObject {
      * @param string $name 属性名
      * @param string $value 属性值
      */
-    //public function __set($name, $value) {
-    //    $this->$name = $value;
-    //}
+    // public function __set($name, $value) {
+    //     $this->$name = $value;
+    // }
 
     /**
      * 读取不存在或私有的属性
@@ -43,9 +43,9 @@ class FateObject {
      * 调用不存在或私有的方法
      *
      * @param string $name 方法名字
-     * @param array $params 方法参数
+     * @param array $parameters 方法参数
      */
-    public function __call($name, $params) {
+    public function __call($name, $parameters) {
         throw new InvalidCallException('Calling unknown method: ' . get_class($this) . "::$name()");
     }
 
