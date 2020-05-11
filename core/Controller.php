@@ -8,7 +8,7 @@ namespace fate\core;
 /**
  * 核心控制器类
  */
-class Controller extends Component {
+abstract class Controller extends Component {
 
     /**
      * @var string 事件名
@@ -68,6 +68,6 @@ class Controller extends Component {
      * @param boolean $output 是否直接输出
      * @return string | null
      */
-    public function render($view, $parameters = [], $output = true) {}
+    public abstract function render($view, $parameters = [], $output = true);
 
 }
