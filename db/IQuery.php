@@ -27,7 +27,7 @@ interface IQuery {
     /**
      * Executes the query and returns all results as an array
      *
-     * @return array | boolean @return array | boolean 包含所有结果的数组 如果没有记录则返回一个空数组 发生错误时返回 false
+     * @return array | boolean 包含所有结果的数组 如果没有记录则返回一个空数组 发生错误时返回 false
      */
     public function getAll();
 
