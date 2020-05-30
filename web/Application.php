@@ -123,8 +123,8 @@ class Application extends \fate\core\Application {
             $route = $this->defaultRoute;
         }
 
-        // 检测非法 与 路径中不能有双斜线 '//'
-        if(0 === preg_match('/^[\w\-\/]+$/', $route) || false !== strpos($route, '//')) {
+        // 路径中不能有双斜线 '//'
+        if(false !== strpos($route, '//')) {
             return null;
         }
 

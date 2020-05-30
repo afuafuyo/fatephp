@@ -11,7 +11,7 @@ namespace fate\db;
 abstract class AbstractQuery implements IQuery {
 
     /**
-     * @var string the columns being selected.
+     * @var string the columns being selected
      */
     public $select = '';
 
@@ -21,27 +21,27 @@ abstract class AbstractQuery implements IQuery {
     public $from = '';
 
     /**
-     * @var string the condition of a query.
+     * @var string the condition of a query
      */
     public $where = '';
 
     /**
-     * @var string the column of group by.
+     * @var string the column of group by
      */
     public $groupBy = '';
 
     /**
-     * @var string the condition of a query.
+     * @var string the condition of a query
      */
     public $having = '';
 
     /**
-     * @var string the sort condition.
+     * @var string the sort condition
      */
     public $orderBy = '';
 
     /**
-     * @var array other sql information.
+     * @var array other sql information
      */
     public $options = [];
 
