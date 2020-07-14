@@ -106,7 +106,7 @@ class Component extends Event {
      */
     public function attachBehaviorInternal($name, $behavior) {
         if(!($behavior instanceof Behavior)) {
-            $behavior = Fate::createObject(behavior);
+            $behavior = Fate::createObject($behavior);
         }
 
         if(isset($this->behaviorsMap[$name])) {

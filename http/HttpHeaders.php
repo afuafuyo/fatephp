@@ -3,7 +3,7 @@
  * @author
  * @license MIT
  */
-namespace fate\web;
+namespace fate\http;
 
 /**
  * 简单控制器

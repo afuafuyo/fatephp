@@ -3,9 +3,7 @@
  * @author
  * @license MIT
  */
-namespace fate\web;
-
-use fate\web\HttpHeaders;
+namespace fate\http;
 
 /**
  * 前端请求

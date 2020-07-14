@@ -33,19 +33,17 @@ abstract class Controller extends Component {
     /**
      * 控制器方法执行前
      */
-    public function beforeAction() {
-        $event = new ActionEvent();
+    public function beforeAction($actionEvent) {
+        $this->trigger(self::EVENT_BEFORE_ACTION, $actionEvent);
 
-        $this->trigger(self::EVENT_BEFORE_ACTION, $event);
-
-        return $event->valid;
+        return $actionEvent->valid;
     }
 
     /**
      * 控制器方法执行后
      */
-    public function afterAction() {
-        $this->trigger(self::EVENT_AFTER_ACTION);
+    public function afterAction($actionEvent) {
+        $this->trigger(self::EVENT_AFTER_ACTION, $actionEvent);
     }
 
     /**
@@ -55,14 +53,16 @@ abstract class Controller extends Component {
      * @param {Object} response
      */
     public function runControllerAction() {
-        if(true !== $this->beforeAction()) {
+        $actionEvent = new ActionEvent();
+
+        if(true !== $this->beforeAction($actionEvent)) {
             return;
         }
 
-        $data = $this->run();
-        $this->afterAction();
+        $actionEvent->data = $this->run();
+        $this->afterAction($actionEvent);
 
-        return $data;
+        return $actionEvent->data;
     }
 
     /**
