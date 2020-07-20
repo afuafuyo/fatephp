@@ -12,18 +12,30 @@ namespace fate\core;
  */
 class ActionFilter extends Behavior {
 
+    public $callbacks = null;
+
+    public function __construct() {
+        $this->callbacks = [
+            Controller::EVENT_BEFORE_ACTION => function($actionEvent) {
+                if(!$actionEvent->valid) {
+                    $this->unListen();
+                    return;
+                }
+                $this->beforeAction($actionEvent);
+            },
+            Controller::EVENT_AFTER_ACTION => function($actionEvent) {
+                $this->unListen();
+
+                $this->afterAction($actionEvent);
+            }
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function events() {
-        return [
-            Controller::EVENT_BEFORE_ACTION => function($actionEvent) {
-                $this->beforeAction($actionEvent);
-            },
-            Controller::EVENT_AFTER_ACTION => function($actionEvent) {
-                $this->afterAction($actionEvent);
-            }
-        ];
+        return $this->callbacks;
     }
 
     /**

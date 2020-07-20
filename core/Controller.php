@@ -56,7 +56,7 @@ abstract class Controller extends Component {
         $actionEvent = new ActionEvent();
 
         if(true !== $this->beforeAction($actionEvent)) {
-            return;
+            return null;
         }
 
         $actionEvent->data = $this->run();
