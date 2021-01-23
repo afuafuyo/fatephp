@@ -19,8 +19,8 @@ class ActionFilter extends Behavior {
             Controller::EVENT_BEFORE_ACTION => function($actionEvent) {
                 if(!$actionEvent->valid) {
                     $this->unListen();
-                    return;
                 }
+
                 $this->beforeAction($actionEvent);
             },
             Controller::EVENT_AFTER_ACTION => function($actionEvent) {

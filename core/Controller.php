@@ -35,8 +35,6 @@ abstract class Controller extends Component {
      */
     public function beforeAction($actionEvent) {
         $this->trigger(self::EVENT_BEFORE_ACTION, $actionEvent);
-
-        return $actionEvent->valid;
     }
 
     /**
@@ -55,7 +53,8 @@ abstract class Controller extends Component {
     public function runControllerAction() {
         $actionEvent = new ActionEvent();
 
-        if(true !== $this->beforeAction($actionEvent)) {
+        $this->beforeAction($actionEvent);
+        if(true !== $actionEvent->valid) {
             return null;
         }
 
