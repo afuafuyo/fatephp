@@ -111,7 +111,6 @@ class Request extends \fate\core\Request {
      * @return string | null
      */
     public function getReferrer() {
-        // return $this->httpHeaders->get('Referer');
         return $this->getHttpHeaders()->get('Referer');
     }
 
