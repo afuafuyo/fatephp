@@ -17,11 +17,11 @@ class ActionFilter extends Behavior {
     public function __construct() {
         $this->callbacks = [
             Controller::EVENT_BEFORE_ACTION => function($actionEvent) {
+                $this->beforeAction($actionEvent);
+
                 if(!$actionEvent->valid) {
                     $this->unListen();
                 }
-
-                $this->beforeAction($actionEvent);
             },
             Controller::EVENT_AFTER_ACTION => function($actionEvent) {
                 $this->unListen();
