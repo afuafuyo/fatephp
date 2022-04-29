@@ -43,9 +43,9 @@ class ErrorHandler extends \fate\core\ErrorHandler {
         $msg = $this->handlerExceptionMessage($exception);
 
         try {
-            if('' !== Fate::$app->errorHandler) {
-                $h = Fate::createObject(Fate::$app->errorHandler);
-                $h->run($msg);
+            if('' !== Fate::$app->exceptionHandler) {
+                $h = Fate::createObject(Fate::$app->exceptionHandler);
+                $h->run($exception);
 
             } else {
                 echo $msg;

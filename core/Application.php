@@ -15,7 +15,7 @@ class Application extends FateObject {
     /**
      * @property string 异常处理类
      */
-    public $errorHandler = '';
+    public $exceptionHandler = '';
 
     /**
      * constructor
@@ -27,7 +27,7 @@ class Application extends FateObject {
 
         $this->init($config);
 
-        Fate::config($this, $config);
+        Fate::configure($this, $config);
     }
 
     /**

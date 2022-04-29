@@ -15,11 +15,6 @@ class Controller extends \fate\core\Controller {
     use ControllerTrait;
 
     /**
-     * @property string 默认视图类命名空间
-     */
-    public $defaultView = 'fate\\web\\View';
-
-    /**
      * @property Object 视图类实例
      */
     public $view = null;
@@ -29,7 +24,7 @@ class Controller extends \fate\core\Controller {
      */
     public function getView() {
         if(null === $this->view) {
-            $this->view = Fate::createObject($this->defaultView);
+            $this->view = Fate::createObject(Fate::$app->defaultView);
         }
 
         return $this->view;

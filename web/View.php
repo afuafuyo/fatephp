@@ -19,6 +19,11 @@ class View extends \fate\core\View {
     public $enableLayout = false;
 
     /**
+     * @property string 布局文件路径
+     */
+    public $layout = 'app/views/layout';
+
+    /**
      * @property string 页面标题
      */
     public $title = '';
@@ -103,8 +108,8 @@ class View extends \fate\core\View {
         $this->contentHtml = ob_get_clean();
 
         // layout content
-        if($this->enableLayout && '' !== Fate::$app->layout) {
-            $layoutFile = Fate::getPathAlias(Fate::$app->layout);
+        if($this->enableLayout) {
+            $layoutFile = Fate::getPathAlias($this->layout);
 
             ob_start();
             ob_implicit_flush(false);

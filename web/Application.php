@@ -69,6 +69,11 @@ class Application extends \fate\core\Application {
     public $defaultControllerId = 'index';
 
     /**
+     * @property string 默认视图类命名空间
+     */
+    public $defaultView = 'fate\\web\\View';
+
+    /**
      * @property string 当前的模块
      */
     public $moduleId = '';
@@ -82,11 +87,6 @@ class Application extends \fate\core\Application {
      * @property string 前缀目录
      */
     public $viewPath = '';
-
-    /**
-     * @property string 布局文件路径
-     */
-    public $layout = '';
 
     /**
      * 运行应用

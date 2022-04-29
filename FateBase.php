@@ -68,7 +68,7 @@ class FateBase {
      * @param array $properties 配置项
      * @return Object 源对象
      */
-    public static function config($object, $properties) {
+    public static function configure($object, $properties) {
         foreach($properties as $key => $val) {
             $object->$key = $val;
         }
@@ -125,7 +125,7 @@ class FateBase {
         $reflection = new \ReflectionClass($classPath);
         $instance = $reflection->newInstanceArgs($parameters);
 
-        static::config($instance, $properties);
+        static::configure($instance, $properties);
 
         return $instance;
     }
@@ -158,8 +158,6 @@ class FateBase {
 
             include($classFile);
         }
-
-        return;
     }
 
 }
