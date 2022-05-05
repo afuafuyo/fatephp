@@ -5,8 +5,6 @@
  */
 namespace fate;
 
-use fate\core\ClassNotFoundException;
-
 class FateBase {
 
     /**
@@ -89,8 +87,8 @@ class FateBase {
      * ]
      *
      * @param array $parameters 参数
-     * @throws ClassNotFoundException 类未找到
      * @return Object 类实例
+     * @throws \ReflectionException
      */
     public static function createObject($clazz, array $parameters = []) {
         if(is_string($clazz)) {
@@ -104,6 +102,7 @@ class FateBase {
      * 字符串方式创建对象
      *
      * @param string classPath
+     * @throws \ReflectionException
      */
     public static function createObjectAsString($classPath, $parameters) {
         $reflection = new \ReflectionClass($classPath);
@@ -115,6 +114,7 @@ class FateBase {
      * 配置方式创建对象
      *
      * @param array definition
+     * @throws \ReflectionException
      */
     public static function createObjectAsDefinition($definition, $parameters) {
         $classPath = $definition['classPath'];

@@ -34,6 +34,7 @@ class Component extends Event {
      * 读取不存在或私有的属性
      *
      * @param string $name 属性名
+     * @throws UnknownPropertyException
      */
     public function __get($name) {
         foreach($this->behaviorsMap as $instance) {
@@ -50,6 +51,7 @@ class Component extends Event {
      *
      * @param string $name 方法名字
      * @param array $parameters 方法参数
+     * @throws InvalidCallException
      */
     public function __call($name, $parameters) {
         foreach($this->behaviorsMap as $instance) {

@@ -27,6 +27,7 @@ class FateObject {
      * 读取不存在或私有的属性
      *
      * @param string $name 属性名
+     * @throws \fate\core\UnknownPropertyException
      */
     public function __get($name) {
         // 不区分大小写
@@ -44,6 +45,7 @@ class FateObject {
      *
      * @param string $name 方法名字
      * @param array $parameters 方法参数
+     * @throws \fate\core\InvalidCallException
      */
     public function __call($name, $parameters) {
         throw new InvalidCallException('Calling unknown method: ' . get_class($this) . "::$name()");

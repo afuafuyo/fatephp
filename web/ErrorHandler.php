@@ -59,11 +59,9 @@ class ErrorHandler extends \fate\core\ErrorHandler {
     }
 
     public function handlerExceptionMessage($exception) {
-        $msg = FATE_DEBUG ?
-            '<pre>An exception occurred: '. (string) $exception .'</pre>' :
-            'An internal server error occurred';
-
-        return $msg;
+        return FATE_DEBUG
+            ? '<pre>An exception occurred: '. (string) $exception .'</pre>'
+            : 'An internal server error occurred';
     }
 
 }

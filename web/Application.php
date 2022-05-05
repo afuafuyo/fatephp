@@ -116,6 +116,7 @@ class Application extends \fate\core\Application {
      *
      * @param string $route 路由
      * @return Object 控制器
+     * @throws \ReflectionException
      */
     public function createController($route) {
         $route = trim($route, '/');

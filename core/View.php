@@ -41,7 +41,8 @@ abstract class View extends FateObject {
         return Fate::namespaceToNormal('app', '')
             . '/views/'
             . str_replace('\\', '/', $app->viewPath)
-            . '/' . $view . $this->defaultExtension;
+            . '/'
+            . $view . $this->defaultExtension;
     }
 
     /**
