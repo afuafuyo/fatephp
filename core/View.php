@@ -13,7 +13,7 @@ use Fate;
 abstract class View extends FateObject {
 
     /**
-     * @property string 默认视图文件后缀
+     * @var string 默认视图文件后缀
      */
     public $defaultExtension = '.php';
 

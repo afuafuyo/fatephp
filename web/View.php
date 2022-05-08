@@ -14,37 +14,37 @@ use fate\core\FileNotFoundException;
 class View extends \fate\core\View {
 
     /**
-     * @property boolean 是否开启布局视图
+     * @var boolean 是否开启布局视图
      */
     public $enableLayout = false;
 
     /**
-     * @property string 布局文件路径
+     * @var string 布局文件路径
      */
     public $layout = 'app/views/layout';
 
     /**
-     * @property string 页面标题
+     * @var string 页面标题
      */
     public $title = '';
 
     /**
-     * @property string 页面描述
+     * @var string 页面描述
      */
     public $description = '';
 
     /**
-     * @property string 内容 html
+     * @var string 内容 html
      */
     public $contentHtml = '';
 
     /**
-     * @property array Head 部分资源
+     * @var array Head 部分资源
      */
     public $headAssets = null;
 
     /**
-     * @property array Footer 部分资源
+     * @var array Footer 部分资源
      */
     public $footerAssets = null;
 

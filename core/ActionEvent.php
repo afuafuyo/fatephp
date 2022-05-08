@@ -10,11 +10,12 @@ namespace fate\core;
  */
 class ActionEvent extends Event {
     /**
-     * @property mixed 数据
+     * @var mixed 数据
      */
     public $data = null;
+
     /**
-     * @property boolean 状态
+     * @var boolean 状态
      */
     public $valid = true;
 }

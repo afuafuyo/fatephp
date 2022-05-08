@@ -18,7 +18,7 @@ class Request extends \fate\core\Request {
     /**
      * 获得单例对象
      *
-     * @return Object
+     * @return Request
      */
     public static function getInstance() {
         if(null === self::$_instance) {

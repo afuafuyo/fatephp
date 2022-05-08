@@ -11,7 +11,7 @@ namespace fate\core;
 class Behavior extends FateObject {
 
     /**
-     * @property Component 拥有行为的组件
+     * @var Component 拥有行为的组件
      */
     public $component = null;
 
@@ -30,7 +30,7 @@ class Behavior extends FateObject {
     /**
      * 监听组件的事件
      *
-     * @param Component component 组件
+     * @param Component $component 组件
      */
     public function listen($component) {
         $this->component = $component;

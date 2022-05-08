@@ -13,7 +13,7 @@ use Fate;
 class Application extends FateObject {
 
     /**
-     * @property string 异常处理类
+     * @var string 异常处理类
      */
     public $exceptionHandler = '';
 

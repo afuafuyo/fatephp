@@ -15,7 +15,7 @@ class Controller extends \fate\core\Controller {
     use ControllerTrait;
 
     /**
-     * @property Object 视图类实例
+     * @var View 视图类实例
      */
     public $view = null;
 
@@ -33,7 +33,7 @@ class Controller extends \fate\core\Controller {
     /**
      * 设置 view 对象
      *
-     * @param any $view
+     * @param View $view
      */
     public function setView($view) {
         $this->view = $view;

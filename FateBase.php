@@ -18,7 +18,7 @@ class FateBase {
     public static $pathAliases = ['@fate' => __DIR__];
 
     /**
-     * @ 别名路径转换真实路径
+     * 别名路径转换真实路径
      *
      * @param string $alias 路径别名
      * @return string 路径

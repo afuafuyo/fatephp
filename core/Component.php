@@ -13,7 +13,7 @@ use Fate;
 class Component extends Event {
 
     /**
-     * @property array the attached behaviors
+     * @var array the attached behaviors
      *
      * [
      *     'behaviorName' => BehaviorInstance

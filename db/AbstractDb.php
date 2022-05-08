@@ -41,7 +41,7 @@ abstract class AbstractDb extends \fate\core\Event {
      * Prepares a sql for execution
      *
      * @param string $sql
-     * @return $this
+     * @return AbstractDb
      */
     public abstract function prepareSql($sql);
 
@@ -49,7 +49,7 @@ abstract class AbstractDb extends \fate\core\Event {
      * Prepares a sql statement for execution
      *
      * @param string $sql
-     * @return $this
+     * @return AbstractDb
      */
     public abstract function prepareStatement($sql);
 
@@ -58,7 +58,7 @@ abstract class AbstractDb extends \fate\core\Event {
      *
      * @param string $parameter
      * @param string $value
-     * @return $this
+     * @return AbstractDb
      */
     public abstract function bindValue($parameter, $value);
 
@@ -66,7 +66,7 @@ abstract class AbstractDb extends \fate\core\Event {
      * 绑定多个参数 可以用于绑定命名参数和占位符参数
      *
      * @param array $parameters
-     * @return $this
+     * @return AbstractDb
      */
     public abstract function bindValues($parameters);
 

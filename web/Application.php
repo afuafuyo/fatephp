@@ -15,7 +15,7 @@ use fate\core\InvalidCallException;
 class Application extends \fate\core\Application {
 
     /**
-     * @property string | array 拦截所有路由
+     * @var string | array 拦截所有路由
      *
      * 'some\namespace\Class'
      *
@@ -30,7 +30,7 @@ class Application extends \fate\core\Application {
     public $interceptAll = null;
 
     /**
-     * @property array 实现路由到控制器转换配置
+     * @var array 实现路由到控制器转换配置
      *
      * [
      *      'u' => 'app\controllers\user\IndexController',
@@ -44,47 +44,47 @@ class Application extends \fate\core\Application {
     public $routesMap = null;
 
     /**
-     * @property array 注册的模块
+     * @var array 注册的模块
      */
     public $modules = null;
 
     /**
-     * @property string 路由标识
+     * @var string 路由标识
      */
     public $defaultRouteParameter = 'r';
 
     /**
-     * @property string 默认路由
+     * @var string 默认路由
      */
     public $defaultRoute = 'index/index';
 
     /**
-     * @property string 默认控制器命名空间
+     * @var string 默认控制器命名空间
      */
     public $defaultControllerNamespace = 'app\\controllers';
 
     /**
-     * @property string 默认控制器
+     * @var string 默认控制器
      */
     public $defaultControllerId = 'index';
 
     /**
-     * @property string 默认视图类命名空间
+     * @var string 默认视图类命名空间
      */
     public $defaultView = 'fate\\web\\View';
 
     /**
-     * @property string 当前的模块
+     * @var string 当前的模块
      */
     public $moduleId = '';
 
     /**
-     * @property string 当前的控制器
+     * @var string 当前的控制器
      */
     public $controllerId = '';
 
     /**
-     * @property string 前缀目录
+     * @var string 前缀目录
      */
     public $viewPath = '';
 
