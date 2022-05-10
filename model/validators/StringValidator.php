@@ -33,6 +33,11 @@ class StringValidator extends \fate\model\Validator {
     public $encoding = 'UTF-8';
 
     /**
+     * @var boolean trim space
+     */
+    public $trim = true;
+
+    /**
      * @var number 最小长度
      */
     public $minLength = 1;
@@ -47,6 +52,15 @@ class StringValidator extends \fate\model\Validator {
      */
     public function validate($attributeName, $attributeValue) {
         $info = $this->getMessage($attributeName);
+
+        if(null === $attributeValue) {
+            $attributeValue = '';
+        }
+
+        if('' !== $attributeValue && $this->trim) {
+            $attributeValue = trim($attributeValue);
+        }
+
         $length = mb_strlen($attributeValue, $this->encoding);
 
         if($length < $this->minLength || $length > $this->maxLength) {

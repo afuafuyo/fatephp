@@ -49,7 +49,8 @@ class Validator {
                 break;
             }
 
-            $result = $this->validate($list[$i], $this->model->attributes[ $list[$i] ]);
+            $value = isset( $this->model->attributes[$list[$i]] ) ? $this->model->attributes[$list[$i]] : null;
+            $result = $this->validate($list[$i], $value);
 
             if('' !== $result) {
                 $infos[] = $result;

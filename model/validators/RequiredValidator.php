@@ -28,9 +28,8 @@ class RequiredValidator extends \fate\model\Validator {
      */
     public function validate($attributeName, $attributeValue) {
         $info = $this->getMessage($attributeName);
-        $value = trim($attributeValue);
 
-        if(null === $value || '' === $value) {
+        if(null === $attributeValue || '' === $attributeValue) {
             return '' === $info ? $attributeName . ' is required' : $info;
         }
 

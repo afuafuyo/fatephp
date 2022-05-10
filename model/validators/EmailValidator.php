@@ -34,7 +34,7 @@ class EmailValidator extends \fate\model\Validator {
     public function validate($attributeName, $attributeValue) {
         $info = $this->getMessage($attributeName);
 
-        if(!preg_match($this->pattern, $attributeValue)) {
+        if(null === $attributeValue || !preg_match($this->pattern, $attributeValue)) {
             return '' === $info ? $attributeName . ' is invalid' : $info;
         }
 
