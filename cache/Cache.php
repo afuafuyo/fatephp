@@ -6,6 +6,7 @@
 namespace fate\cache;
 
 use Fate;
+use fate\ioc\ServiceLocator;
 use fate\core\InvalidConfigException;
 use fate\core\FileNotFoundException;
 
@@ -15,44 +16,35 @@ use fate\core\FileNotFoundException;
 final class Cache {
 
     /**
-     * @var array 缓存对象
+     * 实例
      */
-    private static $_caches = [];
+    private static $serviceLocator = null;
 
     /**
      * 获取缓存实例
      *
-     * @param string $cacheFlag
-     * @return Object
+     * @param string $type
+     * @return mixed
      */
-    public static function getCache($cacheFlag = '') {
-        if(empty($cacheFlag)) {
-            throw new CacheException('Empty param: cacheFlag');
+    public static function getCache($type) {
+        if(!isset(Fate::$app->cache) || !isset(Fate::$app->cache[$type])) {
+            throw new InvalidConfigException('The cache configuration is not found');
         }
 
-        if(!isset(Fate::$app->cache) || !isset(Fate::$app->cache[$cacheFlag])) {
-            throw new InvalidConfigException('Unknow cache config: ' . $cacheFlag);
+        if(null === Cache::$serviceLocator) {
+            Cache::$serviceLocator = new ServiceLocator();
         }
 
-        if(!isset(Fate::$app->cache[$cacheFlag]['classPath'])) {
-            throw new InvalidConfigException('Lost `classPath` config item of the cache class');
+        if( !Cache::$serviceLocator->hasService($type) ){
+            Cache::$serviceLocator->setService(
+                $type,
+                Fate::createObjectAsDefinition(Fate::$app->cache[$type], null)
+            );
+
+            Cache::$serviceLocator->getService($type)->init();
         }
 
-        if( !isset(static::$_caches[$cacheFlag]) || null === static::$_caches[$cacheFlag] ){
-            $config = Fate::$app->cache[$cacheFlag];
-            $cacheClass = $config['classPath'];
-            $cacheFile = Fate::namespaceToNormal($cacheClass);
-
-            if(!is_file($cacheFile)) {
-                throw new FileNotFoundException('The cacheFile: ' . $cacheFile . ' not found');
-            }
-
-            static::$_caches[$cacheFlag] = new $cacheClass($config);
-
-            static::$_caches[$cacheFlag]->init();
-        }
-
-        return static::$_caches[$cacheFlag];
+        return Cache::$serviceLocator->getService($type);
     }
 
 }

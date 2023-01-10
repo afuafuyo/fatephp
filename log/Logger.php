@@ -66,9 +66,11 @@ final class Logger {
      */
     private static $_logger = null;
 
-    private function __construct($settings = null) {
+    private function __construct() {
+        $settings = Fate::$app->log;
+
         if(null === $settings || !isset($settings['targets'])) {
-            throw new InvalidConfigException('No log targets found');
+            throw new InvalidConfigException('The "targets" configuration of the log is missing');
         }
 
         if(isset($settings['traceLevel'])) {
@@ -93,20 +95,10 @@ final class Logger {
      */
     public static function getLogger() {
         if(null === self::$_logger) {
-            self::$_logger = new self(Fate::$app->log);
+            self::$_logger = new self();
         }
 
         return self::$_logger;
-    }
-
-    /**
-     * 获取新日志对象
-     *
-     * @param array $settings
-     * @return Object
-     */
-    public static function newInstance($settings) {
-        return new self($settings);
     }
 
     /**

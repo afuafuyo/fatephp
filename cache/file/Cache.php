@@ -29,16 +29,10 @@ class Cache extends \fate\cache\AbstractCache {
     /**
      * @var string 缓存目录
      */
-    public $cachePath = '@runtime/cache';
+    public $cachePath = '';
 
-    public function __construct(& $config) {
-        if(isset($config['fileExtension'])) {
-            $this->fileExtension = $config['fileExtension'];
-        }
-
-        $this->cachePath = isset($config['cachePath'])
-            ? $config['cachePath']
-            : Fate::getPathAlias($this->cachePath);
+    public function __construct() {
+        $this->cachePath = Fate::getPathAlias('@runtime/caches');
     }
 
     private function getCacheFile($key) {

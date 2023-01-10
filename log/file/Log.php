@@ -16,7 +16,7 @@ use fate\helpers\FileHelper;
  *      'targets' => [
  *          'file' => [
  *              'classPath' => 'fate\log\file\Target',
- *              'logPath' => '@runtime/logs',
+ *              'logPath' => 'absolute path',
  *              'logFile' => 'system.log',
  *              'maxFileSize' => 10240
  *          ]
@@ -30,7 +30,7 @@ class Log extends \fate\log\AbstractLog {
     /**
      * @var string absolute path of log file. default at runtime directory of the application
      */
-    public $logPath = '@runtime/logs';
+    public $logPath = '';
 
     /**
      * @var string log file name
@@ -43,17 +43,7 @@ class Log extends \fate\log\AbstractLog {
     public $maxFileSize = 10240;
 
     public function __construct($config) {
-        $this->logPath = isset($config['logPath'])
-            ? $config['logPath']
-            : Fate::getPathAlias($this->logPath);
-
-        if(isset($config['logFile'])) {
-            $this->logFile = $config['logFile'];
-        }
-
-        if(isset($config['maxFileSize'])) {
-            $this->maxFileSize = $config['maxFileSize'];
-        }
+        $this->logPath = Fate::getPathAlias('@runtime/logs');
     }
 
     /**

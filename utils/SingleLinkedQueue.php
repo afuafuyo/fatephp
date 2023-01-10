@@ -4,7 +4,7 @@ namespace fate\util;
 /**
  * 链队列
  */
-class LinkedQueue implements IQueue {
+class SingleLinkedQueue implements IQueue {
 
     private $headNode = null;
     private $tailNode = null;

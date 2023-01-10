@@ -12,8 +12,6 @@ use Fate;
  */
 class Controller extends \fate\core\Controller {
 
-    use ControllerTrait;
-
     /**
      * @var View 视图类实例
      */

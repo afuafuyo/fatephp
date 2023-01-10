@@ -13,11 +13,11 @@ use fate\core\InvalidConfigException;
  *
  * 'cache' => [
  *      memcached' => [
- *          'classPath' => 'fate\cache\memcached\Cache'
- *          ,'servers' => [
+ *          'classPath' => 'fate\cache\memcached\Cache',
+ *          'servers' => [
  *              [
- *                  'host' => '127.0.0.1'
- *                  ,'port' => '11211'
+ *                  'host' => '127.0.0.1',
+ *                  'port' => '11211'
  *              ]
  *          ]
  *      ]
@@ -25,42 +25,40 @@ use fate\core\InvalidConfigException;
  *
  */
 class Cache extends \fate\cache\AbstractCache {
-    
-    private $_memcached = null;
-    
-    /**
-     * 实例化 
-     */
-    public function __construct(& $config) {        
-        if(!isset($config['servers']) || empty($config['servers'])) {
-            throw new InvalidConfigException('The "servers" property must be specified');
+
+    private $memcached = null;
+    public $servers = null;
+
+    public function init() {
+        if(null === $this->servers) {
+            throw new InvalidConfigException('The servers config of memcached is missing');
         }
-        
-        $this->_memcached = new Memcached();
-        foreach($config['servers'] as $server) {
-            $this->_memcached->addServer($server->host, $server->port);
+
+        $this->memcached = new Memcached();
+        foreach($this->servers as $server) {
+            $this->memcached->addServer($server->host, $server->port);
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function get($key) {
-        return $this->_memcached->get($key);
+        return $this->memcached->get($key);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function set($key, $value, $duration = 0) {
-        $this->_memcached->set($key, $value);
+        $this->memcached->set($key, $value);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function delete($key) {
-        return $this->_memcached->delete($key);
+        return $this->memcached->delete($key);
     }
-    
+
 }
