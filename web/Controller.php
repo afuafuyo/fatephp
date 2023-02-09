@@ -10,7 +10,7 @@ use Fate;
 /**
  * Web 控制器
  */
-class Controller extends \fate\core\Controller {
+class Controller extends \fate\core\AbstractController {
 
     /**
      * @var View 视图类实例

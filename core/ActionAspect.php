@@ -6,11 +6,9 @@
 namespace fate\core;
 
 /**
- * 动作过滤器
- *
- * 过滤器会在控制器的动作执行之前执行
+ * 动作切面
  */
-class ActionFilter extends Behavior {
+class ActionAspect extends Behavior {
 
     public $callbacks = null;
 

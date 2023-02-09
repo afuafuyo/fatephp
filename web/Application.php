@@ -12,7 +12,7 @@ use fate\core\InvalidCallException;
 /**
  * 应用前端控制器
  */
-class Application extends \fate\core\Application {
+class Application extends \fate\core\AbstractApplication {
 
     /**
      * @var string | array 拦截所有路由

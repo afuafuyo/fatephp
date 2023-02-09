@@ -10,7 +10,7 @@ use Fate;
 /**
  * 应用前端控制器
  */
-class Application extends FateObject {
+class AbstractApplication extends FateObject {
 
     /**
      * @var string 异常处理类
@@ -33,12 +33,12 @@ class Application extends FateObject {
     /**
      * 异常处理
      */
-    public function handlerError() {}
+    public abstract function handlerError();
 
     /**
      * 运行应用
      */
-    public function run() {}
+    public abstract function run();
 
     /**
      * 初始化应用

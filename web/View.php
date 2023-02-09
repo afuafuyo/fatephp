@@ -11,7 +11,7 @@ use fate\core\FileNotFoundException;
 /**
  * 视图类
  */
-class View extends \fate\core\View {
+class View extends \fate\core\AbstractView {
 
     /**
      * @var boolean 是否开启布局视图

@@ -5,10 +5,12 @@
  */
 namespace fate\core;
 
+use Fate;
+
 /**
  * 核心控制器类
  */
-abstract class Controller extends Component {
+abstract class AbstractController extends Component {
 
     /**
      * @var string 事件名
@@ -31,6 +33,27 @@ abstract class Controller extends Component {
     const EVENT_AFTER_RENDER = 'afterRender';
 
     /**
+     * the filter collection
+     */
+    public $filterChain = FilterFactory::createFilterChain($this);
+
+    /**
+     * 声明过滤器列表
+     *
+     * ```
+     * [
+     *      filterInstance,
+     *      'filterClassPath'
+     *      ['classPath' => 'filterClassPath', otherProps => xxx]
+     * ]
+     * ```
+     *
+     */
+    public function filters() {
+        return null;
+    }
+
+    /**
      * 控制器方法执行前
      */
     public function beforeAction($actionEvent) {
@@ -45,20 +68,17 @@ abstract class Controller extends Component {
     }
 
     /**
-     * 执行控制器的方法
-     *
-     * @param {Object} request
-     * @param {Object} response
+     * 执行控制器
      */
     public function runControllerAction() {
         $actionEvent = new ActionEvent();
 
         $this->beforeAction($actionEvent);
-        if(true !== $actionEvent->valid) {
+        if(false === $actionEvent->valid) {
             return null;
         }
 
-        $actionEvent->data = $this->run();
+        $this->filterChain->doFilter();
         $this->afterAction($actionEvent);
 
         return $actionEvent->data;
