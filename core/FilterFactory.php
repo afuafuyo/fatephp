@@ -21,7 +21,7 @@ class FilterFactory {
      * @param mixed $resource 资源
      * @return FilterChain
      */
-    public static createFilterChain($resource) {
+    public static function createFilterChain($resource) {
         $filterChain = new FilterChain();
         $filterChain->setResource($resource);
 

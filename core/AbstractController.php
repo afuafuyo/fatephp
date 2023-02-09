@@ -35,7 +35,11 @@ abstract class AbstractController extends Component {
     /**
      * the filter collection
      */
-    public $filterChain = FilterFactory::createFilterChain($this);
+    public $filterChain = null;
+
+    public function __construct() {
+        $this->filterChain = FilterFactory::createFilterChain($this);
+    }
 
     /**
      * 声明过滤器列表
