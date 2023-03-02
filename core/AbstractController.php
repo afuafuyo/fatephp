@@ -10,7 +10,7 @@ use Fate;
 /**
  * 核心控制器类
  */
-abstract class AbstractController extends Component {
+abstract class AbstractController extends Component implements IResource {
 
     /**
      * @var string 事件名
@@ -39,22 +39,6 @@ abstract class AbstractController extends Component {
 
     public function __construct() {
         $this->filterChain = FilterFactory::createFilterChain($this);
-    }
-
-    /**
-     * 声明过滤器列表
-     *
-     * ```
-     * [
-     *      filterInstance,
-     *      'filterClassPath'
-     *      ['classPath' => 'filterClassPath', otherProps => xxx]
-     * ]
-     * ```
-     *
-     */
-    public function filters() {
-        return null;
     }
 
     /**
@@ -87,6 +71,27 @@ abstract class AbstractController extends Component {
 
         return $actionEvent->data;
     }
+
+    /**
+     * 声明过滤器列表
+     *
+     * ```
+     * [
+     *      filterInstance,
+     *      'filterClassPath'
+     *      ['classPath' => 'filterClassPath', otherProps => xxx]
+     * ]
+     * ```
+     *
+     */
+    public function filters() {
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public abstract function run();
 
     /**
      * 渲染文件

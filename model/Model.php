@@ -196,6 +196,10 @@ class Model extends fate\core\Component {
             throw new ModelException('The model has no attributes to validate');
         }
 
+        if(!$this->beforeValidate()) {
+            return false;
+        }
+
         $validators = $this->getValidators();
         if(null === $validators) {
             return true;
@@ -205,8 +209,21 @@ class Model extends fate\core\Component {
             $this->messages = array_merge($this->messages, $validator->validateAttributes());
         }
 
+        $this->afterValidate();
+
         return count($this->messages) === 0;
     }
+    /**
+     * 前置校验
+     */
+    public function beforeValidate() {
+        return true;
+    }
+
+    /**
+     * 后置校验
+     */
+    public function afterValidate() {}
 
     /**
      * 获取错误信息
