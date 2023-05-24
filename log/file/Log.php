@@ -95,11 +95,10 @@ class Log extends \fate\log\AbstractLog {
         $msg = '';
 
         for($i=0, $len=count($messages); $i<$len; $i++) {
-            $msg .= date('Y-m-d H:i:s', $messages[$i][2])
-                . ' [ '
-                . Logger::getLevelName($messages[$i][1])
-                . ' ] '
-                . $messages[$i][0] . "\n";
+            $msg .= '[' . Logger::getLevelName($messages[$i][1]) . ']'
+                . ' [' . date('Y-m-d H:i:s', $messages[$i][2]) . '] '
+                . $messages[$i][0]
+                . "\n";
         }
 
         return $msg;

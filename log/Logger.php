@@ -180,9 +180,7 @@ final class Logger {
      * @param string $message the message to be logged
      */
     public function trace($message) {
-        if(Fate::$app->debug) {
-            $this->log($message, self::LEVEL_TRACE);
-        }
+        $this->log($message, self::LEVEL_TRACE);
     }
 
     /**
