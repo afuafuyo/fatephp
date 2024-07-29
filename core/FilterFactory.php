@@ -30,12 +30,15 @@ class FilterFactory {
             return $filterChain;
         }
 
+        $instance = null;
         foreach($filters as $filter) {
-            if(!method_exists($filter, 'doFilter'))
-                $filter = Fate::createObject($filter);
+            if(!method_exists($filter, 'doFilter')) {
+                $instance = Fate::createObject($filter);
+            } else {
+                $instance = $filter;
             }
 
-            $this->filterChain->addFilter($filter);
+            $this->filterChain->addFilter($instance);
         }
 
         return filterChain;
